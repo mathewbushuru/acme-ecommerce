@@ -1,4 +1,4 @@
-name: Frontend Continuous Integration
+name: Server Continuous Integration
 on:
   workflow_dispatch:
   push:
