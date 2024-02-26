@@ -4,7 +4,7 @@ import DealsCarousel from "@/components/deals-carousel";
 
 function App() {
   return (
-    <main className="pb-8 pt-32">
+    <main className="pb-32 pt-32">
       <Navbar />
       <HeroBanners />
       <DealsCarousel />
