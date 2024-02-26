@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar";
 
 function App() {
   return (
-    <main>
+    <main className="pt-32">
       <Navbar />
 
       {/* Hero banners */}
