@@ -1,1 +1,3 @@
-### ACME Corp - Grocery Ecommerce website example
+### ACME Groceries
+
+A grocery ecommerce website example
