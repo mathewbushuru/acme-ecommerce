@@ -36,4 +36,10 @@ describe("<Button />", () => {
     fireEvent.click(button);
     expect(handleClickMock).toHaveBeenCalledTimes(1);
   });
+
+  it("is disabled when the disabled prop is set", () => {
+    const result = render(<Button disabled>Acme</Button>);
+    const button = result.getByRole("button");
+    expect(button).toBeDisabled();
+  })
 });
