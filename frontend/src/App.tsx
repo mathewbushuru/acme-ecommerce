@@ -1,11 +1,13 @@
 import Navbar from "@/components/navbar";
 import HeroBanners from "@/components/hero-banners";
+import DealsCarousel from "@/components/deals-carousel";
 
 function App() {
   return (
-    <main className="pt-32">
+    <main className="pb-8 pt-32">
       <Navbar />
       <HeroBanners />
+      <DealsCarousel />
     </main>
   );
 }
