@@ -1,6 +1,11 @@
+import { Button } from "@/components/ui/button";
+
 function App() {
   return (
-    <main className="bg-emerald-200 sm:bg-emerald-50">ACME Groceries</main>
+    <main className="bg-background text-foreground min-h-screen">
+      ACME Groceries
+      <Button>Sign up</Button>
+    </main>
   );
 }
 
