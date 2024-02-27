@@ -1,3 +1,5 @@
+import Autoplay from "embla-carousel-autoplay";
+
 import {
   Carousel,
   CarouselContent,
@@ -22,6 +24,13 @@ export default function DealsCarousel() {
           loop: true,
         }}
         className="mx-auto mt-4 w-full max-w-screen-xl"
+        plugins={[
+          Autoplay({
+            delay: 2000,
+            stopOnMouseEnter: true,
+            stopOnInteraction: false,
+          }),
+        ]}
       >
         <CarouselContent>
           {dealItems.map((item, index) => (
@@ -31,13 +40,13 @@ export default function DealsCarousel() {
                   <CardContent className="flex aspect-square flex-col justify-center gap-3 p-4">
                     <img
                       src={item.url}
-                      className="mx-auto h-48 w-72 rounded-md object-cover"
+                      className="mx-auto h-48 w-72 cursor-pointer rounded-md object-cover"
                     />
-                    <p className="text-sm h-8">
-                      {item.name}
-                    </p>
-                    <p className="text-left mb-1">
-                      <span className="font-bold text-destructive">{item.specialPrice}</span>{" "}
+                    <p className="h-8 cursor-pointer text-sm">{item.name}</p>
+                    <p className="mb-1 text-left">
+                      <span className="font-bold text-destructive">
+                        {item.specialPrice}
+                      </span>{" "}
                       was {item.retailPrice}
                     </p>
                     <Button size="sm">Add to Cart</Button>
