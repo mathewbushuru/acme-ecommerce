@@ -109,7 +109,7 @@ function PickupOrDeliverySelector() {
           <ChevronDown className="ml-2 h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-4">
+      <DropdownMenuContent className="p-4 mr-12">
         <div>
           You have selected {pickupChosen ? "Pickup" : "Delivery"}
           <DropdownMenuItem asChild className="mb-4 inline-flex cursor-pointer">
