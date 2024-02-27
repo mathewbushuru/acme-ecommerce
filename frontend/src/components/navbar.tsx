@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Menu,
   Search,
@@ -7,6 +8,7 @@ import {
   ChevronDown,
   Heart,
   RotateCcw,
+  Truck,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -90,20 +92,33 @@ export default function Navbar() {
 }
 
 function PickupOrDeliverySelector() {
+  const [pickupChosen, setPickupChosen] = useState<boolean>(true);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          <Store className="mr-2 h-5 w-5" />
-          <span className="font-semibold">Pickup</span>
+        <Button variant="outline" className="w-36">
+          {pickupChosen ? (
+            <Store className="mr-2 h-5 w-5" />
+          ) : (
+            <Truck className="mr-2 h-5 w-5" />
+          )}
+          <span className="font-semibold">
+            {pickupChosen ? "Pickup" : "Delivery"}
+          </span>
           <ChevronDown className="ml-2 h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-4">
         <div>
-          You have selected pickup
-          <DropdownMenuItem asChild className="inline-flex mb-4 cursor-pointer">
-            <Button variant="outline" size="sm" className="ml-12 mt-2">
+          You have selected {pickupChosen ? "Pickup" : "Delivery"}
+          <DropdownMenuItem asChild className="mb-4 inline-flex cursor-pointer">
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-12 mt-2"
+              onClick={() => setPickupChosen((curr) => !curr)}
+            >
               Change
             </Button>
           </DropdownMenuItem>
