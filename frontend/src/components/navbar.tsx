@@ -11,10 +11,17 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
   return (
-    <div className="shadow-md fixed top-0 inset-x-0 bg-background z-10">
+    <div className="fixed inset-x-0 top-0 z-10 bg-background shadow-md">
       <nav className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 p-4 lg:gap-8">
         <div className="flex items-center gap-2 lg:gap-3">
           <Menu className="h-6 w-6 cursor-pointer text-primary lg:hidden" />
@@ -73,15 +80,41 @@ export default function Navbar() {
                 <Heart className="mr-2 h-5 w-5 fill-foreground" />
                 <span className="font-semibold">Favourites</span>
               </Button>
-              <Button variant="outline">
-                <Store className="mr-2 h-5 w-5" />
-                <span className="font-semibold">Pickup</span>
-                <ChevronDown className="ml-2 h-5 w-5" />
-              </Button>
+              <PickupOrDeliverySelector />
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function PickupOrDeliverySelector() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">
+          <Store className="mr-2 h-5 w-5" />
+          <span className="font-semibold">Pickup</span>
+          <ChevronDown className="ml-2 h-5 w-5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-4">
+        <div>
+          You have selected pickup
+          <DropdownMenuItem asChild className="inline-flex mb-4 cursor-pointer">
+            <Button variant="outline" size="sm" className="ml-12 mt-2">
+              Change
+            </Button>
+          </DropdownMenuItem>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild className="mt-8 cursor-pointer">
+          <Button variant="outline" size="sm">
+            Change Store
+          </Button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
