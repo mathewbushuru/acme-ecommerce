@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar";
 import HeroBanners from "@/components/hero-banners";
 import DealsCarousel from "@/components/deals-carousel";
 import MidpageBanners from "@/components/midpage-banners";
+import GroceryAisles from "@/components/grocery-aisles";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <HeroBanners />
       <DealsCarousel />
       <MidpageBanners />
+      <GroceryAisles />
     </main>
   );
 }
