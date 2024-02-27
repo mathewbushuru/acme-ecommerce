@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 
 export default function Navbar() {
   return (
-    <div className="shadow-md fixed top-0 inset-x-0 bg-background">
+    <div className="shadow-md fixed top-0 inset-x-0 bg-background z-10">
       <nav className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 p-4 lg:gap-8">
         <div className="flex items-center gap-2 lg:gap-3">
           <Menu className="h-6 w-6 cursor-pointer text-primary lg:hidden" />
