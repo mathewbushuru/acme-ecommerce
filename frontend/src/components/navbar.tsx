@@ -55,23 +55,11 @@ export default function Navbar() {
           </div>
           <div className="hidden items-center justify-between lg:flex">
             <div className="flex gap-6 px-3">
-              <div className="flex cursor-pointer items-center gap-2 font-semibold hover:text-primary">
-                <Menu className="h-5 w-5" />
-                Shop Aisles
-              </div>
-              <span className="cursor-pointer hover:text-primary">Flyers</span>
-              <div className="flex cursor-pointer items-center hover:text-primary">
-                Deals
-                <ChevronDown className="ml-1" />
-              </div>
-              <div className="flex cursor-pointer items-center hover:text-primary">
-                Inspiration
-                <ChevronDown className="ml-1" />
-              </div>
-              <div className="flex cursor-pointer items-center hover:text-primary">
-                Pharmacy & Health
-                <ChevronDown className="ml-1" />
-              </div>
+              <ShopAislesDropdownMenu />
+              <FlyersDropdownMenu />
+              <DealsDropdownMenu />
+              <InspirationsDropdownMenu />
+              <PharmacyDropdownMenu />
             </div>
             <div className="flex gap-2">
               <Button variant="ghost">
@@ -109,7 +97,7 @@ function PickupOrDeliverySelector() {
           <ChevronDown className="ml-2 h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-4 mr-12">
+      <DropdownMenuContent className="mr-12 p-4">
         <div>
           You have selected {pickupChosen ? "Pickup" : "Delivery"}
           <DropdownMenuItem asChild className="mb-4 inline-flex cursor-pointer">
@@ -129,6 +117,123 @@ function PickupOrDeliverySelector() {
             Change Store
           </Button>
         </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function ShopAislesDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex cursor-pointer items-center gap-2 font-semibold hover:text-primary">
+          <Menu className="h-5 w-5" />
+          Shop Aisles
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-12  min-w-[30rem] p-4">
+        {[
+          "Fruits & Vegetables",
+          "Baby Care",
+          "Bakery",
+          "Cleaning, Paper & Home",
+          "Dairy & Eggs",
+          "Deli & Ready Made Meals",
+          "Floral and Garden",
+          "Frozen",
+          "Health & Beauty",
+          "International Foods",
+          "Meat & Seafood",
+          "Pantry",
+          "Pet Care",
+          "Plant Based & Non Dairy",
+        ].map((category, index) => (
+          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function FlyersDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex cursor-pointer items-center hover:text-primary">
+          Flyers
+          <ChevronDown className="ml-1" />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-12  min-w-[12rem]">
+        {["Weekly Flyer", "Monthly Newsletter"].map((category, index) => (
+          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function DealsDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex cursor-pointer items-center hover:text-primary">
+          Deals
+          <ChevronDown className="ml-1" />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-12  min-w-[12rem]">
+        {[
+          "My Offers",
+          "Savers Specials",
+          "Value Packs",
+          "Shop All Specials",
+          "Acme Rewards",
+        ].map((category, index) => (
+          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function InspirationsDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex cursor-pointer items-center hover:text-primary">
+          Inspiration
+          <ChevronDown className="ml-1" />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-12  min-w-[12rem]">
+        {["Recipes", "Our Brands"].map((category, index) => (
+          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function PharmacyDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex cursor-pointer items-center hover:text-primary">
+          Pharmacy & Health
+          <ChevronDown className="ml-1" />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="ml-12  min-w-[12rem]">
+        {[
+          "Refill Prescriptions",
+          "Pharmacy Services",
+          "Vaccines",
+          "Nutrition Services",
+          "Lifestyle Choices",
+        ].map((category, index) => (
+          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
