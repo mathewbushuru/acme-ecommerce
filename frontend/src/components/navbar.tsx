@@ -13,6 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,16 +44,11 @@ export default function Navbar() {
         </div>
         <div className="hidden flex-1 gap-8 sm:flex">
           <Input type="search" placeholder="Search" />
-          <Button variant="secondary">Sign In or Register</Button>
+          <SigninRegisterModal />
         </div>
         <div className="flex items-center gap-2">
           <Search className="h-6 w-6 cursor-pointer sm:hidden" />
-          <Button variant="ghost" className="px-4">
-            <ShoppingCart className="h-6 w-6 fill-destructive text-destructive" />
-            <span className="ml-2 hidden font-semibold text-destructive sm:inline">
-              Cart
-            </span>
-          </Button>
+          <CartModal />
         </div>
       </nav>
 
@@ -288,6 +284,83 @@ function FavouritesModal() {
             You'll love all the features that are included with having an
             account. Sign in or register to receive full access.
           </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="mt-4 sm:justify-center">
+          <AlertDialogAction>Sign In or Register</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function CartModal() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghost" className="px-4">
+          <ShoppingCart className="h-6 w-6 fill-destructive text-destructive" />
+          <span className="ml-2 hidden font-semibold text-destructive sm:inline">
+            Cart
+          </span>
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="mb-4 text-center">
+            Sign in to continue
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            You'll love all the features that are included with having an
+            account. Sign in or register to receive full access.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="mt-4 sm:justify-center">
+          <AlertDialogAction>Sign In or Register</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function SigninRegisterModal() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="secondary">Sign In or Register</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="mb-4 text-center">
+            Register for an account
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            You'll love all the features that are included with having an
+            account. Sign in or register to receive full access.
+          </AlertDialogDescription>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="name"
+                className="col-span-3"
+                type="email"
+                placeholder="matt@test.com"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Password
+              </Label>
+              <Input
+                id="username"
+                className="col-span-3"
+                type="password"
+                placeholder="password"
+              />
+            </div>
+          </div>
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-4 sm:justify-center">
           <AlertDialogAction>Sign In or Register</AlertDialogAction>
