@@ -8,7 +8,7 @@ export default function GroceryAisles() {
       <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-6">
         {aisleCategories.map((category, index) => (
           <div className="flex flex-col items-center gap-2 cursor-pointer" key={index}>
-            <div className="flex h-36 w-36 items-center justify-center rounded-full bg-accent">
+            <div className="flex h-36 w-36 items-center justify-center rounded-full bg-accent hover:bg-primary/10">
               <img
                 src={category.imgUrl}
                 className="h-24 w-36 rounded-full object-cover"

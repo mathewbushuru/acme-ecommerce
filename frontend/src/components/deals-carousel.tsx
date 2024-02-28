@@ -14,7 +14,7 @@ export default function DealsCarousel() {
   return (
     <div className="mx-auto mt-6 max-w-screen-xl px-12">
       <h3 className="text-center text-lg font-bold">Hot Deals this Week</h3>
-      <h5 className="mt-2 cursor-pointer text-center text-primary">
+      <h5 className="mt-2 cursor-pointer text-center text-primary hover:underline">
         Shop Flyer
       </h5>
 
