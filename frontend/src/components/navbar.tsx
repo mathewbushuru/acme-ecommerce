@@ -326,7 +326,7 @@ function SigninRegisterModal() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="secondary">Sign In or Register</Button>
+        <Button variant="default">Sign In or Register</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -362,8 +362,8 @@ function SigninRegisterModal() {
             </div>
           </div>
         </AlertDialogHeader>
-        <AlertDialogFooter className="mt-4 sm:justify-center">
-          <AlertDialogAction>Sign In or Register</AlertDialogAction>
+        <AlertDialogFooter className="mt-2 sm:justify-center">
+          <AlertDialogAction>Register new account</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
