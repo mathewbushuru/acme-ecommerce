@@ -20,6 +20,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function Navbar() {
   return (
@@ -62,14 +72,8 @@ export default function Navbar() {
               <PharmacyDropdownMenu />
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost">
-                <RotateCcw className="mr-2 h-5 w-5" />
-                <span className="font-semibold">Past Purchases</span>
-              </Button>
-              <Button variant="ghost">
-                <Heart className="mr-2 h-5 w-5 fill-foreground" />
-                <span className="font-semibold">Favourites</span>
-              </Button>
+              <PastPurchasesModal />
+              <FavouritesModal />
               <PickupOrDeliverySelector />
             </div>
           </div>
@@ -236,5 +240,59 @@ function PharmacyDropdownMenu() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function PastPurchasesModal() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghost">
+          <RotateCcw className="mr-2 h-5 w-5" />
+          <span className="font-semibold">Past Purchases</span>
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="mb-4 text-center">
+            Sign in to continue
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            You'll love all the features that are included with having an
+            account. Sign in or register to receive full access.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="mt-4 sm:justify-center">
+          <AlertDialogAction>Sign In or Register</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function FavouritesModal() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghost">
+          <Heart className="mr-2 h-5 w-5 fill-foreground" />
+          <span className="font-semibold">Favourites</span>
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="mb-4 text-center">
+            Sign in to continue
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            You'll love all the features that are included with having an
+            account. Sign in or register to receive full access.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="mt-4 sm:justify-center">
+          <AlertDialogAction>Sign In or Register</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
