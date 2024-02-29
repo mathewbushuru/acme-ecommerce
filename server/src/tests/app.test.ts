@@ -10,3 +10,11 @@ describe("GET /", () => {
     expect(response.body).toEqual({ message: "Acme Groceries API" });
   });
 });
+
+describe("Error handler", () => {
+  it("responds with a 500 status code and error message", async () => {
+    const response = await request(app).get("/test/test-error");
+    expect(response.status).toBe(500);
+    expect(response.body).toHaveProperty("errorMessage");
+  });
+});
