@@ -1,10 +1,13 @@
 import {
   Sheet,
+  SheetCancel,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
@@ -125,6 +128,13 @@ function ProjectInfoSheet() {
             <span className="font-semibold">Contentful</span> - for a rich
             Content Management System functionality.
           </li>
+          <SheetFooter className="sm:justify-start">
+            <SheetCancel asChild>
+              <Button variant="outline" className="">
+                Go back to dev preview
+              </Button>
+            </SheetCancel>
+          </SheetFooter>
         </div>
       </SheetContent>
     </Sheet>
