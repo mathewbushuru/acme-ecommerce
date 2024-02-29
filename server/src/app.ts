@@ -5,6 +5,7 @@ import cors from "cors";
 import "dotenv/config";
 
 // Routes imports
+import authRoutes from "./routes/auth";
 import testRoutes from "./routes/test";
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json({ message: "Acme Groceries API" });
 });
 
+app.use("/auth", authRoutes);
 app.use("/test", testRoutes);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
