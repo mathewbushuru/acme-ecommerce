@@ -44,7 +44,7 @@ function AuthScreen() {
     <>
       <AlertDialogHeader>
         <AlertDialogTitle className="mb-4 text-center">
-          Register for an account
+          Sign into your account
         </AlertDialogTitle>
         <AlertDialogDescription className="text-center">
           You'll love all the features that are included with having an account.
@@ -75,8 +75,9 @@ function AuthScreen() {
           </div>
         </div>
       </AlertDialogHeader>
-      <AlertDialogFooter className="mt-2 sm:justify-center">
-        <AlertDialogAction>Register new account</AlertDialogAction>
+      <AlertDialogFooter className="space-y-2 sm:flex-col sm:items-center sm:justify-center">
+        <AlertDialogAction className="px-12">Sign in</AlertDialogAction>
+        <Button variant="link"> Don't have an account? Register</Button>
       </AlertDialogFooter>
     </>
   );
