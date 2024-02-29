@@ -54,3 +54,22 @@ export async function getUserById(id: number) {
     throw new Error(error.message || "Error getting user");
   }
 }
+
+export async function getUserByEmail(email: string) {
+  try {
+    const dbResponse: any = await dbPool.query(
+      `SELECT * FROM acme_users WHERE email=?`,
+      [email]
+    );
+    const usersArr = dbResponse[0] as unknown as dbUserType[];
+    let user: dbUserType | null;
+    if (usersArr.length > 0) {
+      user = usersArr[0];
+    } else {
+      user = null;
+    }
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message || "Error getting user with this email");
+  }
+}
