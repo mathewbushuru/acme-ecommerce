@@ -52,7 +52,7 @@ const SheetOverlay = React.forwardRef<
 });
 
 const SheetVariants = cva(
-  "fixed z-50 scale-100 bg-background p-6 opacity-100 shadow-lg",
+  "fixed z-50 scale-100 bg-background p-6 opacity-100 shadow-lg overflow-y-auto",
   {
     variants: {
       position: {
