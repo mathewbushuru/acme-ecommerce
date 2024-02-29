@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { type RootState } from "@/store/store";
-// import {
-//   type User,
-//   type SignupRequestType,
-//   type LoginSuccessResponseType,
-// } from "@/types/auth";
+import {
+  type SignupRequestType,
+  type LoginSuccessResponseType,
+} from "@/types/auth";
 
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
 // const SERVER_URL = "http://localhost:5000";
@@ -30,9 +29,17 @@ const acmeApi = createApi({
     getRoot: builder.query<string, void>({
       query: () => `/`,
     }),
+    login: builder.mutation<LoginSuccessResponseType, SignupRequestType>({
+      query: (credentials) => ({
+        url: "auth/login",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
-export const { useGetRootQuery } = acmeApi;
+export const { useGetRootQuery, useLoginMutation } = acmeApi;
 
 export default acmeApi;
