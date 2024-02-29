@@ -1,5 +1,6 @@
 import Autoplay from "embla-carousel-autoplay";
 
+import AuthModal from "@/components/auth-modal";
 import {
   Carousel,
   CarouselContent,
@@ -49,7 +50,9 @@ export default function DealsCarousel() {
                       </span>{" "}
                       was {item.retailPrice}
                     </p>
-                    <Button size="sm">Add to Cart</Button>
+                    <AuthModal>
+                      <Button size="sm">Add to Cart</Button>
+                    </AuthModal>
                   </CardContent>
                 </Card>
               </div>

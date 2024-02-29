@@ -99,7 +99,7 @@ function InitialAuthScreen({
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter className="mt-4 sm:justify-center">
-        <AlertDialogCancel>Continue Shopping</AlertDialogCancel>
+        <AlertDialogCancel>Continue Browsing</AlertDialogCancel>
         <Button onClick={() => setShowAuthScreenHandler(true)}>
           Sign In or Register
         </Button>
