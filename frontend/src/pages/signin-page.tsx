@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useLoginMutation } from "@/api";
-import { useAppDispatch } from "@/store/store";
-import { setCredentials } from "@/store/features/auth-slice";
+// import { useLoginMutation } from "@/api";
+// import { useAppDispatch } from "@/store/store";
+// import { setCredentials } from "@/store/features/auth-slice";
 
-import { type LoginRequestType } from "@/types/auth";
+// import { type LoginRequestType } from "@/types/auth";
 
 import {
   AlertDialog,
@@ -21,26 +21,26 @@ import { Label } from "@/components/ui/label";
 
 export default function SigninPage() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginTrigger, { isLoading }] = useLoginMutation();
+  // const [loginTrigger, { isLoading }] = useLoginMutation();
 
-  const handleLogin = async () => {
-    const loginData: LoginRequestType = { email, password };
+  // const handleLogin = async () => {
+  //   const loginData: LoginRequestType = { email, password };
 
-    try {
-      const loginResponse = await loginTrigger(loginData).unwrap();
-      const { jwtToken, message, ...user } = loginResponse;
-      console.log(message);
-      navigate("/");
-      dispatch(setCredentials({ user, token: jwtToken }));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     const loginResponse = await loginTrigger(loginData).unwrap();
+  //     const { jwtToken, message, ...user } = loginResponse;
+  //     console.log(message);
+  //     navigate("/");
+  //     dispatch(setCredentials({ user, token: jwtToken }));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <main className="pt-40">
@@ -84,8 +84,9 @@ export default function SigninPage() {
             </div>
           </AlertDialogHeader>
           <AlertDialogFooter className="space-y-2 sm:flex-col sm:items-center sm:justify-center">
-            <AlertDialogAction className="px-12" onClick={handleLogin}>
-              {isLoading ? "Loading ..." : "Sign in"}
+            <AlertDialogAction className="px-12" onClick={() => navigate("/")}>
+              {/* {isLoading ? "Loading ..." : "Sign in"} */}
+              Sign in
             </AlertDialogAction>
             <Button variant="link"> Don't have an account? Register</Button>
             <p className="text-xs font-light tracking-wide text-muted-foreground">
