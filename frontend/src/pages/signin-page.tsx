@@ -56,6 +56,7 @@ export default function SigninPage() {
               Sign in
             </AlertDialogAction>
             <Button variant="link"> Don't have an account? Register</Button>
+            <p className="text-muted-foreground text-xs font-light tracking-wide">Use matt@test.com and Tester123! as demo credentials</p>
           </AlertDialogFooter>
         </AlertDialog>
       </div>
