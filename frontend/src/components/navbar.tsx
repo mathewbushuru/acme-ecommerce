@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Menu,
   Search,
@@ -24,18 +25,19 @@ import {
 
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <div className="fixed inset-x-0 top-0 z-10 bg-background shadow-md">
       <nav className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 p-4 lg:gap-8">
         <div className="flex items-center gap-2 lg:gap-3">
           <Menu className="h-6 w-6 cursor-pointer text-primary lg:hidden" />
-          <h1 className="cursor-pointer font-bold tracking-wide text-primary">
+          <h1 className="cursor-pointer font-bold tracking-wide text-primary" onClick={() => navigate("/")}>
             Acme Groceries
           </h1>
         </div>
         <div className="hidden flex-1 gap-8 sm:flex">
           <Input type="search" placeholder="Search" />
-          <AuthModal skipInitialScreen>
+          <AuthModal>
             <Button>Sign In or Register</Button>
           </AuthModal>
         </div>

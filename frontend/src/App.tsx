@@ -1,29 +1,35 @@
 import { Provider as ReduxProvider } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { store } from "@/store/store";
 import { useGetRootQuery } from "@/api";
 
-import Navbar from "@/components/navbar";
-import HeroBanners from "@/components/hero-banners";
-import DealsCarousel from "@/components/deals-carousel";
-import MidpageBanners from "@/components/midpage-banners";
-import GroceryAisles from "@/components/grocery-aisles";
-import Footer from "@/components/footer";
+import HomePage from "@/pages/home-page";
+import SigninPage from "@/pages/signin-page";
+
+const publicRoutes = [
+  {
+    path: "/",
+    element: <HomePage />,
+    errorElement: <HomePage />,
+  },
+  {
+    path: "/auth/signup",
+    element: <SigninPage />,
+  },
+  {
+    path: "/auth/login",
+    element: <SigninPage />,
+  },
+];
+
+const publicRouter = createBrowserRouter(publicRoutes);
 
 function AppRouter() {
   const { data } = useGetRootQuery();
   data && console.log(data);
 
-  return (
-    <main className="pt-32">
-      <Navbar />
-      <HeroBanners />
-      <DealsCarousel />
-      <MidpageBanners />
-      <GroceryAisles />
-      <Footer />
-    </main>
-  );
+  return <RouterProvider router={publicRouter} />;
 }
 
 function App() {
