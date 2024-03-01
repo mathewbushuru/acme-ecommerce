@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { type RootState } from "@/store/store";
 import {
-  type SignupRequestType,
+  type LoginRequestType,
   type LoginSuccessResponseType,
 } from "@/types/auth";
 
@@ -29,7 +29,7 @@ const acmeApi = createApi({
     getRoot: builder.query<string, void>({
       query: () => `/`,
     }),
-    login: builder.mutation<LoginSuccessResponseType, SignupRequestType>({
+    login: builder.mutation<LoginSuccessResponseType, LoginRequestType>({
       query: (credentials) => ({
         url: "auth/login",
         method: "POST",
