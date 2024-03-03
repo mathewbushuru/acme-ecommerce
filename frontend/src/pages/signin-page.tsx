@@ -65,9 +65,11 @@ export default function SigninPage() {
 
       navigate("/");
       dispatch(setCredentials({ user, token: jwtToken }));
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setLoginErrorMessage("Wrong email or password");
+      setLoginErrorMessage(
+        error.data.errorMessage || "Wrong email or password",
+      );
       setPassword("");
       setHasLoginError(true);
     }
@@ -114,16 +116,19 @@ export default function SigninPage() {
               </div>
             </div>
           </AlertDialogHeader>
-          <AlertDialogFooter className="space-y-2 sm:flex-col sm:items-center sm:justify-center">
+          <AlertDialogFooter className="flex-col space-y-2 sm:items-center sm:justify-center">
             {hasLoginError && (
-              <p className="mb-1 text-xs text-destructive">
+              <p className="my-2 text-center text-xs text-destructive">
                 {loginErrorMessage}
               </p>
             )}
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
               {isLoading ? "Loading ..." : "Sign in"}
             </AlertDialogAction>
-            <Button variant="link" onClick={() => navigate("/auth/signup")}> Don't have an account? Register</Button>
+            <Button variant="link" onClick={() => navigate("/auth/signup")}>
+              {" "}
+              Don't have an account? Register
+            </Button>
             <p className="text-center text-xs font-light tracking-wide  text-muted-foreground">
               Use mattb@test.com and Tester123! as demo credentials
             </p>

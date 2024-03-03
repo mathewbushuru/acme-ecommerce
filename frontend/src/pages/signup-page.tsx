@@ -75,9 +75,9 @@ export default function SignupPage() {
       const signupResponse = await signupTrigger(signupData).unwrap();
       console.log(signupResponse)
       navigate("/auth/signin");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setSignupErrorMessage("There was a problem signing up. try afain");
+      setSignupErrorMessage(error.data.errorMessage || "There was a problem signing up. try again");
       setHasSignupError(true);
     }
   };
@@ -149,9 +149,9 @@ export default function SignupPage() {
               </div>
             </div>
           </AlertDialogHeader>
-          <AlertDialogFooter className="space-y-2 sm:flex-col sm:items-center sm:justify-center">
+          <AlertDialogFooter className="space-y-2 flex-col sm:items-center sm:justify-center">
             {hasSignupError && (
-              <p className="mb-1 text-xs text-destructive">
+              <p className="my-1 text-center text-xs text-destructive">
                 {signupErrorMessage}
               </p>
             )}
