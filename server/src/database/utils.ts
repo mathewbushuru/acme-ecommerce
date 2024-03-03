@@ -5,24 +5,29 @@ interface dbUserType {
   id: number;
   email: string;
   hashedPassword: string;
+  firstName: string;
+  lastName: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export async function createUser(
   email: SignupRequestType["email"],
-  hashedPassword: SignupRequestType["password"]
+  hashedPassword: SignupRequestType["password"],
+  firstName: SignupRequestType["firstName"],
+  lastName: SignupRequestType["lastName"],
 ) {
   try {
     const response: any = await dbPool.query(
       `INSERT INTO acme_users (
-            email, hashedPassword
-        ) VALUES (?, ?)`,
-      [email, hashedPassword]
+            email, hashedPassword, firstName, lastName
+        ) VALUES (?, ?, ?, ?)`,
+      [email, hashedPassword, firstName, lastName]
     );
     const id = response[0].insertId;
     return getUserById(id);
   } catch (error: any) {
+    console.error(error);
     let customErrorMessage: undefined | string;
     if (
       error.message &&

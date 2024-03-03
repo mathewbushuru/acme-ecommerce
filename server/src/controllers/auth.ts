@@ -5,6 +5,13 @@ import { createUser, getUserByEmail } from "../database/utils";
 import { hashPassword, checkUserPassword } from "../lib/auth";
 
 export interface SignupRequestType {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+interface LoginRequestType {
   email: string;
   password: string;
 }
@@ -14,6 +21,8 @@ interface LoginSuccessfulResponseType {
   jwtToken: string;
   id: number;
   email: string;
+  firstName: string;
+  lastName: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -22,7 +31,10 @@ interface LoginSuccessfulResponseType {
  * @desc:       Sign up user
  * @listens:    POST /auth/signup
  * @access:     public
- * @param:      req, res, next
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
  */
 export const postSignupController = async (
   req: Request,
@@ -43,9 +55,20 @@ export const postSignupController = async (
     return res.status(400).json({ errorMessage });
   }
 
+  if (!signupReqData.firstName || !signupReqData.lastName) {
+    const errorMessage = "Sign up error. Name is missing";
+    console.error(errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
   const hashedReqDataPassword = await hashPassword(signupReqData.password);
 
-  createUser(signupReqData.email, hashedReqDataPassword)
+  createUser(
+    signupReqData.email,
+    hashedReqDataPassword,
+    signupReqData.firstName,
+    signupReqData.lastName
+  )
     .then((createUserResponse) => {
       if (createUserResponse === null) {
         const errorMessage = "There was an error signing up, try again";
@@ -65,7 +88,10 @@ export const postSignupController = async (
  * @desc:       Log in user and generate JWT token
  * @listens:    POST /auth/login
  * @access:     public
- * @param:      req, res, next
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
  */
 export const postLoginController = async (
   req: Request,
