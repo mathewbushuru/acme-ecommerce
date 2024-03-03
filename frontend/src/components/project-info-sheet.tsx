@@ -10,6 +10,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 export default function ProjectInfoSheet() {
   const [activePage, setActivePage] = useState<
@@ -210,9 +212,12 @@ function Roadmap({
       <SheetHeader>
         <SheetTitle>Project Roadmap</SheetTitle>
       </SheetHeader>
-      <div className="grid gap-4 py-4 text-sm antialiased">
-        <p>Roadmap Content</p>
-        <SheetFooter className="sm:justify-start">
+      <div className="grid gap-4 pt-4 text-sm antialiased">
+        <div className="flex items-center gap-2">
+          <Checkbox checked />
+          <Label>Users can register accounts and sign into them.</Label>
+        </div>
+        <SheetFooter className="mt-2 sm:justify-start">
           <SheetCancel asChild>
             <Button variant="outline" className="">
               Go back to dev preview
