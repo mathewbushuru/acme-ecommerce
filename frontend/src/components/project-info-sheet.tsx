@@ -66,7 +66,7 @@ export default function ProjectInfoSheet() {
               size="sm"
               onClick={() => setActivePage("technicalDocs")}
             >
-              Technical docs
+              Technical design
             </Button>
           </div>
 
@@ -239,7 +239,34 @@ function TechnicalDocs() {
         <SheetTitle>Technical Documentation</SheetTitle>
       </SheetHeader>
       <div className="grid gap-4 py-4 text-sm antialiased">
-        <p>Technical Docs content</p>
+        <p>
+          I am designing this system to be as fault-tolerant as it could possibly
+          be which is going to involve a bit more work since e-commerce systems
+          have a decent number of moving parts. The system can be divided at a
+          high level into four parts - the client(user), the API, the database
+          and payments processor.
+        </p>
+        <img src="/docs/high-level-overview.jpg" className="mx-auto max-h-40" />
+
+        <p>
+          The main approach to achieving fault-tolerancy is by using replicas. For example, our MySQL database on AWS has an exact replica as shown below.
+        </p>
+        <img src="/docs/database.jpg" className="mx-auto max-h-40" />
+
+        <p>
+          The first single point of failure in the system above is the API. We have a single API server in our system, and if it fails, the user is completely unable to interact with our system. To solve this, we are simply going to duplicate our API server and introduce an API load balancer.
+        </p>
+        <img src="/docs/high-level-overview2.jpg" className="mx-auto max-h-60" />
+
+        <p>
+          We have a similar problem with the load balancer, if it fails then our whole system is down again. A workaround for this is to have load balancers with different IP addresses and configure our DNS to return both IP addresses. If we pass in our domain name e.g <span className="font-mono">acme.mathewbushuru.com</span>, the DNS server translates that into a set of two IP addresses. When a browser receives multiple ip addresses for a domain, it will either use a round-robin approach or pick the first one. And if one of them is not available, it will try another. Downsides of this approach are: DNS is usually cached on the client making it harder to introduce new load balancers, and in the even that a load balancer is down, there is increased latency to find the working one. But that's better than the whole system going down.
+        </p>
+        <img src="/docs/high-level-overview3.jpg" className="mx-auto max-h-60" />
+
+        <p>
+          The other single point of failure is the Payments Processor. This becomes easier when using third-party services because these services offer Service Level Agreements (SLA) that give us the expected uptime. For example, Stripe which is one service I will be integrating has an uptime of 99.9999%. We can introduce a standby payment processor but this increases complexity since different services have different APIs.
+        </p>
+
         <SheetFooter className="sm:justify-start">
           <SheetCancel asChild>
             <Button variant="outline" className="">
