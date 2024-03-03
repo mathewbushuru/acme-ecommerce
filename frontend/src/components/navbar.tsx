@@ -30,7 +30,6 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const userData = useAppSelector((state) => state.auth.user);
-  console.log(userData);
 
   return (
     <div className="fixed inset-x-0 top-0 z-10 bg-background shadow-md">
