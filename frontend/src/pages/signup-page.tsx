@@ -83,7 +83,7 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="pt-40">
+    <main className="pt-12 sm:pt-40">
       <div className="mx-auto max-w-lg px-8">
         <AlertDialog>
           <AlertDialogHeader>
