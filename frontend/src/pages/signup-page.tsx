@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function SigninPage() {
+export default function SignupPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -79,13 +79,39 @@ export default function SigninPage() {
         <AlertDialog>
           <AlertDialogHeader>
             <AlertDialogTitle className="mb-4 text-center">
-              Sign into your account
+              Register an account
             </AlertDialogTitle>
             <AlertDialogDescription className="text-center">
               You'll love all the features that are included with having an
               account. Sign in or register to receive full access.
             </AlertDialogDescription>
             <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="firstName" className="col-span-4 sm:col-span-1">
+                  First name
+                </Label>
+                <Input
+                  id="firstName"
+                  className="col-span-4 sm:col-span-3"
+                  type="text"
+                  placeholder="Matt"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="lastName" className="col-span-4 sm:col-span-1">
+                  Last name
+                </Label>
+                <Input
+                  id="lastName"
+                  className="col-span-4 sm:col-span-3"
+                  type="text"
+                  placeholder="B"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="email" className="col-span-4 sm:col-span-1">
                   Email
@@ -123,10 +149,7 @@ export default function SigninPage() {
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
               {isLoading ? "Loading ..." : "Sign in"}
             </AlertDialogAction>
-            <Button variant="link" onClick={() => navigate("/auth/signup")}> Don't have an account? Register</Button>
-            <p className="text-center text-xs font-light tracking-wide  text-muted-foreground">
-              Use mattb@test.com and Tester123! as demo credentials
-            </p>
+            <Button variant="link" onClick={() => navigate("/auth/signin")}> Already have an account? Sign in</Button>
           </AlertDialogFooter>
         </AlertDialog>
       </div>
