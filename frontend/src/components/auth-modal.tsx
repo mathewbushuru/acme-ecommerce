@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "@/store/store";
+
 import {
   AlertDialog,
   AlertDialogFooter,
@@ -13,11 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function AuthModal({ children }: { children: React.ReactNode }) {
+  const userData = useAppSelector((state) => state.auth.user);
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
-        <InitialAuthScreen />
+        {userData ? <TempAfterAuthScreen /> : <InitialAuthScreen />}
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -41,6 +45,25 @@ function InitialAuthScreen({}: {}) {
         <Button onClick={() => navigate("/auth/signin")}>
           Sign In or Register
         </Button>
+      </AlertDialogFooter>
+    </>
+  );
+}
+
+function TempAfterAuthScreen({}: {}) {
+  const userData = useAppSelector((state) => state.auth.user);
+  return (
+    <>
+      <AlertDialogHeader>
+        <AlertDialogTitle className="mb-4 text-center">
+          Hello {userData?.firstName} {userData?.lastName},
+        </AlertDialogTitle>
+        <AlertDialogDescription className="text-center">
+          This is currently empty
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter className="mt-4 sm:justify-center">
+        <AlertDialogCancel>Continue Browsing</AlertDialogCancel>
       </AlertDialogFooter>
     </>
   );
