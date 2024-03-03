@@ -38,7 +38,7 @@ function InitialAuthScreen({}: {}) {
       </AlertDialogHeader>
       <AlertDialogFooter className="mt-4 sm:justify-center">
         <AlertDialogCancel>Continue Browsing</AlertDialogCancel>
-        <Button onClick={() => navigate("/auth/signup")}>
+        <Button onClick={() => navigate("/auth/signin")}>
           Sign In or Register
         </Button>
       </AlertDialogFooter>

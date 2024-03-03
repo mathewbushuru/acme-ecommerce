@@ -9,7 +9,7 @@ import {
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
 // const SERVER_URL = "http://localhost:5000";
 
-console.log(`Connected to server: ${SERVER_URL}`);
+console.log(`Connecting to server: ${SERVER_URL}`);
 
 const acmeApi = createApi({
   reducerPath: "acmeApi",

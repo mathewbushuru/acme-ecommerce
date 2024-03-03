@@ -18,7 +18,7 @@ const publicRoutes = [
     element: <SigninPage />,
   },
   {
-    path: "/auth/login",
+    path: "/auth/signin",
     element: <SigninPage />,
   },
 ];

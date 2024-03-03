@@ -5,7 +5,6 @@ export interface User {
   lastName: string;
   createdAt: string;
   updatedAt: string;
-  // jwtToken: string | null;
 }
 
 export type SignupRequestType = {
