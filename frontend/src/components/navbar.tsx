@@ -10,7 +10,10 @@ import {
   Heart,
   RotateCcw,
   Truck,
+  User2
 } from "lucide-react";
+
+import { useAppSelector } from "@/store/store";
 
 import AuthModal from "@/components/auth-modal";
 import { Button } from "@/components/ui/button";
@@ -23,23 +26,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 export default function Navbar() {
   const navigate = useNavigate();
+
+  const userData = useAppSelector((state) => state.auth.user);
+  console.log(userData);
+
   return (
     <div className="fixed inset-x-0 top-0 z-10 bg-background shadow-md">
       <nav className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 p-4 lg:gap-8">
         <div className="flex items-center gap-2 lg:gap-3">
           <Menu className="h-6 w-6 cursor-pointer text-primary lg:hidden" />
-          <h1 className="cursor-pointer font-bold tracking-wide text-primary" onClick={() => navigate("/")}>
+          <h1
+            className="cursor-pointer font-bold tracking-wide text-primary"
+            onClick={() => navigate("/")}
+          >
             Acme Groceries
           </h1>
         </div>
         <div className="hidden flex-1 gap-8 sm:flex">
           <Input type="search" placeholder="Search" />
-          <AuthModal>
-            <Button>Sign In or Register</Button>
-          </AuthModal>
+          {userData ? (
+            <Button variant="ghost" className="text-primary">
+              <User2 className="mr-2 w-5 h-5 fill-current" />
+              <span className="">Welcome {userData.firstName}</span>
+            </Button>
+          ) : (
+            <AuthModal>
+              <Button>Sign In or Register</Button>
+            </AuthModal>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <Search className="h-6 w-6 cursor-pointer sm:hidden" />

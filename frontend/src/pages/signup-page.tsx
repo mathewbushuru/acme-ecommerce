@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useLoginMutation } from "@/api";
-import { useAppDispatch } from "@/store/store";
-import { setCredentials } from "@/store/features/auth-slice";
+import { useSignupMutation } from "@/api";
 
-import { type LoginRequestType } from "@/types/auth";
+import { type SignupRequestType } from "@/types/auth";
 
 import {
   AlertDialog,
@@ -21,55 +19,66 @@ import { Label } from "@/components/ui/label";
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginTrigger, { isLoading }] = useLoginMutation();
+  const [signupTrigger, { isLoading }] = useSignupMutation();
 
-  const [hasLoginError, setHasLoginError] = useState(false);
-  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [hasSignupError, setHasSignupError] = useState(false);
+  const [signupErrorMessage, setSignupErrorMessage] = useState("");
 
   const handleLogin = async () => {
+    if (firstName.length === 0) {
+      setHasSignupError(true);
+      setSignupErrorMessage("First name is required!");
+      return;
+    }
+
+    if (lastName.length === 0) {
+      setHasSignupError(true);
+      setSignupErrorMessage("Last name is required!");
+      return;
+    }
+
     if (email.length === 0) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Email is required!");
+      setHasSignupError(true);
+      setSignupErrorMessage("Email is required!");
       return;
     }
 
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailRegex.test(email)) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Use valid email address!");
+      setHasSignupError(true);
+      setSignupErrorMessage("Use valid email address!");
       return;
     }
 
     if (password.length === 0) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Password is required!");
+      setHasSignupError(true);
+      setSignupErrorMessage("Password is required!");
       return;
     }
 
-    setHasLoginError(false);
+    setHasSignupError(false);
 
-    const loginData: LoginRequestType = { email, password };
+    const signupData: SignupRequestType = {
+      email,
+      password,
+      firstName,
+      lastName,
+    };
 
     try {
-      const loginResponse = await loginTrigger(loginData).unwrap();
-
-      const { jwtToken, message, ...user } = loginResponse;
-      console.log(message);
-
-      console.log(user);
-
-      navigate("/");
-      dispatch(setCredentials({ user, token: jwtToken }));
+      const signupResponse = await signupTrigger(signupData).unwrap();
+      console.log(signupResponse)
+      navigate("/auth/signin");
     } catch (error) {
       console.error(error);
-      setLoginErrorMessage("Wrong email or password");
-      setPassword("");
-      setHasLoginError(true);
+      setSignupErrorMessage("There was a problem signing up. try afain");
+      setHasSignupError(true);
     }
   };
 
@@ -95,8 +104,8 @@ export default function SignupPage() {
                   className="col-span-4 sm:col-span-3"
                   type="text"
                   placeholder="Matt"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -108,8 +117,8 @@ export default function SignupPage() {
                   className="col-span-4 sm:col-span-3"
                   type="text"
                   placeholder="B"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -141,15 +150,18 @@ export default function SignupPage() {
             </div>
           </AlertDialogHeader>
           <AlertDialogFooter className="space-y-2 sm:flex-col sm:items-center sm:justify-center">
-            {hasLoginError && (
+            {hasSignupError && (
               <p className="mb-1 text-xs text-destructive">
-                {loginErrorMessage}
+                {signupErrorMessage}
               </p>
             )}
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
               {isLoading ? "Loading ..." : "Sign in"}
             </AlertDialogAction>
-            <Button variant="link" onClick={() => navigate("/auth/signin")}> Already have an account? Sign in</Button>
+            <Button variant="link" onClick={() => navigate("/auth/signin")}>
+              {" "}
+              Already have an account? Sign in
+            </Button>
           </AlertDialogFooter>
         </AlertDialog>
       </div>

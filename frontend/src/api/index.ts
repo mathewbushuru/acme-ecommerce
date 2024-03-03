@@ -4,6 +4,8 @@ import { type RootState } from "@/store/store";
 import {
   type LoginRequestType,
   type LoginSuccessResponseType,
+  type SignupRequestType,
+  type SignupResponseType,
 } from "@/types/auth";
 
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
@@ -37,9 +39,17 @@ const acmeApi = createApi({
       }),
       invalidatesTags: [],
     }),
+    signup: builder.mutation<SignupResponseType, SignupRequestType>({
+      query: (signupData) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: signupData,
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
-export const { useGetRootQuery, useLoginMutation } = acmeApi;
+export const { useGetRootQuery, useLoginMutation, useSignupMutation } = acmeApi;
 
 export default acmeApi;
