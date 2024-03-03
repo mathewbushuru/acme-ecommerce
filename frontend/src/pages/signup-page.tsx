@@ -156,7 +156,7 @@ export default function SignupPage() {
               </p>
             )}
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
-              {isLoading ? "Loading ..." : "Sign in"}
+              {isLoading ? "Loading ..." : "Sign up"}
             </AlertDialogAction>
             <Button variant="link" onClick={() => navigate("/auth/signin")}>
               {" "}
