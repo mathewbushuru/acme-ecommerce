@@ -323,7 +323,7 @@ function TechnicalDocs() {
           round-robin approach or pick the first one. And if one of them is not
           available, it will try another. Downsides of this approach are: DNS is
           usually cached on the client making it harder to introduce new load
-          balancers, and in the even that a load balancer is down, there is
+          balancers, and in the event that a load balancer is down, there is
           increased latency to find the working one. But that's better than the
           whole system going down.
         </p>

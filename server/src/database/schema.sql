@@ -34,3 +34,35 @@ INSERT INTO acme_users(
 
 -- @block;
 SELECT * FROM acme_users;
+
+-- @block;
+DROP TABLE IF EXISTS acme_categories;
+CREATE TABLE acme_categories (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL UNIQUE,
+    `createdAt` TIMESTAMP NOT NULL DEFAULT(now()),
+    `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- @block;
+INSERT INTO acme_categories(
+    `name`
+) VALUES 
+    ("Fruits & Vegetables"),
+    ("Baby Care"),
+    ("Bakery"),
+    ("Cleaning, Paper & Home"),
+    ("Dairy & Eggs"),
+    ('Deli & Ready Made Meals'),
+    ("Floral & Garden"),
+    ("Frozen"),
+    ("Health & Beauty"),
+    ("International Foods"),
+    ("Meat & Seafood"),
+    ("Pantry"),
+    ("Pet Care"),
+    ("Plant Based & Non Dairy")
+    ;
+
+--@block;
+SELECT * FROM acme_categories;
