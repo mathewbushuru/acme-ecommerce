@@ -11,11 +11,18 @@ interface dbUserType {
   updatedAt: string;
 }
 
+interface dbCategoryType {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export async function createUser(
   email: SignupRequestType["email"],
   hashedPassword: SignupRequestType["password"],
   firstName: SignupRequestType["firstName"],
-  lastName: SignupRequestType["lastName"],
+  lastName: SignupRequestType["lastName"]
 ) {
   try {
     const response: any = await dbPool.query(
@@ -77,4 +84,14 @@ export async function getUserByEmail(email: string) {
   } catch (error: any) {
     throw new Error(error.message || "Error getting user with this email");
   }
+}
+
+export async function getAllCategories() {
+  try {
+    const dbResponse:any = await dbPool.query(
+      `SELECT * FROM acme_categories;`
+    );
+    const categoriesArr = dbResponse[0] as unknown as dbCategoryType[];
+    return categoriesArr;
+  } catch (error) {}
 }
