@@ -14,6 +14,7 @@ interface dbUserType {
 interface dbCategoryType {
   id: number;
   name: string;
+  imageUrl: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -93,5 +94,7 @@ export async function getAllCategories() {
     );
     const categoriesArr = dbResponse[0] as unknown as dbCategoryType[];
     return categoriesArr;
-  } catch (error) {}
+  } catch (error:any) {
+    throw new Error(error.message || "Error fetching all categories");
+  }
 }

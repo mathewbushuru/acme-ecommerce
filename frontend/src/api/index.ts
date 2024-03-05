@@ -7,6 +7,7 @@ import {
   type SignupRequestType,
   type SignupResponseType,
 } from "@/types/auth";
+import { GetAllCategoriesResponseType } from "@/types/product";
 
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
 // const SERVER_URL = "http://localhost:5000";
@@ -47,9 +48,17 @@ const acmeApi = createApi({
       }),
       invalidatesTags: [],
     }),
+    getProductCategories: builder.query<GetAllCategoriesResponseType, void>({
+      query: () => `/product/categories`,
+    }),
   }),
 });
 
-export const { useGetRootQuery, useLoginMutation, useSignupMutation } = acmeApi;
+export const {
+  useGetRootQuery,
+  useLoginMutation,
+  useSignupMutation,
+  useGetProductCategoriesQuery,
+} = acmeApi;
 
 export default acmeApi;

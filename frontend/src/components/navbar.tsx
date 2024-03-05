@@ -10,10 +10,12 @@ import {
   Heart,
   RotateCcw,
   Truck,
-  User2
+  User2,
 } from "lucide-react";
 
 import { useAppSelector } from "@/store/store";
+import { useGetProductCategoriesQuery } from "@/api";
+import { fallbackAisleCategories } from "@/lib/constants";
 
 import AuthModal from "@/components/auth-modal";
 import { Button } from "@/components/ui/button";
@@ -47,7 +49,7 @@ export default function Navbar() {
           <Input type="search" placeholder="Search" />
           {userData ? (
             <Button variant="ghost" className="text-primary">
-              <User2 className="mr-2 w-5 h-5 fill-current" />
+              <User2 className="mr-2 h-5 w-5 fill-current" />
               <span className="">Welcome {userData.firstName}</span>
             </Button>
           ) : (
@@ -150,6 +152,16 @@ function PickupOrDeliverySelector() {
 }
 
 function ShopAislesDropdownMenu() {
+  const { data: allBackendCategories } = useGetProductCategoriesQuery();
+
+  let allCategories: { name: string }[];
+
+  if (!allBackendCategories) {
+    allCategories = fallbackAisleCategories;
+  } else {
+    allCategories = allBackendCategories.categories;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -159,23 +171,8 @@ function ShopAislesDropdownMenu() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="ml-12  min-w-[30rem] p-4">
-        {[
-          "Fruits & Vegetables",
-          "Baby Care",
-          "Bakery",
-          "Cleaning, Paper & Home",
-          "Dairy & Eggs",
-          "Deli & Ready Made Meals",
-          "Floral and Garden",
-          "Frozen",
-          "Health & Beauty",
-          "International Foods",
-          "Meat & Seafood",
-          "Pantry",
-          "Pet Care",
-          "Plant Based & Non Dairy",
-        ].map((category, index) => (
-          <DropdownMenuItem key={index}>{category}</DropdownMenuItem>
+        {allCategories.map((category, index) => (
+          <DropdownMenuItem key={index}>{category.name}</DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
