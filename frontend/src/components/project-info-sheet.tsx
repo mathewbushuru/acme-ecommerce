@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 
 export default function ProjectInfoSheet() {
   const [activePage, setActivePage] = useState<
-    "aboutAcme" | "roadmap" | "technicalDocs"
+    "aboutAcme" | "roadmap" | "technicalDocs" | "databaseDesign"
   >("aboutAcme");
 
   let pageContent: React.ReactNode;
@@ -28,7 +28,10 @@ export default function ProjectInfoSheet() {
       pageContent = <Roadmap onNextPage={setActivePage} />;
       break;
     case "technicalDocs":
-      pageContent = <TechnicalDocs />;
+      pageContent = <TechnicalDocs onNextPage={setActivePage} />;
+      break;
+    case "databaseDesign":
+      pageContent = <DatabaseDesign />;
       break;
     default:
       pageContent = <>Something went wrong</>;
@@ -68,6 +71,14 @@ export default function ProjectInfoSheet() {
             >
               Technical design
             </Button>
+            <Button
+              variant={activePage === "databaseDesign" ? "secondary" : "ghost"}
+              className="justify-start"
+              size="sm"
+              onClick={() => setActivePage("databaseDesign")}
+            >
+              Database design
+            </Button>
           </div>
 
           <div className="h-full overflow-y-scroll p-8">{pageContent}</div>
@@ -81,7 +92,9 @@ function AboutAcme({
   onNextPage,
 }: {
   onNextPage: React.Dispatch<
-    React.SetStateAction<"aboutAcme" | "roadmap" | "technicalDocs">
+    React.SetStateAction<
+      "aboutAcme" | "roadmap" | "technicalDocs" | "databaseDesign"
+    >
   >;
 }) {
   return (
@@ -200,11 +213,52 @@ function AboutAcme({
   );
 }
 
+const roadmapItems = [
+  {
+    item: <>Users can register accounts and sign into them.</>,
+    complete: true,
+  },
+  {
+    item: <>Users can view all products per category/aisle.</>,
+    complete: false,
+  },
+  { item: <>Users can place orders.</>, complete: false },
+  { item: <>Users can check order status.</>, complete: false },
+  { item: <>Users can pay for orders.</>, complete: false },
+  { item: <>Users can view and write product reviews.</>, complete: false },
+  { item: <>Users can search for products.</>, complete: false },
+  { item: <>Admin can add products.</>, complete: false },
+  {
+    item: (
+      <>Use machine learning to show product recommendations on home page</>
+    ),
+    complete: false,
+  },
+  {
+    item: (
+      <>
+        Scale service to be able to handle Amazon scale (300 million active
+        monthly users -&gt; assume each user does 10 searches a month -&gt; 3
+        billion searches -&gt; 3B / (30 days x 24 hrs x 60 mins x 60 secs) -&gt;
+        3B / 2,592,000 secs -&gt; 3B / ~3 million secs -&gt;{" "}
+        <span className="font-bold">1,000 searches/second</span>,{" "}
+        <span className="font-bold">10 million products</span> -&gt; assume 10
+        MB metadata for each product -&gt; 10 million x 10 MB -&gt; 100 million
+        MB -&gt; 100,000 GB -&gt;{" "}
+        <span className="font-bold">100 TB storage.</span>)
+      </>
+    ),
+    complete: false,
+  },
+];
+
 function Roadmap({
   onNextPage,
 }: {
   onNextPage: React.Dispatch<
-    React.SetStateAction<"aboutAcme" | "roadmap" | "technicalDocs">
+    React.SetStateAction<
+      "aboutAcme" | "roadmap" | "technicalDocs" | "databaseDesign"
+    >
   >;
 }) {
   return (
@@ -213,55 +267,12 @@ function Roadmap({
         <SheetTitle>Project Roadmap</SheetTitle>
       </SheetHeader>
       <div className="grid gap-4 pt-4 text-sm antialiased">
-        <div className="flex items-center gap-2">
-          <Checkbox checked />
-          <Label>Users can register accounts and sign into them.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can view all products per category/aisle.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can place orders.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can check order status.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can pay for orders.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can view and write product reviews.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Users can search for products.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>Admin can add products.</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>
-            Use machine learning to show product recommendations on home page
-          </Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Label>
-            Scale service to be able to handle Amazon scale (300 million active
-            monthly users -&gt; assume each user does 10 searches a month -&gt;
-            3 billion searches -&gt; 3B / (30 days * 24 hrs * 60 mins * 60 secs)
-            -&gt; 3B / 2,592,000 secs -&gt; 3B / ~3 million secs -&gt;{" "}
-            <span className="font-bold">1,000 searches/second</span>,{" "}
-            <span className="font-bold">10 million products</span>)
-          </Label>
-        </div>
+        {roadmapItems.map((roadmapItem, index) => (
+          <div key={index} className="flex items-center gap-4">
+            <Checkbox checked={roadmapItem.complete} />
+            <Label className="leading-6">{roadmapItem.item}</Label>
+          </div>
+        ))}
         <SheetFooter className="mt-2 sm:justify-start">
           <SheetCancel asChild>
             <Button variant="outline" className="">
@@ -277,7 +288,15 @@ function Roadmap({
   );
 }
 
-function TechnicalDocs() {
+function TechnicalDocs({
+  onNextPage,
+}: {
+  onNextPage: React.Dispatch<
+    React.SetStateAction<
+      "aboutAcme" | "roadmap" | "technicalDocs" | "databaseDesign"
+    >
+  >;
+}) {
   return (
     <>
       <SheetHeader>
@@ -341,6 +360,102 @@ function TechnicalDocs() {
           this increases complexity since different services have different
           APIs.
         </p>
+
+        <SheetFooter className="sm:justify-start">
+          <SheetCancel asChild>
+            <Button variant="outline" className="">
+              Go back to dev preview
+            </Button>
+          </SheetCancel>
+          <Button
+            variant="outline"
+            onClick={() => onNextPage("databaseDesign")}
+          >
+            Next page (Database design)
+          </Button>
+        </SheetFooter>
+      </div>
+    </>
+  );
+}
+
+function DatabaseDesign() {
+  return (
+    <>
+      <SheetHeader>
+        <SheetTitle>Database Design</SheetTitle>
+      </SheetHeader>
+      <div className="grid gap-4 py-4 text-sm antialiased">
+        <p>
+          User information is structured so a SQL database makes sense for this.
+        </p>
+        <img src="/docs/user-erd.jpg" className="mx-auto max-h-40" />
+
+        <p>
+          We could add fields for billing address and delivery address to the
+          user table but that would restrict the user to only having one address
+          at a time. To allow the user to have multiple addresses on file and
+          prevent duplication of data, we will have a separate address table
+        </p>
+        <img src="/docs/address-erd.jpg" className="mx-auto max-h-40" />
+
+        <p>
+          Product data is inherently unstructured so the best option for it
+          would be to use a NoSQL / Document database like DynamoDB or MongoDB.
+        </p>
+
+        <p>
+          Orders can be stored in either a SQL or document database. In a
+          document database, each order will be a JSON object with the following
+          fields: <span className="font-mono">orderId</span>,{" "}
+          <span className="font-mono">userId</span>,{" "}
+          <span className="font-mono">addressId</span>,{" "}
+          <span className="font-mono">amountBeforeTax</span>,{" "}
+          <span className="font-mono">taxAmount</span>, and{" "}
+          <span className="font-mono">
+            itemsArray (itemId, quantity, price, currency)
+          </span>
+          .
+        </p>
+
+        <p>
+          For the review database, we will use a key - value database such as
+          Redis. Each review will consist of each of the following keys:{" "}
+          <span className="font-mono">reviewId</span>,{" "}
+          <span className="font-mono">rating</span>,{" "}
+          <span className="font-mono">description</span>,{" "}
+          <span className="font-mono">imageUrl</span>,{" "}
+          <span className="font-mono">videoUrl</span>, and{" "}
+          <span className="font-mono">userId</span>.
+        </p>
+
+        <h5 className="font-semibold">APIs / Services</h5>
+        <li>
+          <span className="font-mono">getRecommendations(userId)</span>: return
+          list of 10 product recommendations.
+        </li>
+        <li>
+          <span className="font-mono">search(searchString,userId)</span>: return
+          list of product search results.
+        </li>
+        <li>
+          <span className="font-mono">
+            addToCart(userId,productId,quantity)
+          </span>
+          : return boolean (true or false) on whether addition was successful.
+        </li>
+        <li>
+          <span className="font-mono">
+            placeOrder(userId, orderId, addressId, paymentMethod)
+          </span>
+          : return boolean (true or false) on whether order was successful.
+        </li>
+        <li>
+          <span className="font-mono">
+            checkOrderStatus(orderId)
+          </span>
+          : return progress of order (received, shipped, delivered).
+        </li>
 
         <SheetFooter className="sm:justify-start">
           <SheetCancel asChild>
