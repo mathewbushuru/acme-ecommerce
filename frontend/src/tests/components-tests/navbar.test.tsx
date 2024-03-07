@@ -4,14 +4,21 @@ import { cleanup, render } from "@testing-library/react";
 import Navbar from "@/components/navbar";
 
 vi.mock("react-router-dom");
-vi.mock("@/store/store")
+vi.mock("@/store/store");
+vi.mock("@/api", async (importOriginal) => {
+  const mod: any = await importOriginal();
+  return {
+    ...mod,
+    useGetProductCategoriesQuery: vi.fn().mockReturnValue([]),
+  };
+});
 
 describe("<Navbar />", async () => {
   const rrd = await import("react-router-dom");
 
-  beforeEach( () => {
+  beforeEach(() => {
     rrd.useNavigate = vi.fn();
-  })
+  });
 
   afterEach(cleanup);
 

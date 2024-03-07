@@ -105,3 +105,15 @@ SELECT * FROM acme_categories;
 
 --@block;
 SELECT * FROM acme_categories WHERE id = 1;
+
+--@block; -- add category id
+DROP TABLE IF EXISTS acme_products;
+CREATE TABLE acme_products (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL UNIQUE,
+    `createdAt` TIMESTAMP NOT NULL DEFAULT(now()),
+    `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+--@block;
+SELECT * FROM acme_products;
