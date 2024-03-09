@@ -19,6 +19,22 @@ interface dbCategoryType {
   updatedAt: string;
 }
 
+interface dbProductType {
+  id: number;
+  name: string;
+  categoryId: number;
+  regularPrice: number;
+  specialPrice: number;
+  isOnSpecial: number;
+  size: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * User data util functions
+ */
 export async function createUser(
   email: SignupRequestType["email"],
   hashedPassword: SignupRequestType["password"],
@@ -87,7 +103,10 @@ export async function getUserByEmail(email: string) {
   }
 }
 
-export async function getAllCategories() {
+/**
+ * Product data util functions
+ */
+export async function getAllProductCategories() {
   try {
     const dbResponse:any = await dbPool.query(
       `SELECT * FROM acme_categories;`
@@ -96,5 +115,17 @@ export async function getAllCategories() {
     return categoriesArr;
   } catch (error:any) {
     throw new Error(error.message || "Error fetching all categories");
+  }
+}
+
+export async function getAllProducts(){
+  try {
+    const dbResponse:any = await dbPool.query(
+      `SELECT * FROM acme_products;`
+    );
+    const productsArr = dbResponse[0] as dbProductType[];
+    return productsArr;
+  } catch (error:any){
+    throw new Error(error.message || "Error fetching all products");
   }
 }

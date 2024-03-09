@@ -1,12 +1,17 @@
 import { Router } from "express";
 
-import { getAllCategories } from "../database/utils";
+import { getAllProductCategories, getAllProducts } from "../database/utils";
 
 const router = Router();
 
 router.get("/categories", async (req, res, next) => {
-  const categories = await getAllCategories();
-  return res.json({ categories });
+  const allCategories = await getAllProductCategories();
+  return res.json({ allCategories });
+});
+
+router.get("/all", async (req, res, next) => {
+  const allProducts = await getAllProducts();
+  return res.json({ allProducts });
 });
 
 export default router;

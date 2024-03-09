@@ -7,5 +7,5 @@ export interface categoryType {
 }
 
 export interface GetAllCategoriesResponseType {
-  categories: categoryType[];
+  allCategories: categoryType[];
 }

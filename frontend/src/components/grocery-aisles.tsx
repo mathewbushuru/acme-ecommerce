@@ -10,7 +10,7 @@ export default function GroceryAisles() {
   if (!allBackendCategories) {
     allCategories = fallbackAisleCategories;
   } else {
-    allCategories = allBackendCategories.categories;
+    allCategories = allBackendCategories.allCategories;
   }
 
   return (
