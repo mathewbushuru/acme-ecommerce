@@ -1,9 +1,9 @@
-import { useGetProductCategoriesQuery } from "@/api";
+import { useGetAllProductCategoriesQuery } from "@/api";
 
 import { fallbackAisleCategories } from "@/lib/constants";
 
 export default function GroceryAisles() {
-  const { data: allBackendCategories } = useGetProductCategoriesQuery();
+  const { data: allBackendCategories } = useGetAllProductCategoriesQuery();
 
   let allCategories: { name: string; imageUrl: string }[];
 

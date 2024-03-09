@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 import { useAppSelector } from "@/store/store";
-import { useGetProductCategoriesQuery } from "@/api";
+import { useGetAllProductCategoriesQuery } from "@/api";
 import { fallbackAisleCategories } from "@/lib/constants";
 
 import AuthModal from "@/components/auth-modal";
@@ -152,7 +152,7 @@ function PickupOrDeliverySelector() {
 }
 
 function ShopAislesDropdownMenu() {
-  const { data: allBackendCategories } = useGetProductCategoriesQuery();
+  const { data: allBackendCategories } = useGetAllProductCategoriesQuery();
 
   let allCategories: { name: string }[];
 

@@ -9,7 +9,7 @@ vi.mock("@/api", async (importOriginal) => {
   const mod: any = await importOriginal();
   return {
     ...mod,
-    useGetProductCategoriesQuery: vi.fn().mockReturnValue([]),
+    useGetAllProductCategoriesQuery: vi.fn().mockReturnValue([]),
   };
 });
 
