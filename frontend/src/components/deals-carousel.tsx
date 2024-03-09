@@ -40,15 +40,15 @@ export default function DealsCarousel() {
                 <Card>
                   <CardContent className="flex aspect-square flex-col justify-center gap-3 p-4">
                     <img
-                      src={item.url}
+                      src={item.imageUrl}
                       className="mx-auto h-48 w-72 cursor-pointer rounded-md object-cover"
                     />
-                    <p className="h-8 cursor-pointer text-sm">{item.name}</p>
+                    <p className="h-8 cursor-pointer text-sm">{`${item.name} - ${item.size}`}</p>
                     <p className="mb-1 text-left">
                       <span className="font-bold text-destructive">
-                        {item.specialPrice}
+                        {`$${(item.specialPriceInCents / 100).toFixed(2)}`}
                       </span>{" "}
-                      was {item.retailPrice}
+                      was {`$${(item.regularPriceInCents / 100).toFixed(2)}`}
                     </p>
                     <AuthModal>
                       <Button size="sm">Add to Cart</Button>
@@ -68,45 +68,59 @@ export default function DealsCarousel() {
 
 const dealItems = [
   {
-    url: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Blueberries - Fresh, 1 pint, 1 each",
-    specialPrice: "$3.99",
-    retailPrice: "$7.99",
+    imageUrl:
+      "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Blueberries",
+    specialPriceInCents: 399,
+    regularPriceInCents: 799,
+    size: "1 pint, 1 each",
   },
   {
-    url: "https://plus.unsplash.com/premium_photo-1664472658489-8bb2cf572db1?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Meat Lasagna - 907 Gram",
-    specialPrice: "$7.49",
-    retailPrice: "$11.69",
+    imageUrl:
+      "https://plus.unsplash.com/premium_photo-1664472658489-8bb2cf572db1?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Meat Lasagna",
+    specialPriceInCents: 749,
+    regularPriceInCents: 1169,
+    size: "907 Grams",
   },
   {
-    url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Ancient Grains Bread - 600 Gram",
-    specialPrice: "$3.99",
-    retailPrice: "$7.99",
+    imageUrl:
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Ancient Grains Bread",
+    specialPriceInCents: 399,
+    regularPriceInCents: 799,
+    size: "600 Grams",
   },
   {
-    url: "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imageUrl:
+      "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Maple & Brown Sugar Flavour Oat Meal",
-    specialPrice: "$3.00",
-    retailPrice: "$4.79",
+    specialPriceInCents: 300,
+    regularPriceInCents: 479,
+    size: "12 Pack",
   },
   {
-    url: "https://images.unsplash.com/photo-1517456944721-229d38679dfa?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Breakfast Cereal - 850 Gram",
-    specialPrice: "$8.99",
-    retailPrice: "$12.49",
+    imageUrl:
+      "https://images.unsplash.com/photo-1517456944721-229d38679dfa?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Breakfast Cereal",
+    specialPriceInCents: 899,
+    regularPriceInCents: 1249,
+    size: "850 Grams",
   },
   {
-    url: "https://images.unsplash.com/photo-1621447504864-d8686e12698c?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Sea Salt &  Vinegar Potato Chips - 200 Gram",
-    specialPrice: "$3.79",
-    retailPrice: "$5.49",
+    imageUrl:
+      "https://images.unsplash.com/photo-1621447504864-d8686e12698c?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Sea Salt &  Vinegar Potato Chips",
+    specialPriceInCents: 379,
+    regularPriceInCents: 549,
+    size: "200 Grams",
   },
   {
-    url: "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Coca-Cola Soft Drinks - 12 x 355ml",
-    specialPrice: "$8.69",
-    retailPrice: "$12.49",
+    imageUrl:
+      "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Coca-Cola Soft Drinks",
+    specialPriceInCents: 869,
+    regularPriceInCents: 1249,
+    size: "12 Pack",
   },
 ];

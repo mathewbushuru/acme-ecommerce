@@ -106,14 +106,65 @@ SELECT * FROM acme_categories;
 --@block;
 SELECT * FROM acme_categories WHERE id = 1;
 
---@block; -- add category id
+--@block; -- categoryId as FK
 DROP TABLE IF EXISTS acme_products;
 CREATE TABLE acme_products (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL UNIQUE,
+    `categoryId` BIGINT UNSIGNED NOT NULL DEFAULT(0),
+    `regularPrice` INT UNSIGNED NOT NULL,
+    `specialPrice` INT UNSIGNED,
+    `isOnSpecial` SMALLINT DEFAULT(0),
+    `size` VARCHAR(50) NOT NULL,
+    `imageUrl` VARCHAR(255) NOT NULL,
     `createdAt` TIMESTAMP NOT NULL DEFAULT(now()),
     `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 --@block;
 SELECT * FROM acme_products;
+
+--@block;
+INSERT INTO acme_products(`name`, `categoryId`, `regularPrice`, `specialPrice`, `isOnSpecial`, `size`,`imageUrl`)
+VALUES (
+    "Blueberries - Fresh",
+    0, 799, 399, 1,
+    "1 pint, 1 each",
+    "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Meat Lasagna",
+    0, 1169, 749, 1,
+    "907 Grams",
+    "https://plus.unsplash.com/premium_photo-1664472658489-8bb2cf572db1?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Ancient Grains Bread",
+    0, 799, 399, 1,
+    "600 Grams",
+    "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Maple & Brown Sugar Flavour Oat Meal",
+    0, 479, 300, 1,
+    "12 Pack",
+    "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Breakfast Cereal",
+    0, 1249, 899, 1,
+    "850 Grams",
+    "https://images.unsplash.com/photo-1517456944721-229d38679dfa?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Sea Salt &  Vinegar Potato Chips",
+    0, 549, 379, 1,
+    "200 Grams",
+    "https://images.unsplash.com/photo-1621447504864-d8686e12698c?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+),
+(
+    "Coca-Cola Soft Drinks",
+    0, 1249, 869, 1,
+    "12 Pack",
+    "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+);
