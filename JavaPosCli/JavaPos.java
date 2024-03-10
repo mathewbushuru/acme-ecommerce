@@ -1,4 +1,5 @@
-// add to ~/.bash_profile export PATH_TO_FX=path/to/javafx-sdk-21.0.2/lib
+// ensure JAVA_HOME is set to point to JDK directory
+// add to ~/.bash_profile 'export PATH_TO_FX=path/to/javafx-sdk-21.0.2/lib'
 // source ~/.bash_profile
 // echo $PATH_TO_FX
 
