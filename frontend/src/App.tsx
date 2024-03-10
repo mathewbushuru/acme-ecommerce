@@ -5,7 +5,7 @@ import { store } from "@/store/store";
 import { useGetRootQuery } from "@/api";
 
 import HomePage from "@/pages/home-page";
-import SignupPage from "./pages/signup-page";
+import SignupPage from "@/pages/signup-page";
 import SigninPage from "@/pages/signin-page";
 
 const publicRoutes = [
