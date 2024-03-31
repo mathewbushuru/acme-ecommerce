@@ -1,3 +1,3 @@
-### ACME Groceries
+### ACME Ecommerce
 
-A grocery ecommerce website example
+Building blocks for digital commerce
