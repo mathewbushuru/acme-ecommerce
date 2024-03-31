@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardContent,
@@ -11,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
   return (
     <Card className="w-full max-w-sm mx-auto">
       <CardHeader>
@@ -44,7 +47,9 @@ export default function LoginForm() {
         </p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Sign in</Button>
+        <Button className="w-full" onClick={() => navigate("/dashboard")}>
+          Sign in
+        </Button>
       </CardFooter>
     </Card>
   );
