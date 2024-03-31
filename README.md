@@ -14,7 +14,7 @@ Home page
 
 Auth
 
-![sign](./.github/docs/admin-frontend-signin.jpg)
+![sign](./.github/docs/frontend-signin.jpg)
 
 ##### Progress: /admin-web-frontend
 
