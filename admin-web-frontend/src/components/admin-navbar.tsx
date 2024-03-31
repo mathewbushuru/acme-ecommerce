@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
-export default function DashboardHeader() {
+export default function AdminNavbar() {
   const navigate = useNavigate();
 
   return (
