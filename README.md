@@ -35,8 +35,8 @@ Auth
 A Node/Express backend + Postgres Database
 
 > [!NOTE]
-> There is code for both MySQL and PostgreSQL under `/server/mysql-database` and `/server/postgres-database` respectively. This project was initially using a MySQL database on AWS but I refactored it to use Postgres instead. MySQL is left here for future reference.
+> There is code for both MySQL and PostgreSQL under `/server/src/mysql-database` and `/server/src/postgres-database` respectively. This project was initially using a MySQL database on AWS but I refactored it to use Postgres instead. MySQL is left here for future reference.
 
 ##### /backoffice-desktop-app
 
-A .NET/C# desktop app coming soon.
+A .NET/C# desktop app developed in parallel alongside a Java GUI app.
