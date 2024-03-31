@@ -2,7 +2,7 @@
 
 Building blocks for digital commerce
 
-##### Progress: /frontend
+##### /frontend
 
 Live URL: [`acme.mathewbushuru.com`](https://acme.mathewbushuru.com/)
 
@@ -16,7 +16,7 @@ Auth
 
 ![sign](./.github/docs/frontend-signin.jpg)
 
-##### Progress: /admin-web-frontend
+##### /admin-web-frontend
 
 Live URL: [`acme-admin.mathewbushuru.com`](https://acme-admin.mathewbushuru.com/)
 
