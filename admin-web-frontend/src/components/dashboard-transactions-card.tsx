@@ -103,7 +103,7 @@ export default function DashboardTransactionsCard() {
                 <Badge variant="destructive">Refund</Badge>
               </TableCell>
               <TableCell className="hidden sm:table-cell">2024-04-31</TableCell>
-              <TableCell className="text-right">- $70.00</TableCell>
+              <TableCell className="text-right whitespace-nowrap">- $70.00</TableCell>
             </TableRow>
           </TableBody>
         </Table>

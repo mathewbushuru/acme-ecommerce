@@ -17,29 +17,29 @@ export default function AdminNavbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 flex items-center h-16 gap-4 border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 flex items-center h-16 gap-4 border-b bg-background px-4 md:px-6 z-[99]">
       <nav className="hidden md:flex text-lg font-medium md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <NavLink
           to="#"
           className="flex items-center gap-2 text-primary font-semibold"
         >
           <Package2 className="h-6 w-6" />
-          <span className="whitespace-nowrap">Acme Admin</span>
+          <span className="whitespace-nowrap md:hidden lg:inline-block">Acme Admin</span>
         </NavLink>
         <NavLink to="#" className="text-foreground">
           Dashboard
         </NavLink>
         <NavLink
           to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
         >
-          Orders
+          Inventory Maintenance
         </NavLink>
         <NavLink
           to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
         >
-          Products
+          Preferred Shoppers
         </NavLink>
         <NavLink
           to="#"
@@ -68,19 +68,13 @@ export default function AdminNavbar() {
               to="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Orders
+              Inventory Maintenance
             </NavLink>
             <NavLink
               to="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Products
-            </NavLink>
-            <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Customers
+              Preferred Shoppers
             </NavLink>
             <NavLink
               to="#"
@@ -98,7 +92,7 @@ export default function AdminNavbar() {
             <Input
               type="search"
               placeholder="Search..."
-              className="sm:w-[300px] pl-8"
+              className="sm:w-[300px] md:w-[240px] lg:w-[300px] pl-8"
             />
           </div>
         </form>
