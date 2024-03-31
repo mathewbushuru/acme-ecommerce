@@ -1,0 +1,3 @@
+-- show databases
+-- @block;
+\l
