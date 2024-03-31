@@ -6,15 +6,18 @@ const sql = postgres({
   username: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   port: 5432,
-  ssl: "require",
+  ssl: process.env.PG_LOCALHOST === "true" ? undefined : "require",
   connection: {
-    options: `project=${process.env.PG_ENDPOINT_ID}`,
+    options:
+      process.env.PG_LOCALHOST === "true"
+        ? undefined
+        : `project=${process.env.PG_ENDPOINT_ID}`,
   },
 });
 
-export async function logPostgresVersion(){
-    const result = await sql`SELECT version()`;
-    console.log(result);
+export async function logPostgresVersion() {
+  const result = await sql`SELECT version()`;
+  console.log(result);
 }
 
 export default sql;
