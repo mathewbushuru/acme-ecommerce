@@ -40,7 +40,7 @@ export default function LoginForm() {
           />
         </div>
         <p className="text-xs font-light text-muted-foreground text-center">
-          Use matt@test.com and 781*admiN as demo credentials
+          Use mattb@test.com and 781*admiN as demo credentials
         </p>
       </CardContent>
       <CardFooter>
