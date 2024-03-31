@@ -1,3 +1,5 @@
+// Running it from command line instead of IDE(IntelliJ)
+
 // ensure JAVA_HOME is set to point to JDK directory
 // add to ~/.bash_profile 'export PATH_TO_FX=path/to/javafx-sdk-21.0.2/lib'
 // source ~/.bash_profile
@@ -8,22 +10,26 @@
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
 
-public class JavaPos extends Application {
-    @Override
-    public void start(Stage stage) {
+public class AcmePos extends Application {
+    private Parent createContent(){
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
+        return new StackPane(new Label("ACME POS. Uses JavaFX " + javafxVersion + ", running on Java " + javaVersion + "."));
+    }
+
+    @Override
+    public void start(Stage stage){
+        Scene scene = new Scene(createContent(), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch();
     }
 }
