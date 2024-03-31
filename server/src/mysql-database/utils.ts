@@ -1,36 +1,11 @@
 import dbPool from ".";
-import { type SignupRequestType } from "../controllers/auth";
 
-interface dbUserType {
-  id: number;
-  email: string;
-  hashedPassword: string;
-  firstName: string;
-  lastName: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface dbCategoryType {
-  id: number;
-  name: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface dbProductType {
-  id: number;
-  name: string;
-  categoryId: number;
-  regularPrice: number;
-  specialPrice: number;
-  isOnSpecial: number;
-  size: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { type SignupRequestType } from "../types/auth";
+import {
+  type dbCategoryType,
+  type dbProductType,
+  type dbUserType,
+} from "../types/database";
 
 /**
  * User data util functions
@@ -108,24 +83,22 @@ export async function getUserByEmail(email: string) {
  */
 export async function getAllProductCategories() {
   try {
-    const dbResponse:any = await dbPool.query(
+    const dbResponse: any = await dbPool.query(
       `SELECT * FROM acme_categories;`
     );
     const categoriesArr = dbResponse[0] as unknown as dbCategoryType[];
     return categoriesArr;
-  } catch (error:any) {
+  } catch (error: any) {
     throw new Error(error.message || "Error fetching all categories");
   }
 }
 
-export async function getAllProducts(){
+export async function getAllProducts() {
   try {
-    const dbResponse:any = await dbPool.query(
-      `SELECT * FROM acme_products;`
-    );
+    const dbResponse: any = await dbPool.query(`SELECT * FROM acme_products;`);
     const productsArr = dbResponse[0] as dbProductType[];
     return productsArr;
-  } catch (error:any){
+  } catch (error: any) {
     throw new Error(error.message || "Error fetching all products");
   }
 }

@@ -1,6 +1,9 @@
 import { Router } from "express";
 
-import { getAllProductCategories, getAllProducts } from "../mysql-database/utils";
+import {
+  getAllProductCategories,
+  getAllProducts,
+} from "../postgres-database/product-utils";
 
 const router = Router();
 
