@@ -4,28 +4,11 @@ import jwt from "jsonwebtoken";
 import { createUser, getUserByEmail } from "../mysql-database/utils";
 import { hashPassword, checkUserPassword } from "../lib/auth";
 
-export interface SignupRequestType {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-interface LoginRequestType {
-  email: string;
-  password: string;
-}
-
-interface LoginSuccessfulResponseType {
-  message: string;
-  jwtToken: string;
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import {
+  type LoginRequestType,
+  type SignupRequestType,
+  type LoginSuccessfulResponseType,
+} from "../types/auth";
 
 /**
  * @desc:       Sign up user
@@ -98,7 +81,7 @@ export const postLoginController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const loginReqData = req.body as SignupRequestType;
+  const loginReqData = req.body as LoginRequestType;
 
   if (!loginReqData.email) {
     const errorMessage = "Sign in error, email is missing.";
