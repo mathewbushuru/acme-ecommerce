@@ -1,3 +1,6 @@
+// NOTE: main server for this app is the ExpressJS app under /server.
+// This is an experiment that could replace that as the BE for this project
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
