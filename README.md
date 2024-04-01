@@ -39,7 +39,11 @@ A Node/Express backend + Postgres Database
 
 ##### /backoffice-desktop-app
 
-A .NET/C# desktop app developed in parallel alongside a Java GUI app.
+A .NET/C# desktop app
+
+![sign](./.github/docs/desktop-app.JPG)
+
+Also experimenting with a Java GUI app in this folder. Might move to a MAUI app to get a cross-platform MacOS and Windows Desktop app.
 
 ##### /dotnet-server
 
