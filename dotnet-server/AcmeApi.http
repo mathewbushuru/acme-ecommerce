@@ -1,6 +1,6 @@
-@AcmeApi_HostAddress = http://localhost:5206
+@AcmeApi_HostAddress = http://localhost:5000
 
-GET {{AcmeApi_HostAddress}}/weatherforecast/
+GET {{AcmeApi_HostAddress}}/
 Accept: application/json
 
 ###
