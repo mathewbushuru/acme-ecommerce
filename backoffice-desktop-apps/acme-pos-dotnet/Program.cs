@@ -1,4 +1,4 @@
-namespace acme_pos_dotnet;
+namespace AcmePos;
 
 static class Program
 {
@@ -7,5 +7,5 @@ static class Program
     {
         ApplicationConfiguration.Initialize();
         Application.Run(new Form1());
-    }    
+    }
 }
