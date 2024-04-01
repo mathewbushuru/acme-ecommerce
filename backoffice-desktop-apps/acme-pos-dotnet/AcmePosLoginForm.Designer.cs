@@ -1,6 +1,6 @@
-﻿namespace acme_pos_dotnet;
+﻿namespace AcmePos;
 
-partial class Form1
+partial class AcmePosLoginForm
 {
 
     private System.ComponentModel.IContainer components = null;

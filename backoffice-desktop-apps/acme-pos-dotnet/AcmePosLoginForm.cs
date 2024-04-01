@@ -1,13 +1,13 @@
-namespace acme_pos_dotnet;
+namespace AcmePos;
 
-public partial class Form1 : Form
+public partial class AcmePosLoginForm : Form
 {
-    public Form1()
+    public AcmePosLoginForm()
     {
         InitializeComponent();
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private void AcmePosLoginForm_Load(object sender, EventArgs e)
     {
 
     }
