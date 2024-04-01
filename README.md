@@ -2,7 +2,7 @@
 
 Building blocks for digital commerce
 
-##### Progress: /frontend
+##### /frontend
 
 Live URL: [`acme.mathewbushuru.com`](https://acme.mathewbushuru.com/)
 
@@ -16,7 +16,7 @@ Auth
 
 ![sign](./.github/docs/frontend-signin.jpg)
 
-##### Progress: /admin-web-frontend
+##### /admin-web-frontend
 
 Live URL: [`acme-admin.mathewbushuru.com`](https://acme-admin.mathewbushuru.com/)
 
@@ -40,3 +40,7 @@ A Node/Express backend + Postgres Database
 ##### /backoffice-desktop-app
 
 A .NET/C# desktop app developed in parallel alongside a Java GUI app.
+
+##### /dotnet-server
+
+An C# ASP.NET API developed in parallel with the ExpressJS server in the `/server` directory. I aim both APIs to have the same functionality.
