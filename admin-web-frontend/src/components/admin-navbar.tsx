@@ -13,6 +13,27 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
+import { cn } from "@/lib/utils";
+
+const navigationLinks = [
+  {
+    name: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    name: "Inventory Maintenance",
+    link: "/inventory-maintenance",
+  },
+  {
+    name: "Preferred Shoppers",
+    link: "/preferred-shoppers",
+  },
+  {
+    name: "Analytics",
+    link: "/analytics",
+  },
+];
+
 export default function AdminNavbar() {
   const navigate = useNavigate();
 
@@ -20,33 +41,28 @@ export default function AdminNavbar() {
     <header className="sticky top-0 flex items-center h-16 gap-4 border-b bg-background px-4 md:px-6 z-[99]">
       <nav className="hidden md:flex text-lg font-medium md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <NavLink
-          to="#"
+          to="/dashboard"
           className="flex items-center gap-2 text-primary font-semibold"
         >
           <Package2 className="h-6 w-6" />
-          <span className="whitespace-nowrap md:hidden lg:inline-block">Acme Admin</span>
+          <span className="whitespace-nowrap md:hidden lg:inline-block">
+            Acme Admin
+          </span>
         </NavLink>
-        <NavLink to="#" className="text-foreground">
-          Dashboard
-        </NavLink>
-        <NavLink
-          to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
-        >
-          Inventory Maintenance
-        </NavLink>
-        <NavLink
-          to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
-        >
-          Preferred Shoppers
-        </NavLink>
-        <NavLink
-          to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Analytics
-        </NavLink>
+        {navigationLinks.map((linkItem) => (
+          <NavLink
+            to={linkItem.link}
+            className={({ isActive }) =>
+              cn(
+                "text-muted-foreground transition-colors hover:text-foreground text-nowrap",
+                isActive && "text-foreground"
+              )
+            }
+            key={linkItem.name}
+          >
+            {linkItem.name}
+          </NavLink>
+        ))}
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -56,32 +72,28 @@ export default function AdminNavbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <nav className="grid gap-6 text-lg font-medium">
-            <NavLink to="#" className="flex items-center gap-2 font-semibold">
+          <nav className="grid gap-6 text-lg font-medium pt-14">
+            <NavLink
+              to="#"
+              className="flex items-center gap-2 text-primary font-semibold"
+            >
               <Package2 className="h-6 w-6" />
               <span>Acme Admin</span>
             </NavLink>
-            <NavLink to="#" className="text-foreground">
-              Dashboard
-            </NavLink>
-            <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Inventory Maintenance
-            </NavLink>
-            <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Preferred Shoppers
-            </NavLink>
-            <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Analytics
-            </NavLink>
+            {navigationLinks.map((linkItem) => (
+              <NavLink
+                to={linkItem.link}
+                className={({ isActive }) =>
+                  cn(
+                    "text-muted-foreground hover:text-foreground text-nowrap",
+                    isActive && "text-foreground"
+                  )
+                }
+                key={linkItem.name}
+              >
+                {linkItem.name}
+              </NavLink>
+            ))}
           </nav>
         </SheetContent>
       </Sheet>

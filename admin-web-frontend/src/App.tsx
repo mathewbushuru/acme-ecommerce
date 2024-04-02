@@ -2,6 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import SigninPage from "@/pages/signin-page";
 import DashboardPage from "@/pages/dashboard-page";
+import InventoryMaintenancePage from "@/pages/inventory-maintenance-page";
+import PreferredShoppersPage from "@/pages/preferred-shoppers-page";
+import AnalyticsPage from "@/pages/analytics-page";
 
 const publicRoutes = [
   {
@@ -12,6 +15,18 @@ const publicRoutes = [
   {
     path: "/dashboard",
     element: <DashboardPage />
+  },
+  {
+    path: "/inventory-maintenance",
+    element: <InventoryMaintenancePage />
+  },
+  {
+    path: "/preferred-shoppers",
+    element: <PreferredShoppersPage />
+  },
+  {
+    path: "/analytics",
+    element: <AnalyticsPage />
   }
 ];
 
