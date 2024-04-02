@@ -42,7 +42,7 @@ A Node/Express backend + Postgres Database
 
 A .NET/C# desktop app
 
-![sign](./.github/docs/desktop-signin.JPG)
+![sign](./.github/docs/acme-pos-app.JPG)
 
 Also experimenting with a Java GUI app in this folder. Might move to a MAUI app to get a cross-platform MacOS and Windows Desktop app.
 
