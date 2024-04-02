@@ -101,7 +101,7 @@ partial class AcmePosLoginForm
         Controls.Add(textBox1);
         Name = "Form1";
         Text = "AcmePOS";
-        Load += Form1_Load;
+        Load += AcmePosLoginForm_Load;
         ResumeLayout(false);
         PerformLayout();
     }
