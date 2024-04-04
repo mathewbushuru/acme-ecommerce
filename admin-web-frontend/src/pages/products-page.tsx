@@ -3,7 +3,7 @@ import {  Pencil } from "lucide-react";
 import RootLayout from "@/layouts/root-layout";
 import { Button } from "@/components/ui/button";
 
-export default function InventoryPage() {
+export default function ProductsPage() {
   return (
     <RootLayout>
       <div className="w-full grid md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
@@ -20,7 +20,7 @@ export default function InventoryPage() {
         </div>
 
         {/* Main  */}
-        <div className="p-2">Inventory maintenance</div>
+        <div className="p-2">Products information maintenance</div>
       </div>
     </RootLayout>
   );

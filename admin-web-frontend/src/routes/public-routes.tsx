@@ -1,6 +1,6 @@
 import SigninPage from "@/pages/signin-page";
 import DashboardPage from "@/pages/dashboard-page";
-import InventoryPage from "@/pages/inventory-page";
+import ProductsPage from "@/pages/products-page";
 import CustomersPage from "@/pages/customers-page";
 import AnalyticsPage from "@/pages/analytics-page";
 
@@ -19,9 +19,9 @@ export const publicRoutes = [
       isOnNavbar: true
     },
     {
-      path: "/inventory",
-      element: <InventoryPage />,
-      name: "Inventory",
+      path: "/products",
+      element: <ProductsPage />,
+      name: "Products",
       isOnNavbar: true
     },
     {
