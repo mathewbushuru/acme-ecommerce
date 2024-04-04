@@ -1,6 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Package2, Menu, Search, CircleUser } from "lucide-react";
 
+import { publicRoutes as navigationLinks } from "@/routes/public-routes";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
@@ -14,25 +16,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { cn } from "@/lib/utils";
-
-const navigationLinks = [
-  {
-    name: "Dashboard",
-    link: "/dashboard",
-  },
-  {
-    name: "Inventory Maintenance",
-    link: "/inventory-maintenance",
-  },
-  {
-    name: "Preferred Shoppers",
-    link: "/preferred-shoppers",
-  },
-  {
-    name: "Analytics",
-    link: "/analytics",
-  },
-];
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
@@ -49,20 +32,23 @@ export default function AdminNavbar() {
             Acme Admin
           </span>
         </NavLink>
-        {navigationLinks.map((linkItem) => (
-          <NavLink
-            to={linkItem.link}
-            className={({ isActive }) =>
-              cn(
-                "text-muted-foreground transition-colors hover:text-foreground text-nowrap",
-                isActive && "text-foreground"
-              )
-            }
-            key={linkItem.name}
-          >
-            {linkItem.name}
-          </NavLink>
-        ))}
+        {navigationLinks.map(
+          (linkItem) =>
+            linkItem.isOnNavbar && (
+              <NavLink
+                to={linkItem.path}
+                className={({ isActive }) =>
+                  cn(
+                    "text-muted-foreground transition-colors hover:text-foreground text-nowrap",
+                    isActive && "text-foreground"
+                  )
+                }
+                key={linkItem.name}
+              >
+                {linkItem.name}
+              </NavLink>
+            )
+        )}
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -80,20 +66,23 @@ export default function AdminNavbar() {
               <Package2 className="h-6 w-6" />
               <span>Acme Admin</span>
             </NavLink>
-            {navigationLinks.map((linkItem) => (
-              <NavLink
-                to={linkItem.link}
-                className={({ isActive }) =>
-                  cn(
-                    "text-muted-foreground hover:text-foreground text-nowrap",
-                    isActive && "text-foreground"
-                  )
-                }
-                key={linkItem.name}
-              >
-                {linkItem.name}
-              </NavLink>
-            ))}
+            {navigationLinks.map(
+              (linkItem) =>
+                linkItem.isOnNavbar && (
+                  <NavLink
+                    to={linkItem.path}
+                    className={({ isActive }) =>
+                      cn(
+                        "text-muted-foreground hover:text-foreground text-nowrap",
+                        isActive && "text-foreground"
+                      )
+                    }
+                    key={linkItem.name}
+                  >
+                    {linkItem.name}
+                  </NavLink>
+                )
+            )}
           </nav>
         </SheetContent>
       </Sheet>
