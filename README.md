@@ -24,7 +24,11 @@ Demo credentials: `mattb@test.com` , `81*admiN`
 
 Home page
 
-![home](./.github/docs/admin-frontend.jpg)
+![home](./.github/docs/admin-frontend2.jpg)
+
+Products page
+
+![product](./.github/docs/admin-products.jpg)
 
 Auth
 
