@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Package2, Menu, Search, CircleUser } from "lucide-react";
+import { Package2, Menu, Search, CircleUser} from "lucide-react";
 
 import { publicRoutes as navigationLinks } from "@/routes/public-routes";
 
@@ -39,12 +39,13 @@ export default function AdminNavbar() {
                 to={linkItem.path}
                 className={({ isActive }) =>
                   cn(
-                    "text-muted-foreground transition-colors hover:text-foreground text-nowrap",
+                    "text-muted-foreground transition-colors hover:text-foreground text-nowrap flex items-center",
                     isActive && "text-foreground"
                   )
                 }
                 key={linkItem.name}
               >
+                {linkItem.icon}
                 {linkItem.name}
               </NavLink>
             )
