@@ -38,7 +38,7 @@ export default function ProductsPage() {
                   className="justify-start"
                   onClick={() => navigate("#")}
                 >
-                  General
+                  Products
                 </Button>
                 <Button
                   variant="ghost"
@@ -46,7 +46,7 @@ export default function ProductsPage() {
                   className="justify-start"
                   onClick={() => navigate("#")}
                 >
-                  Add / Edit Product
+                  Product Specials
                 </Button>
                 <Button
                   variant="ghost"
@@ -54,7 +54,7 @@ export default function ProductsPage() {
                   className="justify-start"
                   onClick={() => navigate("#")}
                 >
-                  Add Product Specials
+                  Product Categories
                 </Button>
                 <Button
                   variant="ghost"
@@ -88,7 +88,7 @@ export default function ProductsPage() {
                 </Button>
               </nav>
             </div>
-            <div className="p-4 mt-auto">
+            <div className="mt-auto p-4">
               <Card>
                 <CardHeader className="p-2 md:p-4">
                   <CardTitle className="text-xl">Need help?</CardTitle>
@@ -96,7 +96,11 @@ export default function ProductsPage() {
                     Reach out to our support team.
                   </CardDescription>
                   <CardContent className="p-2 pt-0 md:p-0 md:pt-2">
-                    <Button size="sm" className="w-full bg-popover" variant="outline">
+                    <Button
+                      size="sm"
+                      className="w-full bg-popover"
+                      variant="outline"
+                    >
                       Contact us
                     </Button>
                   </CardContent>
@@ -106,8 +110,26 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* Main  */}
-        <div className="p-2">Products information maintenance</div>
+        {/* Page Content  */}
+        <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          <div>
+            <h1 className="text-lg font-semibold md:text-xl">Inventory</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              View product details, or enter 'Edit Mode' to edit product details
+              / add new products.
+            </p>
+          </div>
+
+          <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+            <div className="flex flex-col items-center gap-1 text-center">
+              <h3 className="text-xl font-bold">You have no products.</h3>
+              <p className="text-sm text-muted-foreground">
+                You can start selling as soon as you add a product.
+              </p>
+              <Button className="mt-4">Add Product</Button>
+            </div>
+          </div>
+        </main>
       </div>
     </RootLayout>
   );
