@@ -48,4 +48,4 @@ Also experimenting with a Java GUI app in this folder. Might move to a MAUI app 
 
 ##### /dotnet-server
 
-An C# ASP.NET API developed in parallel with the ExpressJS server in the `/server` directory. I aim both APIs to have the same functionality.
+An C# ASP.NET API developed in parallel with the ExpressJS server in the `/server` directory. I aim for both APIs to have the same functionality.
