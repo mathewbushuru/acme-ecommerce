@@ -4,6 +4,13 @@ import { Pencil } from "lucide-react";
 import RootLayout from "@/layouts/root-layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function ProductsPage() {
   const navigate = useNavigate();
@@ -56,7 +63,10 @@ export default function ProductsPage() {
                   onClick={() => navigate("#")}
                 >
                   Purchase Orders
-                  <Badge variant="secondary" className="ml-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
+                  <Badge
+                    variant="secondary"
+                    className="ml-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                  >
                     3
                   </Badge>
                 </Button>
@@ -77,6 +87,21 @@ export default function ProductsPage() {
                   Groups Setup
                 </Button>
               </nav>
+            </div>
+            <div className="p-4 mt-auto">
+              <Card>
+                <CardHeader className="p-2 md:p-4">
+                  <CardTitle className="text-xl">Need help?</CardTitle>
+                  <CardDescription>
+                    Reach out to our support team.
+                  </CardDescription>
+                  <CardContent className="p-2 pt-0 md:p-0 md:pt-2">
+                    <Button size="sm" className="w-full bg-popover" variant="outline">
+                      Contact us
+                    </Button>
+                  </CardContent>
+                </CardHeader>
+              </Card>
             </div>
           </div>
         </div>
