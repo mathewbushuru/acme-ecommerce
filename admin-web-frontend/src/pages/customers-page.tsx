@@ -45,7 +45,15 @@ export default function CustomersPage() {
                   className="justify-start"
                   onClick={() => navigate("#")}
                 >
-                  Customer CSV Imports
+                  Customer CSV Import
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="justify-start"
+                  onClick={() => navigate("#")}
+                >
+                  Customer Registration
                 </Button>
                 <Button
                   variant="ghost"

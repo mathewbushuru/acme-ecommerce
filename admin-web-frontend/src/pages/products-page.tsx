@@ -113,7 +113,7 @@ export default function ProductsPage() {
         {/* Page Content  */}
         <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div>
-            <h1 className="text-lg font-semibold md:text-xl">Inventory</h1>
+            <h1 className="text-lg font-semibold md:text-xl">Inventory Maintenance</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               View product details, or enter 'Edit Mode' to edit product details
               / add new products.
