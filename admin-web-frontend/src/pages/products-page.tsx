@@ -18,7 +18,7 @@ export default function ProductsPage() {
     <RootLayout>
       <div className="grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
         {/* Sidebar  */}
-        <div className="hidden shadow-lg md:block">
+        <div className="hidden shadow-lg md:block 2xl:shadow-none">
           <div className="flex h-full max-h-screen flex-col gap-2 border-r">
             <div className="flex border-b px-2 py-3 lg:px-4">
               <Button
@@ -113,7 +113,7 @@ export default function ProductsPage() {
         {/* Page Content  */}
         <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div>
-            <h1 className="text-lg font-semibold md:text-xl">Inventory</h1>
+            <h1 className="text-lg font-semibold md:text-xl">Inventory Maintenance</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               View product details, or enter 'Edit Mode' to edit product details
               / add new products.
