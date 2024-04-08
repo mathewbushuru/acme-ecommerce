@@ -26,10 +26,10 @@ export default function AnalyticsPage() {
                 className="w-full justify-start"
               >
                 <BarChart3 className="mr-2 h-4 w-4" />
-                Generate Reports
+                Generate Excel Reports
               </Button>
             </div>
-            <div className="flex-1 py-3">
+            <div className="flex-1">
               <nav className="flex flex-col gap-2 px-2 lg:px-4">
                 <Button
                   variant="default"
