@@ -168,3 +168,32 @@ VALUES (
 
 -- @block;
 SELECT * FROM acme_products;
+
+-- need to set manual trigger for updatedAt to match MySQL's ON UPDATE
+-- @block;
+BEGIN;
+DROP TABLE IF EXISTS acme_employees;
+CREATE TABLE acme_employees (
+    id              BIGSERIAL PRIMARY KEY,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    hashedPassword  VARCHAR(255) NOT NULL,
+    firstName       VARCHAR(255) NOT NULL,
+    lastName        VARCHAR(255) NOT NULL,
+    isadmin         SMALLINT DEFAULT 0,
+    createdAt       TIMESTAMP NOT NULL DEFAULT now(),
+    updatedAt       TIMESTAMP NOT NULL DEFAULT now()
+);
+COMMIT;
+
+-- @block;
+SELECT *  FROM acme_employees;
+
+-- @block;
+INSERT INTO acme_employees( email, hashedPassword, firstName, lastName, isadmin )
+                VALUES (
+                    'mattb@test.com',
+                    '$2b$10$bOtkRma07SLp0lQ4gy.dYeOs0SPxUmB4HB4mqHWizfK1c5cZ6a8IS',
+                    'Matt',
+                    'B',
+                    1
+                );
