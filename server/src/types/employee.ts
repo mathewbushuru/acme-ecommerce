@@ -10,7 +10,7 @@ export interface EmployeeLoginSuccessfulResponseType {
     email: string;
     firstName: string;
     lastName: string;
-    isAdmin: string;
+    isAdmin: boolean;
     createdAt: string;
     updatedAt: string;
 }

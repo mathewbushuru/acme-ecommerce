@@ -1,9 +1,16 @@
 import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
-import { hashPassword } from "../lib/auth";
-import { createEmployeeUser } from "../postgres-database/employee-utils";
-
-import { type EmployeeSignupRequestType } from "../types/employee";
+import { hashPassword, checkUserPassword } from "../lib/auth";
+import {
+  createEmployeeUser,
+  getEmployeeByEmail,
+} from "../postgres-database/employee-utils";
+import {
+  type EmployeeSignupRequestType,
+  type EmployeeLoginRequestType,
+  type EmployeeLoginSuccessfulResponseType,
+} from "../types/employee";
 
 /**
  * @desc:       Sign up employee
@@ -54,7 +61,7 @@ export const postEmployeeSignupController = async (
         return res.status(500).json({ errorMessage });
       }
 
-      console.log("Employee sign up successful");
+      console.log(`[${signupData.email}]: Employee sign up successful`);
       const { hashedPassword, ...employeeDataWithoutPassword } =
         createEmployeeUserResponse;
       return res
@@ -62,4 +69,71 @@ export const postEmployeeSignupController = async (
         .json({ message: "Signup successful", ...employeeDataWithoutPassword });
     })
     .catch((err) => next(err));
+};
+
+/**
+ * @desc:       Log in employee and generate JWT token
+ * @listens:    POST admin/auth/login
+ * @access:     public
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
+ */
+export const postEmployeeLoginController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const loginReqData = req.body as EmployeeLoginRequestType;
+
+  if (!loginReqData.email) {
+    const errorMessage = "Sign in error, employee email is missing";
+    console.error(errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  if (!loginReqData.password) {
+    const errorMessage = "Sign in error, employee password is missing";
+    console.error(errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  const employeeData = await getEmployeeByEmail(loginReqData.email);
+
+  if (employeeData === null) {
+    const errorMessage = "Sign in error, no such employee.";
+    return res.status(401).json({ errorMessage });
+  }
+
+  const { hashedPassword, ...employeeDataWithoutPassword } = employeeData;
+
+  const passwordMatches = await checkUserPassword(
+    loginReqData.password,
+    hashedPassword
+  );
+
+  if (!passwordMatches) {
+    const errorMessage = "Sign error, wrong password";
+    console.error(errorMessage);
+    return res.status(401).json({ errorMessage });
+  }
+
+  console.log(`[${loginReqData.email}]: Employee login successful`);
+
+  const secondsBeforeTokenExpires = 1 * 60 * 60; // 1 hour
+  const jwtToken = jwt.sign(
+    { employeeId: employeeDataWithoutPassword.id },
+    process.env.JWT_SECRET_KEY!,
+    { algorithm: "HS256", expiresIn: secondsBeforeTokenExpires }
+  );
+
+  const successfullLoginResponse: EmployeeLoginSuccessfulResponseType = {
+    ...employeeDataWithoutPassword,
+    isAdmin: employeeDataWithoutPassword.isAdmin === 1,
+    message: "Employee sign in successful",
+    jwtToken,
+  };
+
+  return res.json(successfullLoginResponse);
 };
