@@ -1,9 +1,9 @@
-export interface AdminLoginRequestType {
+export interface EmployeeLoginRequestType {
     email: string;
     password: string;
 }
 
-export interface AdminLoginSuccessfulResponseType {
+export interface EmployeeLoginSuccessfulResponseType {
     message: string;
     jwtToken: string;
     id: number;
@@ -15,9 +15,10 @@ export interface AdminLoginSuccessfulResponseType {
     updatedAt: string;
 }
 
-export interface AdminSignupRequestType {
+export interface EmployeeSignupRequestType {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+    isAdmin: boolean;
 }

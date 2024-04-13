@@ -176,12 +176,12 @@ DROP TABLE IF EXISTS acme_employees;
 CREATE TABLE acme_employees (
     id              BIGSERIAL PRIMARY KEY,
     email           VARCHAR(255) NOT NULL UNIQUE,
-    hashedPassword  VARCHAR(255) NOT NULL,
-    firstName       VARCHAR(255) NOT NULL,
-    lastName        VARCHAR(255) NOT NULL,
+    hashedpassword  VARCHAR(255) NOT NULL,
+    firstname       VARCHAR(255) NOT NULL,
+    lastname        VARCHAR(255) NOT NULL,
     isadmin         SMALLINT DEFAULT 0,
-    createdAt       TIMESTAMP NOT NULL DEFAULT now(),
-    updatedAt       TIMESTAMP NOT NULL DEFAULT now()
+    createdat       TIMESTAMP NOT NULL DEFAULT now(),
+    updatedat       TIMESTAMP NOT NULL DEFAULT now()
 );
 COMMIT;
 
@@ -189,7 +189,7 @@ COMMIT;
 SELECT *  FROM acme_employees;
 
 -- @block;
-INSERT INTO acme_employees( email, hashedPassword, firstName, lastName, isadmin )
+INSERT INTO acme_employees( email, hashedpassword, firstname, lastname, isadmin )
                 VALUES (
                     'mattb@test.com',
                     '$2b$10$bOtkRma07SLp0lQ4gy.dYeOs0SPxUmB4HB4mqHWizfK1c5cZ6a8IS',
