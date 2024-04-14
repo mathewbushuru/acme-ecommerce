@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { store } from "@/store/store";
 import { useGetRootQuery } from "@/api";
 
-import { publicRoutes } from "./routes/public-routes";
+import { publicRoutes } from "@/routes/public-routes";
 
 const publicRouter = createBrowserRouter(publicRoutes);
 

@@ -1,15 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import {  BarChart3 } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 
 import RootLayout from "@/layouts/root-layout";
+
+import ContactSupportCard from "@/components/contact-support-card";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function AnalyticsPage() {
   const navigate = useNavigate();
@@ -62,27 +57,11 @@ export default function AnalyticsPage() {
                   onClick={() => navigate("#")}
                 >
                   Profit and Loss (P & L) Report
-                </Button> 
+                </Button>
               </nav>
             </div>
             <div className="mt-auto p-4">
-              <Card>
-                <CardHeader className="p-2 md:p-4">
-                  <CardTitle className="text-xl">Need help?</CardTitle>
-                  <CardDescription>
-                    Reach out to our support team.
-                  </CardDescription>
-                  <CardContent className="p-2 pt-0 md:p-0 md:pt-2">
-                    <Button
-                      size="sm"
-                      className="w-full bg-popover"
-                      variant="outline"
-                    >
-                      Contact us
-                    </Button>
-                  </CardContent>
-                </CardHeader>
-              </Card>
+              <ContactSupportCard />
             </div>
           </div>
         </div>
@@ -94,18 +73,15 @@ export default function AnalyticsPage() {
               Sales Analytics
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Filter by time period - hourly, daily, weekly, monthly and yearly. Dynamic updates to get a realtime view of your store.
+              Filter by time period - hourly, daily, weekly, monthly and yearly.
+              Dynamic updates to get a realtime view of your store.
             </p>
           </div>
 
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-xl font-bold">
-                You have no sales yet.
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Come back later.
-              </p>
+              <h3 className="text-xl font-bold">You have no sales yet.</h3>
+              <p className="text-sm text-muted-foreground">Come back later.</p>
             </div>
           </div>
         </main>

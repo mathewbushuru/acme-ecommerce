@@ -152,11 +152,9 @@ export default function SignupPage() {
             </div>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:items-center sm:justify-center">
-            {hasSignupError && (
-              <p className="my-1 text-center text-xs text-destructive">
-                {signupErrorMessage}
-              </p>
-            )}
+            <p className="mb-1 text-center text-xs text-destructive h-4">
+              {hasSignupError ? signupErrorMessage : " "}
+            </p>
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
               {isLoading ? "Loading ..." : "Sign up"}
             </AlertDialogAction>

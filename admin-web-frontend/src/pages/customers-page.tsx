@@ -2,14 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 
 import RootLayout from "@/layouts/root-layout";
+
+import ContactSupportCard from "@/components/contact-support-card";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function CustomersPage() {
   const navigate = useNavigate();
@@ -74,23 +69,7 @@ export default function CustomersPage() {
               </nav>
             </div>
             <div className="mt-auto p-4">
-              <Card>
-                <CardHeader className="p-2 md:p-4">
-                  <CardTitle className="text-xl">Need help?</CardTitle>
-                  <CardDescription>
-                    Reach out to our support team.
-                  </CardDescription>
-                  <CardContent className="p-2 pt-0 md:p-0 md:pt-2">
-                    <Button
-                      size="sm"
-                      className="w-full bg-popover"
-                      variant="outline"
-                    >
-                      Contact us
-                    </Button>
-                  </CardContent>
-                </CardHeader>
-              </Card>
+              <ContactSupportCard />
             </div>
           </div>
         </div>
@@ -98,15 +77,20 @@ export default function CustomersPage() {
         {/* Page Content  */}
         <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div>
-            <h1 className="text-lg font-semibold md:text-xl">Customer Loyalty</h1>
+            <h1 className="text-lg font-semibold md:text-xl">
+              Customer Loyalty
+            </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              View Customer Loyalty Program, inquire customer points, purchases and coupons. Enter 'Edit Mode' for data maintenance.
+              View Customer Loyalty Program, inquire customer points, purchases
+              and coupons. Enter 'Edit Mode' for data maintenance.
             </p>
           </div>
 
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-xl font-bold">You have no registered customers.</h3>
+              <h3 className="text-xl font-bold">
+                You have no registered customers.
+              </h3>
               <p className="text-sm text-muted-foreground">
                 Add your first customer.
               </p>
