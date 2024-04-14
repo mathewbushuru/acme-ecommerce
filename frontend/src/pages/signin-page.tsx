@@ -117,11 +117,9 @@ export default function SigninPage() {
             </div>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:items-center sm:justify-center">
-            {hasLoginError && (
-              <p className="my-2 text-center text-xs text-destructive">
-                {loginErrorMessage}
-              </p>
-            )}
+            <p className="mb-1 text-center text-xs text-destructive h-4">
+              {hasLoginError ? loginErrorMessage : " "}
+            </p>
             <AlertDialogAction className="mt-2 px-12" onClick={handleLogin}>
               {isLoading ? "Loading ..." : "Sign in"}
             </AlertDialogAction>

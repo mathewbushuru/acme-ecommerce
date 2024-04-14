@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { type RootState } from "@/store/store";
+import {
+  type AdminLoginRequestType,
+  type AdminLoginSuccessfulResponseType,
+} from "@/types/auth";
 
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
 // const SERVER_URL = "http://localhost:5000";
@@ -25,9 +29,20 @@ const acmeAdminApi = createApi({
     getRoot: builder.query<string, void>({
       query: () => `/`,
     }),
+    adminLogin: builder.mutation<
+      AdminLoginSuccessfulResponseType,
+      AdminLoginRequestType
+    >({
+      query: (credentials) => ({
+        url: "admin/auth/login",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
-export const { useGetRootQuery } = acmeAdminApi;
+export const { useGetRootQuery, useAdminLoginMutation } = acmeAdminApi;
 
 export default acmeAdminApi;

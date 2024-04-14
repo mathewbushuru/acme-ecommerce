@@ -1,4 +1,11 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useAdminLoginMutation } from "@/api";
+import { useAppDispatch } from "@/store/store";
+import { setCredentials } from "@/store/features/auth-slice";
+
+import { type AdminLoginRequestType } from "@/types/auth";
 
 import {
   Card,
@@ -14,8 +21,61 @@ import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loginTrigger, { isLoading }] = useAdminLoginMutation();
+
+  const [hasLoginError, setHasLoginError] = useState(false);
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+
+  const handleLogin = async () => {
+    if (email.length === 0) {
+      setHasLoginError(true);
+      setLoginErrorMessage("Email is required");
+      return;
+    }
+
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      setHasLoginError(true);
+      setLoginErrorMessage("Use valid email address");
+      return;
+    }
+
+    if (password.length === 0) {
+      setHasLoginError(true);
+      setLoginErrorMessage("Password is required");
+      return;
+    }
+
+    setHasLoginError(false);
+
+    const loginData: AdminLoginRequestType = { email, password };
+
+    try {
+      const loginResponse = await loginTrigger(loginData).unwrap();
+
+      const { jwtToken, message, ...user } = loginResponse;
+      console.log(message);
+      console.log(user);
+
+      navigate("/dashboard");
+      dispatch(setCredentials({ user, token: jwtToken }));
+    } catch (error: any) {
+      console.error(error);
+      setLoginErrorMessage(
+        error.data.errorMessage || "Wrong email or password",
+      );
+      setPassword("");
+      setHasLoginError(true);
+    }
+  };
+
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
@@ -31,6 +91,8 @@ export default function LoginForm() {
             placeholder="matt@mathewbushuru.com"
             required
             className="bg-popover"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="grid gap-2">
@@ -40,15 +102,20 @@ export default function LoginForm() {
             type="password"
             required
             className="bg-popover"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <p className="text-xs font-light text-muted-foreground text-center">
+        <p className="h-0.5 text-center text-xs text-destructive">
+          {hasLoginError ? loginErrorMessage : " "}
+        </p>
+        <p className="text-center text-xs font-light text-muted-foreground">
           Use mattb@test.com and 781*admiN as demo credentials
         </p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={() => navigate("/dashboard")}>
-          Sign in
+        <Button className="w-full" onClick={handleLogin}>
+          {isLoading ? "Loading..." : "Sign in"}
         </Button>
       </CardFooter>
     </Card>

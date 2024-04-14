@@ -2,15 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 
 import RootLayout from "@/layouts/root-layout";
+
+import ContactSupportCard from "@/components/contact-support-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function ProductsPage() {
   const navigate = useNavigate();
@@ -89,23 +84,7 @@ export default function ProductsPage() {
               </nav>
             </div>
             <div className="mt-auto p-4">
-              <Card>
-                <CardHeader className="p-2 md:p-4">
-                  <CardTitle className="text-xl">Need help?</CardTitle>
-                  <CardDescription>
-                    Reach out to our support team.
-                  </CardDescription>
-                  <CardContent className="p-2 pt-0 md:p-0 md:pt-2">
-                    <Button
-                      size="sm"
-                      className="w-full bg-popover"
-                      variant="outline"
-                    >
-                      Contact us
-                    </Button>
-                  </CardContent>
-                </CardHeader>
-              </Card>
+              <ContactSupportCard />
             </div>
           </div>
         </div>
