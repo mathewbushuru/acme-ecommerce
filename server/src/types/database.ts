@@ -6,6 +6,17 @@ export interface dbCategoryType {
   updatedAt: string;
 }
 
+export interface dbEmployeeUserType {
+  id: number;
+  email: string;
+  hashedPassword: string;
+  firstName: string;
+  lastName: string;
+  isAdmin: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface dbProductType {
   id: number;
   name: string;

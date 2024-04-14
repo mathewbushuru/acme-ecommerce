@@ -7,6 +7,7 @@ import "dotenv/config";
 // Routes imports
 import authRoutes from "./routes/auth";
 import productRoutes from "./routes/product"
+import adminRoutes from "./routes/admin";
 import testRoutes from "./routes/test";
 
 const app = express();
@@ -23,6 +24,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 app.use("/auth", authRoutes);
 app.use("/product", productRoutes);
+app.use("/admin", adminRoutes);
 app.use("/test", testRoutes);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
