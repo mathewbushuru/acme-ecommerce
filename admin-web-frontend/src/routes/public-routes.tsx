@@ -1,10 +1,10 @@
 import { Home, Package, Users, LineChart } from "lucide-react";
 
-import SigninPage from "@/pages/signin-page";
-import DashboardPage from "@/pages/dashboard-page";
-import ProductsPage from "@/pages/products-page";
-import CustomersPage from "@/pages/customers-page";
-import AnalyticsPage from "@/pages/analytics-page";
+import SigninPage from "@/global-pages/signin-page";
+import DashboardPage from "@/modules/dashboard/pages/dashboard-page";
+import ProductsPage from "@/modules/products/pages/products-page";
+import CustomersPage from "@/modules/customers/pages/customers-page";
+import AnalyticsPage from "@/modules/analytics/pages/analytics-page";
 
 export const publicRoutes = [
   {
