@@ -6,11 +6,15 @@ import ProductsPage from "@/modules/products/pages/products-page";
 import CustomersPage from "@/modules/customers/pages/customers-page";
 import AnalyticsPage from "@/modules/analytics/pages/analytics-page";
 
+import { productRoutes } from "@/modules/products/routes/product-routes";
+import { customerRoutes } from "@/modules/customers/routes/customer-routes";
+import { analyticRoutes } from "@/modules/analytics/routes/analytic-routes";
+
 export const protectedRoutes = [
   {
     path: "/",
     element: <Navigate to="/dashboard" replace={true} />,
-    name: "Dashboard",
+    name: "/",
     isOnNavbar: false,
     icon: null,
   },
@@ -20,6 +24,12 @@ export const protectedRoutes = [
     name: "Dashboard",
     isOnNavbar: true,
     icon: <Home className="mr-2 h-4 w-4" />,
+    children: [
+      {
+        path: "/dashboard/*",
+        element: <Navigate to="/dashboard" replace={true} />,
+      },
+    ],
   },
   {
     path: "/products",
@@ -28,6 +38,7 @@ export const protectedRoutes = [
     isOnNavbar: true,
     icon: <Package className="mr-2 h-4 w-4" />,
   },
+  ...productRoutes,
   {
     path: "/customers",
     element: <CustomersPage />,
@@ -35,6 +46,7 @@ export const protectedRoutes = [
     isOnNavbar: true,
     icon: <Users className="mr-2 h-4 w-4" />,
   },
+  ...customerRoutes,
   {
     path: "/analytics",
     element: <AnalyticsPage />,
@@ -42,4 +54,5 @@ export const protectedRoutes = [
     isOnNavbar: true,
     icon: <LineChart className="mr-2 h-4 w-4" />,
   },
+  ...analyticRoutes,
 ];

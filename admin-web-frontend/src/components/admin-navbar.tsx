@@ -42,7 +42,8 @@ export default function AdminNavbar() {
           </span>
         </NavLink>
         {navigationLinks.map(
-          (linkItem) =>
+          //TODO: resolve linkItem typing
+          (linkItem: any) =>
             linkItem.isOnNavbar && (
               <NavLink
                 to={linkItem.path}
@@ -85,7 +86,8 @@ export default function AdminNavbar() {
               <span>Acme Admin</span>
             </NavLink>
             {navigationLinks.map(
-              (linkItem) =>
+              //TODO: resolve linkItem typing
+              (linkItem: any) =>
                 linkItem.isOnNavbar && (
                   <NavLink
                     to={linkItem.path}
