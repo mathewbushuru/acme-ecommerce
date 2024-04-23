@@ -1,7 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Package2, Menu, Search, CircleUser, ExternalLink } from "lucide-react";
 
-import { publicRoutes as navigationLinks } from "@/routes/public-routes";
+import { protectedRoutes as navigationLinks } from "@/routes/protected-routes";
+
+import { useAppDispatch } from "@/store/store";
+import { clearCredentials } from "@/store/features/auth-slice";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +22,12 @@ import { cn } from "@/lib/utils";
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearCredentials());
+    navigate("/");
+  };
 
   return (
     <header className="sticky top-0 z-[99] flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -126,9 +135,7 @@ export default function AdminNavbar() {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/")}>
-              Logout
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
