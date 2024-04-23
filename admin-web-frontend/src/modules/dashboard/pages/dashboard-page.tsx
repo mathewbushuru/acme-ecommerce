@@ -1,8 +1,8 @@
 import RootLayout from "@/layouts/root-layout";
 
-import DashboardStatsSummary from "@/components/dashboard-stats-summary";
-import DashboardTransactionsCard from "@/components/dashboard-transactions-card";
-import DashboardNewAccounts from "@/components/dashboard-new-accounts";
+import DashboardStatsSummary from "@/modules/dashboard/components/dashboard-stats-summary";
+import DashboardTransactionsCard from "@/modules/dashboard/components/dashboard-transactions-card";
+import DashboardNewAccounts from "@/modules/dashboard/components/dashboard-new-accounts";
 
 export default function DashboardPage() {
   return (
