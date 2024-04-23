@@ -47,7 +47,7 @@ A Node/Express backend + Postgres Database
 > [!NOTE]
 > There is code for both MySQL and PostgreSQL under `/server/src/mysql-database` and `/server/src/postgres-database` respectively. This project was initially using a MySQL database on AWS but I refactored it to use Postgres instead. MySQL is left here for future reference.
 
-##### Progress - /backoffice-desktop-app
+##### Progress - experiments/backoffice-desktop-app
 
 
 A .NET/C# desktop app
@@ -56,6 +56,6 @@ A .NET/C# desktop app
 
 Also experimenting with a Java GUI app in this folder. 
 
-##### Progress - /dotnet-server
+##### Progress - experiments/dotnet-server
 
 An C# ASP.NET API developed in parallel with the ExpressJS server in the `/server` directory. I aim for both APIs to have the same functionality.
