@@ -6,17 +6,21 @@ import ProductPageSidebar from "@/modules/products/components/product-page-sideb
 export const productRoutes = [
   {
     path: "/products/all",
-    isOnNavbar: false,
     element: (
       <SidebarLayout
         sidebarComponent={<ProductPageSidebar />}
         mainComponent={<>All Products</>}
       />
     ),
+    isOnNavbar: false,
+    name: "All products",
+    icon: null
   },
   {
     path: "/products/*",
-    isOnNavbar: false,
     element: <Navigate to="/products" replace={true} />,
+    isOnNavbar: false,
+    name: "Products Catchall",
+    icon: null
   },
 ];
