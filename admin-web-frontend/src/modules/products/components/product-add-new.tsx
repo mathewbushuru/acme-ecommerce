@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
 
-export default function ProductAddNew() {
+import ProductNavigation from "@/modules/products/components/product-navigation";
+import { ProductLinkType } from "@/modules/products/components/product-navigation";
+
+export default function ProductAddNew({
+  currActiveLink = "products-home",
+}: {
+  currActiveLink?: ProductLinkType;
+}) {
   return (
     <div className="flex h-full flex-col gap-4 lg:gap-6">
       <div>
+        <ProductNavigation activeLink={currActiveLink} />
         <h1 className="text-lg font-semibold md:text-xl">
           Inventory Maintenance
         </h1>
@@ -19,7 +27,7 @@ export default function ProductAddNew() {
           <p className="text-sm text-muted-foreground">
             You can start selling as soon as you add a product.
           </p>
-          <Button className="mt-4">Add Product</Button>
+          <Button className="mt-4">Add First Product</Button>
         </div>
       </div>
     </div>

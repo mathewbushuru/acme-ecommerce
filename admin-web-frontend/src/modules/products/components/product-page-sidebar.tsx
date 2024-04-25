@@ -36,20 +36,20 @@ export default function ProductPageSidebar() {
             All Products
           </Button>
           <Button
+            variant={pathname === "/products/categories" ? "default" : "ghost"}
+            size="sm"
+            className="justify-start"
+            onClick={() => navigate("/products/categories")}
+          >
+            Product Categories
+          </Button>
+          <Button
             variant={pathname === "/products/specials" ? "default" : "ghost"}
             size="sm"
             className="justify-start"
             onClick={() => navigate("/products/specials")}
           >
             Product Specials
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="justify-start"
-            onClick={() => navigate("#")}
-          >
-            Product Categories
           </Button>
           <Button
             variant="ghost"

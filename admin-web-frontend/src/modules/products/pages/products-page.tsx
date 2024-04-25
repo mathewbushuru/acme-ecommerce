@@ -5,9 +5,9 @@ import ProductAddNew from "@/modules/products/components/product-add-new";
 
 export default function ProductsPage() {
   return (
-      <SidebarLayout
-        sidebarComponent={<ProductPageSidebar />}
-        mainComponent={<ProductAddNew />}
-      />
+    <SidebarLayout
+      sidebarComponent={<ProductPageSidebar />}
+      mainComponent={<ProductAddNew currActiveLink="products-home" />}
+    />
   );
 }
