@@ -10,10 +10,10 @@ function AppRouter() {
   const { data } = useGetRootQuery();
   data && console.log(data);
 
-  const user = useAppSelector(state => state.adminAuth.user);
+  const user = useAppSelector((state) => state.adminAuth.user);
 
   const appRouter = user ? privateRouter : publicRouter;
-  
+
   return <RouterProvider router={appRouter} />;
 }
 

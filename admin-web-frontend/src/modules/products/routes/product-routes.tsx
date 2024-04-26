@@ -1,7 +1,9 @@
 import { Navigate } from "react-router-dom";
 
 import SidebarLayout from "@/layouts/sidebar-layout";
+
 import ProductPageSidebar from "@/modules/products/components/product-page-sidebar";
+import ProductListAll from "@/modules/products/components/product-list-all";
 
 export const productRoutes = [
   {
@@ -9,7 +11,7 @@ export const productRoutes = [
     element: (
       <SidebarLayout
         sidebarComponent={<ProductPageSidebar />}
-        mainComponent={<>All Products</>}
+        mainComponent={<ProductListAll />}
       />
     ),
     isOnNavbar: false,
