@@ -1,7 +1,24 @@
+import { ListFilter, File, Search, PlusCircle } from "lucide-react";
+
 import { useGetAllProductsQuery } from "@/api";
 
 import ProductNavigation from "@/modules/products/components/product-navigation";
 import ProductAddNew from "@/modules/products/components/product-add-new";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from "@/components/ui/dropdown-menu";
 
 export default function ProductListAll() {
   const { data } = useGetAllProductsQuery();
@@ -32,7 +49,125 @@ export default function ProductListAll() {
         </p>
       </div>
 
-      <div className="flex flex-1 rounded-lg border border-dashed p-4 shadow-sm">
+      <main className="flex flex-1 flex-col gap-3 rounded-lg border border-dashed p-4 shadow-sm">
+        <Tabs defaultValue="all">
+          <div className="flex items-center">
+            <TabsList className="hidden sm:inline-flex h-9">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="draft">Draft</TabsTrigger>
+              <TabsTrigger
+                value="discontinued"
+                className="hidden lg:inline-block"
+              >
+                Discontinued
+              </TabsTrigger>
+            </TabsList>
+            <div className="flex w-full items-center justify-end gap-2">
+              <form className="flex-1 sm:flex-initial">
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="By Sku# or '%' + 'product_name'..."
+                    className="pl-8 h-9 sm:w-[300px] md:w-[240px] lg:w-[300px]"
+                  />
+                </div>
+              </form>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="ml-auto sm:ml-0"
+                  >
+                    <ListFilter className="mr-1 h-3.5 w-3.5" />
+                    <span className="hidden sm:inline">Filter</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>Department</DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuCheckboxItem checked>
+                        All
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Meat & Seafood
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Fruit & Vegetables
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Dairy & Eggs
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Frozen
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Bakery
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Deli & Ready Made Meals
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Plant Based & Non Dairy
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Pantry
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Health & Beauty
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Baby Care
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Pet Care
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Cleaning, Paper & Home
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      Creation Time
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuCheckboxItem checked>
+                        All
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Last 24 hours
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Last 7 days
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Last 4 weeks
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Last 3 months
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button variant="outline" size="sm">
+                <File className="mr-1 h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Export</span>
+              </Button>
+              <Button variant="secondary" size="sm">
+                <PlusCircle className="mr-1 h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Add Product</span>
+              </Button>
+            </div>
+          </div>
+        </Tabs>
+
         <div className="flex flex-col gap-5 sm:gap-2">
           {allProductsArr.map((product) => (
             <div className="flex items-center" key={product.id}>
@@ -49,7 +184,7 @@ export default function ProductListAll() {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
