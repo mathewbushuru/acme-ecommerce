@@ -20,7 +20,7 @@ export const productRoutes = [
   },
   {
     path: "/products/*",
-    element: <Navigate to="/products" replace={true} />,
+    element: <Navigate to="/products/all" replace={true} />,
     isOnNavbar: false,
     name: "Products Catchall",
     icon: null
