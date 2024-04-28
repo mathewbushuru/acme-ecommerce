@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 import { useAdminLoginMutation } from "@/api";
 import { useAppDispatch } from "@/store/store";
@@ -115,7 +116,14 @@ export default function LoginForm() {
       </CardContent>
       <CardFooter>
         <Button className="w-full" onClick={handleLogin}>
-          {isLoading ? "Loading..." : "Sign in"}
+          {isLoading ? (
+            <>
+              <Loader className="animate-spin h-4 w-4 mr-2" />
+              Loading
+            </>
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </CardFooter>
     </Card>

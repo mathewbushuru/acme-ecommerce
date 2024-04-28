@@ -7,7 +7,7 @@ import ProductAddNew from "@/modules/products/components/product-add-new";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -49,20 +49,21 @@ export default function ProductListAll() {
         </p>
       </div>
 
-      <main className="flex flex-1 flex-col gap-3 rounded-lg border border-dashed p-4 shadow-sm">
-        <Tabs defaultValue="all">
+      <main className="flex-1 rounded-lg border border-dashed  p-4 shadow-sm">
+        <Tabs defaultValue="active">
           <div className="flex items-center">
-            <TabsList className="hidden sm:inline-flex h-9">
+            <TabsList className="hidden h-9 sm:inline-flex">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="active">Active</TabsTrigger>
               <TabsTrigger value="draft">Draft</TabsTrigger>
               <TabsTrigger
                 value="discontinued"
-                className="hidden lg:inline-block"
+                className="hidden sm:inline-block"
               >
                 Discontinued
               </TabsTrigger>
             </TabsList>
+            {/* Products right header searchbar and buttons */}
             <div className="flex w-full items-center justify-end gap-2">
               <form className="flex-1 sm:flex-initial">
                 <div className="relative">
@@ -70,7 +71,7 @@ export default function ProductListAll() {
                   <Input
                     type="search"
                     placeholder="By Sku# or '%' + 'product_name'..."
-                    className="pl-8 h-9 sm:w-[300px] md:w-[240px] lg:w-[300px]"
+                    className="h-9 pl-8 sm:w-[300px] md:w-[240px] lg:w-[300px]"
                   />
                 </div>
               </form>
@@ -82,7 +83,7 @@ export default function ProductListAll() {
                     className="ml-auto sm:ml-0"
                   >
                     <ListFilter className="mr-1 h-3.5 w-3.5" />
-                    <span className="hidden sm:inline">Filter</span>
+                    <span className="hidden lg:inline">Filter</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -154,36 +155,102 @@ export default function ProductListAll() {
                       </DropdownMenuCheckboxItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuSub>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="sm:hidden">
+                      Product Status
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuCheckboxItem disabled>
+                        All
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem checked>
+                        Active
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem disabled>
+                        Draft
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem disabled>
+                        Discontinued
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
                 </DropdownMenuContent>
               </DropdownMenu>
               <Button variant="outline" size="sm">
                 <File className="mr-1 h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Export</span>
+                <span className="hidden lg:inline">Export</span>
               </Button>
               <Button variant="secondary" size="sm">
                 <PlusCircle className="mr-1 h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Add Product</span>
+                <span className="hidden lg:inline">Add Product</span>
               </Button>
             </div>
           </div>
-        </Tabs>
 
-        <div className="flex flex-col gap-5 sm:gap-2">
-          {allProductsArr.map((product) => (
-            <div className="flex items-center" key={product.id}>
-              <img
-                className="mr-4 h-12 w-16 rounded-md object-cover"
-                src={product.imageUrl}
-              />
-              <div className="flex flex-col sm:flex-row">
-                <span className="mr-2 text-sm">{product.name}</span>
-                <span className="text-sm text-muted-foreground">
-                  Sku# {product.id}, ${product.regularPrice / 100}
-                </span>
+          {/* Products main content  */}
+          <div className="mt-6">
+            <TabsContent value="all">
+              <div className="flex flex-col gap-5 sm:gap-2">
+                {allProductsArr.map((product) => (
+                  <div className="flex items-center" key={product.id}>
+                    <img
+                      className="mr-4 h-12 w-16 rounded-md object-cover"
+                      src={product.imageUrl}
+                    />
+                    <div className="flex flex-col sm:flex-row">
+                      <span className="mr-2 text-sm">{product.name}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Sku# {product.id}, ${product.regularPrice / 100}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+            </TabsContent>
+            <TabsContent value="active">
+              <div className="mt-4 flex flex-col gap-5 sm:gap-2">
+                {allProductsArr.map((product) => (
+                  <div className="flex items-center" key={product.id}>
+                    <img
+                      className="mr-4 h-12 w-16 rounded-md object-cover"
+                      src={product.imageUrl}
+                    />
+                    <div className="flex flex-col sm:flex-row">
+                      <span className="mr-2 text-sm">{product.name}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Sku# {product.id}, ${product.regularPrice / 100}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="draft">
+              <div className="mt-32 flex flex-col items-center gap-2 text-center">
+                <h3 className="text-xl font-bold">
+                  You have no products in the creation phase.
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Use this section for products you are creating but have don't
+                  have complete details
+                </p>
+                <Button className="mt-4">Add Product</Button>
+              </div>
+            </TabsContent>
+            <TabsContent value="discontinued">
+              <div className="mt-32 flex flex-col items-center gap-3 text-center">
+                <h3 className="text-xl font-bold">
+                  You have no archived / discontinued products.
+                </h3>
+                <p className="max-w-screen-sm text-sm text-muted-foreground">
+                  Products marked as discontinued show up here. Use this for
+                  products you no longer wish to sell, but still need for
+                  historical reporting purposes.
+                </p>
+              </div>
+            </TabsContent>
+          </div>
+        </Tabs>
       </main>
     </div>
   );
