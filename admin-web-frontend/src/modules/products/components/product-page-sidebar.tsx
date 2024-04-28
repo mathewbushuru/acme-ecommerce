@@ -20,14 +20,6 @@ export default function ProductPageSidebar() {
       <div className="flex-1">
         <nav className="flex flex-col gap-2 px-2 lg:px-4">
           <Button
-            variant={pathname === "/products" ? "default" : "ghost"}
-            size="sm"
-            className="justify-start"
-            onClick={() => navigate("/products")}
-          >
-            Products
-          </Button>
-          <Button
             variant={pathname === "/products/all" ? "default" : "ghost"}
             size="sm"
             className="justify-start"

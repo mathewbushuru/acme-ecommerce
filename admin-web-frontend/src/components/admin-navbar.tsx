@@ -1,5 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Package2, Menu,  CircleUser, ExternalLink, SplitSquareHorizontal as Command } from "lucide-react";
+import {
+  Package2,
+  Menu,
+  CircleUser,
+  ExternalLink,
+  SplitSquareHorizontal as Command,
+} from "lucide-react";
 
 import { protectedRoutes as navigationLinks } from "@/routes/protected-routes";
 
@@ -112,7 +118,10 @@ export default function AdminNavbar() {
         </SheetContent>
       </Sheet>
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <form className="ml-auto flex-1 sm:flex-initial">
+        <form
+          className="ml-auto flex-1 sm:flex-initial"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <div className="relative">
             <Command className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
             <Input

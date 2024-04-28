@@ -32,7 +32,13 @@ export default function LoginForm() {
   const [hasLoginError, setHasLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+
     if (email.length === 0) {
       setHasLoginError(true);
       setLoginErrorMessage("Email is required");
@@ -76,56 +82,58 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="mx-auto w-full max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="matt@mathewbushuru.com"
-            required
-            className="bg-popover"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            required
-            className="bg-popover"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <p className="h-0.5 text-center text-xs text-destructive">
-          {hasLoginError ? loginErrorMessage : " "}
-        </p>
-        <p className="text-center text-xs font-light text-muted-foreground">
-          Use mattb@test.com and 781*admiN as demo credentials
-        </p>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full" onClick={handleLogin}>
-          {isLoading ? (
-            <>
-              <Loader className="animate-spin h-4 w-4 mr-2" />
-              Loading
-            </>
-          ) : (
-            "Sign in"
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
+    <form onSubmit={handleLogin}>
+      <Card className="mx-auto w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="matt@mathewbushuru.com"
+              required
+              className="bg-popover"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              required
+              className="bg-popover"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <p className="h-0.5 text-center text-xs text-destructive">
+            {hasLoginError ? loginErrorMessage : " "}
+          </p>
+          <p className="text-center text-xs font-light text-muted-foreground">
+            Use mattb@test.com and 781*admiN as demo credentials
+          </p>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full" onClick={handleLogin}>
+            {isLoading ? (
+              <>
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+                Loading
+              </>
+            ) : (
+              "Sign in"
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
