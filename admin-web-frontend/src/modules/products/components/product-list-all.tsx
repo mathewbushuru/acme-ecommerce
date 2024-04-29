@@ -18,6 +18,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function ProductListAll() {
   const { data } = useGetAllProductsQuery();
@@ -226,20 +234,60 @@ export default function ProductListAll() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-5 sm:gap-2">
-                  {allProductsArr.map((product) => (
-                    <div className="flex items-center" key={product.id}>
-                      <img
-                        className="mr-4 h-12 w-16 rounded-md object-cover"
-                        src={product.imageUrl}
-                      />
-                      <div className="flex flex-col sm:flex-row">
-                        <span className="mr-2 text-sm">{product.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          Sku# {product.id}, ${product.regularPrice / 100}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Active Products</CardTitle>
+                      <CardDescription>
+                        Manage your active products, edit their details and view
+                        their sales performance.
+                      </CardDescription>
+                      <CardContent>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="hidden w-24 sm:table-cell">
+                                  <span className="sr-only">Image</span>
+                              </TableHead>
+                              <TableHead>Name</TableHead>
+                              <TableHead>Status</TableHead>
+                              <TableHead className="hidden md:table-cell">
+                                Price
+                              </TableHead>
+                              <TableHead className="hidden md:table-cell">
+                                Created At
+                              </TableHead>
+                              <TableHead className="hidden md:table-cell">
+                                Total Sales
+                              </TableHead>
+                              <TableHead>
+                                <span className="sr-only">Actions</span>
+                              </TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            
+                          </TableBody>
+                        </Table>
+
+                        {allProductsArr.map((product) => (
+                          <div className="flex items-center" key={product.id}>
+                            <img
+                              className="mr-4 h-12 w-16 rounded-md object-cover"
+                              src={product.imageUrl}
+                            />
+                            <div className="flex flex-col sm:flex-row">
+                              <span className="mr-2 text-sm">
+                                {product.name}
+                              </span>
+                              <span className="text-sm text-muted-foreground">
+                                Sku# {product.id}, ${product.regularPrice / 100}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </CardHeader>
+                  </Card>
                 </div>
               )}
             </TabsContent>
@@ -250,7 +298,7 @@ export default function ProductListAll() {
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Use this section for products you are creating but have don't
-                  have complete details
+                  have all the details yet.
                 </p>
                 <Button className="mt-4">Add Product</Button>
               </div>
