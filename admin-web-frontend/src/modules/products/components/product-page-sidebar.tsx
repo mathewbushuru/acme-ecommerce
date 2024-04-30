@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Pencil } from "lucide-react";
+import { Database } from "lucide-react";
 
 import ContactSupportCard from "@/components/contact-support-card";
 import { Button } from "@/components/ui/button";
@@ -13,27 +13,27 @@ export default function ProductPageSidebar() {
     <div className="flex h-full max-h-screen flex-col gap-2 border-r">
       <div className="flex border-b px-2 py-3 lg:px-4">
         <Button variant="secondary" size="sm" className="w-full justify-start">
-          <Pencil className="mr-2 h-4 w-4" />
-          Enter Edit Mode
+          <Database className="mr-2 h-4 w-4" />
+          Reset database
         </Button>
       </div>
       <div className="flex-1">
         <nav className="flex flex-col gap-2 px-2 lg:px-4">
           <Button
-            variant={pathname === "/products/all" ? "default" : "ghost"}
+            variant={pathname === "/products/home" ? "default" : "ghost"}
             size="sm"
             className="justify-start"
-            onClick={() => navigate("/products/all")}
+            onClick={() => navigate("/products/home")}
           >
-            All Products
+            Products Home
           </Button>
           <Button
-            variant={pathname === "/products/categories" ? "default" : "ghost"}
+            variant={pathname === "/products/maintenance" ? "default" : "ghost"}
             size="sm"
             className="justify-start"
-            onClick={() => navigate("/products/categories")}
+            onClick={() => navigate("/products/maintenance")}
           >
-            Product Categories
+            Product Maintenance
           </Button>
           <Button
             variant={pathname === "/products/specials" ? "default" : "ghost"}
