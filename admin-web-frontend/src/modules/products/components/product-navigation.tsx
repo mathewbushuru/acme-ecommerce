@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 export type ProductLinkType =
-  | "products-home"
   | "products-all"
   | "products-categories"
   | "products-specials"
@@ -15,12 +14,6 @@ export default function ProductNavigation({
   const navigate = useNavigate();
   return (
     <div className="mb-2 flex flex-wrap gap-2 text-xs md:hidden">
-      <span
-        className={`cursor-pointer ${activeLink === "products-home" && "text-primary"}`}
-        onClick={() => navigate("/products")}
-      >
-        Home - Product |
-      </span>
       <span
         className={`cursor-pointer ${activeLink === "products-all" && "text-primary"}`}
         onClick={() => navigate("/products/all")}

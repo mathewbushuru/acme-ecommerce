@@ -8,20 +8,6 @@ To achieve this, I am building several e-commerce applications in this repo, and
 
 The name *Acme* is from the *Wile E. Coyote* animations and is used a generic company name in many  cartoons. In the past, it was commonly used in the names of real businesses in order to be listed towards the beginning of alphabetized telephone directories like the *Yellow Pages*. I think this makes it a perfect stand-in for an e-commerce company. The apps I'm building in this repo are e-commerce grocery applications since that's what I have the most experience with at the moment but I hope to generalize them in the future of any online business.
 
-##### Progress - /frontend
-
-Live URL: [`acme.mathewbushuru.com`](https://acme.mathewbushuru.com/)
-
-Demo credentials: `mattb@test.com` , `Tester123!`
-
-Home page
-
-![home](./.github/docs/frontend.jpg)
-
-Auth
-
-![sign](./.github/docs/frontend-signin.jpg)
-
 ##### Progress - /admin-web-frontend
 
 Live URL: [`acme-admin.mathewbushuru.com`](https://acme-admin.mathewbushuru.com/)
@@ -39,6 +25,20 @@ Products page
 Auth
 
 ![sign](./.github/docs/admin-frontend-signin.jpg)
+
+##### Progress - /frontend
+
+Live URL: [`acme.mathewbushuru.com`](https://acme.mathewbushuru.com/)
+
+Demo credentials: `mattb@test.com` , `Tester123!`
+
+Home page
+
+![home](./.github/docs/frontend.jpg)
+
+Auth
+
+![sign](./.github/docs/frontend-signin.jpg)
 
 ##### Progress - /server
 

@@ -1,4 +1,10 @@
-import { ListFilter, File, Search, PlusCircle } from "lucide-react";
+import {
+  ListFilter,
+  File,
+  Search,
+  PlusCircle,
+  MoreHorizontal,
+} from "lucide-react";
 
 import { useGetAllProductsQuery } from "@/api";
 
@@ -17,7 +23,25 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProductListAll() {
   const { data } = useGetAllProductsQuery();
@@ -38,13 +62,13 @@ export default function ProductListAll() {
     <div className="flex h-full flex-col gap-4 lg:gap-6">
       <div>
         <ProductNavigation activeLink="products-all" />
-        <h1 className="text-lg font-semibold md:text-xl">All Products</h1>
+        <h1 className="text-lg font-semibold md:text-xl">Products Home</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          View all your listed products.
+          Search and view all your listed products.
         </p>
       </div>
 
-      <main className="flex-1 rounded-lg border border-dashed  p-4 shadow-sm">
+      <main className="max-h-[690px] flex-1 overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm sm:max-h-[590px]">
         <Tabs defaultValue="active">
           <div className="flex items-center">
             <TabsList className="hidden h-9 sm:inline-flex">
@@ -198,20 +222,112 @@ export default function ProductListAll() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-5 sm:gap-2">
-                  {allProductsArr.map((product) => (
-                    <div className="flex items-center" key={product.id}>
-                      <img
-                        className="mr-4 h-12 w-16 rounded-md object-cover"
-                        src={product.imageUrl}
-                      />
-                      <div className="flex flex-col sm:flex-row">
-                        <span className="mr-2 text-sm">{product.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          Sku# {product.id}, ${product.regularPrice / 100}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>All Products</CardTitle>
+                      <CardDescription>
+                        Manage your active products, edit their details and view
+                        their sales performance.
+                      </CardDescription>
+                      <CardContent className="max-h-[454px] overflow-y-auto pt-1 sm:max-h-[375px]">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="hidden w-24 sm:table-cell">
+                                <span className="sr-only">Image</span>
+                              </TableHead>
+                              <TableHead>Name</TableHead>
+                              <TableHead className="hidden sm:table-cell">
+                                Status
+                              </TableHead>
+                              <TableHead className="hidden md:table-cell">
+                                Sku#
+                              </TableHead>
+                              <TableHead>Price</TableHead>
+                              <TableHead className="hidden lg:table-cell">
+                                Total Sales
+                              </TableHead>
+                              <TableHead className="hidden lg:table-cell">
+                                Created At
+                              </TableHead>
+                              <TableHead>
+                                <span className="sr-only">Actions</span>
+                              </TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {allProductsArr.map((product) => (
+                              <TableRow key={product.id}>
+                                <TableCell className="hidden sm:table-cell">
+                                  <img
+                                    className="aspect-square rounded-md object-cover"
+                                    src={product.imageUrl}
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {product.name}
+                                </TableCell>
+                                <TableCell className="hidden sm:table-cell">
+                                  <Badge variant="outline">
+                                    {
+                                      ["Active", "Draft", "Disc"].sort(
+                                        () => Math.random() - Math.random(),
+                                      )[0]
+                                    }
+                                  </Badge>
+                                </TableCell>
+                                <TableCell className="hidden font-medium md:table-cell">
+                                  {product.id}
+                                </TableCell>
+                                <TableCell>
+                                  ${product.regularPrice / 100}
+                                </TableCell>
+                                <TableCell className="hidden lg:table-cell">
+                                  {Math.floor(
+                                    Math.random() * 5000,
+                                  ).toLocaleString()}
+                                </TableCell>
+                                <TableCell className="hidden lg:table-cell">
+                                  {new Date(product.createdAt).toLocaleString()}
+                                </TableCell>
+                                <TableCell>
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button size="icon" variant="ghost">
+                                        <MoreHorizontal className="h-4 w-4">
+                                          <span className="sr-only">
+                                            Toggle menu
+                                          </span>
+                                        </MoreHorizontal>
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                      <DropdownMenuLabel>
+                                        Actions
+                                      </DropdownMenuLabel>
+                                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        Add specials
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        View analytics
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </CardContent>
+                      <CardFooter className="pb-0">
+                        <div className="text-xs text-muted-foreground">
+                          Showing <strong>1-{allProductsArr.length}</strong> of{" "}
+                          <strong>{allProductsArr.length}</strong> products.
+                        </div>
+                      </CardFooter>
+                    </CardHeader>
+                  </Card>
                 </div>
               )}
             </TabsContent>
@@ -226,20 +342,112 @@ export default function ProductListAll() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-5 sm:gap-2">
-                  {allProductsArr.map((product) => (
-                    <div className="flex items-center" key={product.id}>
-                      <img
-                        className="mr-4 h-12 w-16 rounded-md object-cover"
-                        src={product.imageUrl}
-                      />
-                      <div className="flex flex-col sm:flex-row">
-                        <span className="mr-2 text-sm">{product.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          Sku# {product.id}, ${product.regularPrice / 100}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Active Products</CardTitle>
+                      <CardDescription>
+                        Manage your active products, edit their details and view
+                        their sales performance.
+                      </CardDescription>
+                      <CardContent className="max-h-[454px] overflow-y-auto pt-1 sm:max-h-[375px]">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="hidden w-24 sm:table-cell">
+                                <span className="sr-only">Image</span>
+                              </TableHead>
+                              <TableHead>Name</TableHead>
+                              <TableHead className="hidden sm:table-cell">
+                                Status
+                              </TableHead>
+                              <TableHead className="hidden md:table-cell">
+                                Sku#
+                              </TableHead>
+                              <TableHead>Price</TableHead>
+                              <TableHead className="hidden lg:table-cell">
+                                Total Sales
+                              </TableHead>
+                              <TableHead className="hidden lg:table-cell">
+                                Created At
+                              </TableHead>
+                              <TableHead>
+                                <span className="sr-only">Actions</span>
+                              </TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {allProductsArr.map((product) => (
+                              <TableRow key={product.id}>
+                                <TableCell className="hidden sm:table-cell">
+                                  <img
+                                    className="aspect-square rounded-md object-cover"
+                                    src={product.imageUrl}
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {product.name}
+                                </TableCell>
+                                <TableCell className="hidden sm:table-cell">
+                                  <Badge variant="outline">
+                                    {
+                                      ["Active", "Draft", "Disc"].sort(
+                                        () => Math.random() - Math.random(),
+                                      )[0]
+                                    }
+                                  </Badge>
+                                </TableCell>
+                                <TableCell className="hidden font-medium md:table-cell">
+                                  {product.id}
+                                </TableCell>
+                                <TableCell>
+                                  ${product.regularPrice / 100}
+                                </TableCell>
+                                <TableCell className="hidden lg:table-cell">
+                                  {Math.floor(
+                                    Math.random() * 5000,
+                                  ).toLocaleString()}
+                                </TableCell>
+                                <TableCell className="hidden lg:table-cell">
+                                  {new Date(product.createdAt).toLocaleString()}
+                                </TableCell>
+                                <TableCell>
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button size="icon" variant="ghost">
+                                        <MoreHorizontal className="h-4 w-4">
+                                          <span className="sr-only">
+                                            Toggle menu
+                                          </span>
+                                        </MoreHorizontal>
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                      <DropdownMenuLabel>
+                                        Actions
+                                      </DropdownMenuLabel>
+                                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        Add specials
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        View analytics
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </CardContent>
+                      <CardFooter className="pb-0">
+                        <div className="text-xs text-muted-foreground">
+                          Showing <strong>1-{allProductsArr.length}</strong> of{" "}
+                          <strong>{allProductsArr.length}</strong> products.
+                        </div>
+                      </CardFooter>
+                    </CardHeader>
+                  </Card>
                 </div>
               )}
             </TabsContent>
@@ -250,7 +458,7 @@ export default function ProductListAll() {
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Use this section for products you are creating but have don't
-                  have complete details
+                  have all the details yet.
                 </p>
                 <Button className="mt-4">Add Product</Button>
               </div>

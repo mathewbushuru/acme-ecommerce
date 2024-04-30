@@ -7,7 +7,7 @@ import ProductListAll from "@/modules/products/components/product-list-all";
 
 export const productRoutes = [
   {
-    path: "/products/all",
+    path: "/products/home",
     element: (
       <SidebarLayout
         sidebarComponent={<ProductPageSidebar />}
@@ -20,7 +20,7 @@ export const productRoutes = [
   },
   {
     path: "/products/*",
-    element: <Navigate to="/products" replace={true} />,
+    element: <Navigate to="/products/home" replace={true} />,
     isOnNavbar: false,
     name: "Products Catchall",
     icon: null
