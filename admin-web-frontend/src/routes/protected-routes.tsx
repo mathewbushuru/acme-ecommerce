@@ -24,12 +24,6 @@ export const protectedRoutes = [
     name: "Dashboard",
     isOnNavbar: true,
     icon: <Home className="mr-2 h-4 w-4" />,
-    children: [
-      {
-        path: "/dashboard/*",
-        element: <Navigate to="/dashboard" replace={true} />,
-      },
-    ],
   },
   {
     path: "/products",
