@@ -45,7 +45,7 @@ import {
 
 import { type ProductSuccessfulResponseType } from "@/types/product";
 
-export default function ProductListAll() {
+export default function ProductsHome() {
   const { data } = useGetAllProductsQuery();
 
   if (!data) {
