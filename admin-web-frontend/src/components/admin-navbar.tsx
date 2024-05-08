@@ -12,6 +12,7 @@ import { protectedRoutes as navigationLinks } from "@/routes/protected-routes";
 import { useAppDispatch } from "@/store/store";
 import { clearCredentials } from "@/store/features/auth-slice";
 
+import ThemeToggle from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
@@ -131,6 +132,7 @@ export default function AdminNavbar() {
             />
           </div>
         </form>
+        <ThemeToggle />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
