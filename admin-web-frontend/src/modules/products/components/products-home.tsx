@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   ListFilter,
   File,
@@ -7,8 +8,6 @@ import {
 } from "lucide-react";
 
 import { useGetAllProductsQuery } from "@/api";
-
-import ProductNavigation from "@/modules/products/components/product-navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -45,14 +44,14 @@ import {
 
 import { type ProductSuccessfulResponseType } from "@/types/product";
 
-export default function ProductListAll() {
+export default function ProductsHome() {
+  const navigate = useNavigate();
   const { data } = useGetAllProductsQuery();
 
   if (!data) {
     return (
       <ProductsHomeSubLayout>
         <div>
-          <ProductNavigation activeLink="products-home" />
           <p>Loading...</p>
         </div>
       </ProductsHomeSubLayout>
@@ -86,7 +85,11 @@ export default function ProductListAll() {
               <File className="mr-1 h-3.5 w-3.5" />
               <span className="hidden lg:inline">Export</span>
             </Button>
-            <Button variant="secondary" size="sm">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => navigate("/products/maintenance")}
+            >
               <PlusCircle className="mr-1 h-3.5 w-3.5" />
               <span className="hidden lg:inline">Add Product</span>
             </Button>
@@ -109,11 +112,11 @@ export default function ProductListAll() {
                 <Card>
                   <CardHeader>
                     <CardTitle>All Products</CardTitle>
-                    <CardDescription>
+                    <CardDescription className="hidden sm:inline-block">
                       Manage your active products, edit their details and view
                       their sales performance.
                     </CardDescription>
-                    <CardContent className="max-h-[454px] overflow-y-auto pt-1 sm:max-h-[370px]">
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
                       <ProductsTable productsArr={allProductsArr} />
                     </CardContent>
                     <CardFooter className="pb-0">
@@ -141,11 +144,11 @@ export default function ProductListAll() {
                 <Card>
                   <CardHeader>
                     <CardTitle>Active Products</CardTitle>
-                    <CardDescription>
+                    <CardDescription className="hidden sm:inline-block">
                       Manage your active products, edit their details and view
                       their sales performance.
                     </CardDescription>
-                    <CardContent className="max-h-[454px] overflow-y-auto pt-1 sm:max-h-[370px]">
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
                       <ProductsTable productsArr={allProductsArr} />
                     </CardContent>
                     <CardFooter className="pb-0">
@@ -191,16 +194,15 @@ export default function ProductListAll() {
 
 function ProductsHomeSubLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-full flex-col gap-4 lg:gap-6">
-      <div>
-        <ProductNavigation activeLink="products-home" />
+    <div className="h-full">
+      <div className="h-[75px]">
         <h1 className="text-lg font-semibold md:text-xl">Products Home</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Search and view all your listed products.
         </p>
       </div>
 
-      <main className="max-h-[690px] flex-1 overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm sm:max-h-[580px]">
+      <main className="h-[calc(100%-75px)] overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm">
         {children}
       </main>
     </div>
@@ -303,7 +305,7 @@ function ProductsTable({
           <TableHead className="hidden w-24 sm:table-cell">
             <span className="sr-only">Image</span>
           </TableHead>
-          <TableHead>Name</TableHead>
+          <TableHead className="px-1 sm:px-4">Name</TableHead>
           <TableHead className="hidden sm:table-cell">Status</TableHead>
           <TableHead className="hidden md:table-cell">Sku#</TableHead>
           <TableHead>Price</TableHead>
@@ -323,7 +325,9 @@ function ProductsTable({
                 src={product.imageUrl}
               />
             </TableCell>
-            <TableCell className="font-medium">{product.name}</TableCell>
+            <TableCell className="px-1 font-medium sm:px-4">
+              {product.name}
+            </TableCell>
             <TableCell className="hidden sm:table-cell">
               <Badge variant="outline">
                 {

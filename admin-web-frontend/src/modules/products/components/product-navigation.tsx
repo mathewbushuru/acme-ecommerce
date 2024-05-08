@@ -22,7 +22,7 @@ export default function ProductNavigation({
       </span>
       <span
         className={`cursor-pointer ${activeLink === "product-maintenance" && "text-primary"}`}
-        onClick={() => navigate("#")}
+        onClick={() => navigate("/products/maintenance")}
       >
         Product Maintenance |
       </span>

@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 import SidebarLayout from "@/layouts/sidebar-layout";
 
 import ProductPageSidebar from "@/modules/products/components/product-page-sidebar";
-import ProductListAll from "@/modules/products/components/product-list-all";
+import ProductsHome from "@/modules/products/components/products-home";
+import ProductMaintenance from "@/modules/products/components/product-maintenance";
 
 export const productRoutes = [
   {
@@ -11,11 +12,23 @@ export const productRoutes = [
     element: (
       <SidebarLayout
         sidebarComponent={<ProductPageSidebar />}
-        mainComponent={<ProductListAll />}
+        mainComponent={<ProductsHome />}
       />
     ),
     isOnNavbar: false,
-    name: "All products",
+    name: "Products home",
+    icon: null
+  },
+  {
+    path: "/products/maintenance",
+    element: (
+      <SidebarLayout
+        sidebarComponent={<ProductPageSidebar />}
+        mainComponent={<ProductMaintenance />}
+      />
+    ),
+    isOnNavbar: false,
+    name: "Product maintenance",
     icon: null
   },
   {
