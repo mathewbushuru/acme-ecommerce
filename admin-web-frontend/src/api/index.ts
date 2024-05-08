@@ -2,7 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { type RootState } from "@/store/store";
 
-import { type ProductSuccessfulResponseType } from "@/types/product";
+import {
+  type ProductSuccessfulResponseType,
+  type ProductCategoryType,
+} from "@/types/product";
 import {
   type AdminLoginRequestType,
   type AdminLoginSuccessfulResponseType,
@@ -48,6 +51,12 @@ const acmeAdminApi = createApi({
     >({
       query: () => `/product/all`,
     }),
+    getAllCategories: builder.query<
+      { allCategories: ProductCategoryType[] },
+      void
+    >({
+      query: () => `/product/categories`,
+    }),
   }),
 });
 
@@ -55,6 +64,7 @@ export const {
   useGetRootQuery,
   useAdminLoginMutation,
   useGetAllProductsQuery,
+  useGetAllCategoriesQuery,
 } = acmeAdminApi;
 
 export default acmeAdminApi;

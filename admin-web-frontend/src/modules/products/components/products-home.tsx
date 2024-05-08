@@ -240,7 +240,7 @@ function FilterDropdownMenu() {
         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Department</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>Product category</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuCheckboxItem checked>All</DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem>Meat & Seafood</DropdownMenuCheckboxItem>
@@ -298,6 +298,7 @@ function ProductsTable({
 }: {
   productsArr: ProductSuccessfulResponseType[];
 }) {
+  const navigate = useNavigate();
   return (
     <Table>
       <TableHeader>
@@ -358,9 +359,15 @@ function ProductsTable({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                  <DropdownMenuItem>Add specials</DropdownMenuItem>
-                  <DropdownMenuItem>View analytics</DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      navigate(`/products/maintenance?sku=${product.id}`)
+                    }
+                  >
+                    View/Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>Specials</DropdownMenuItem>
+                  <DropdownMenuItem>Analytics</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

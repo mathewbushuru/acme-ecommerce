@@ -4,7 +4,7 @@ import SidebarLayout from "@/layouts/sidebar-layout";
 
 import ProductPageSidebar from "@/modules/products/components/product-page-sidebar";
 import ProductsHome from "@/modules/products/components/products-home";
-import ProductMaintenance from "@/modules/products/components/product-maintenance";
+import ProductMaintenance from "../components/ProductMaintenance";
 
 export const productRoutes = [
   {
