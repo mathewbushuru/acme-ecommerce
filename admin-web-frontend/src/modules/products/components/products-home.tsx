@@ -7,7 +7,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-import { useGetAllProductsQuery } from "@/api";
+import { useGetAllProductsQuery, useGetAllCategoriesQuery } from "@/api";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,9 +46,9 @@ import { type ProductSuccessfulResponseType } from "@/types/product";
 
 export default function ProductsHome() {
   const navigate = useNavigate();
-  const { data } = useGetAllProductsQuery();
+  const { data: productsData } = useGetAllProductsQuery();
 
-  if (!data) {
+  if (!productsData) {
     return (
       <ProductsHomeSubLayout>
         <div>
@@ -58,7 +58,7 @@ export default function ProductsHome() {
     );
   }
 
-  const allProductsArr = data.allProducts;
+  const allProductsArr = productsData.allProducts;
   // const allProductsArr: any[] = [];
 
   return (
@@ -228,6 +228,8 @@ function SearchProductInput() {
 }
 
 function FilterDropdownMenu() {
+  const { data: categoryData } = useGetAllCategoriesQuery();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -240,29 +242,20 @@ function FilterDropdownMenu() {
         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Department</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>Product category</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuCheckboxItem checked>All</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Meat & Seafood</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
-              Fruit & Vegetables
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Dairy & Eggs</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Frozen</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Bakery</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
-              Deli & Ready Made Meals
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
-              Plant Based & Non Dairy
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Pantry</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Health & Beauty</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Baby Care</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Pet Care</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
-              Cleaning, Paper & Home
-            </DropdownMenuCheckboxItem>
+            {!categoryData ? (
+              <DropdownMenuCheckboxItem checked>
+                Loading ...
+              </DropdownMenuCheckboxItem>
+            ) : (
+              categoryData.allCategories.map((category) => (
+                <DropdownMenuCheckboxItem key={category.id}>
+                  {category.name}
+                </DropdownMenuCheckboxItem>
+              ))
+            )}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSub>
@@ -298,6 +291,7 @@ function ProductsTable({
 }: {
   productsArr: ProductSuccessfulResponseType[];
 }) {
+  const navigate = useNavigate();
   return (
     <Table>
       <TableHeader>
@@ -358,9 +352,15 @@ function ProductsTable({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                  <DropdownMenuItem>Add specials</DropdownMenuItem>
-                  <DropdownMenuItem>View analytics</DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      navigate(`/products/maintenance?sku=${product.id}`)
+                    }
+                  >
+                    View/Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>Specials</DropdownMenuItem>
+                  <DropdownMenuItem>Analytics</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
