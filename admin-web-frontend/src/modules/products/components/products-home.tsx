@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   ListFilter,
   File,
@@ -44,6 +45,7 @@ import {
 import { type ProductSuccessfulResponseType } from "@/types/product";
 
 export default function ProductsHome() {
+  const navigate = useNavigate();
   const { data } = useGetAllProductsQuery();
 
   if (!data) {
@@ -83,7 +85,11 @@ export default function ProductsHome() {
               <File className="mr-1 h-3.5 w-3.5" />
               <span className="hidden lg:inline">Export</span>
             </Button>
-            <Button variant="secondary" size="sm">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => navigate("/products/maintenance")}
+            >
               <PlusCircle className="mr-1 h-3.5 w-3.5" />
               <span className="hidden lg:inline">Add Product</span>
             </Button>
@@ -110,7 +116,7 @@ export default function ProductsHome() {
                       Manage your active products, edit their details and view
                       their sales performance.
                     </CardDescription>
-                    <CardContent className="h-[46vh] 2xl:h-[55vh] max-w-[70vw] overflow-y-auto pt-1 scrollbar-hide">
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
                       <ProductsTable productsArr={allProductsArr} />
                     </CardContent>
                     <CardFooter className="pb-0">
@@ -142,7 +148,7 @@ export default function ProductsHome() {
                       Manage your active products, edit their details and view
                       their sales performance.
                     </CardDescription>
-                    <CardContent className="h-[46vh] 2xl:h-[55vh] max-w-[70vw] overflow-y-auto pt-1 scrollbar-hide">
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
                       <ProductsTable productsArr={allProductsArr} />
                     </CardContent>
                     <CardFooter className="pb-0">
@@ -196,7 +202,7 @@ function ProductsHomeSubLayout({ children }: { children: React.ReactNode }) {
         </p>
       </div>
 
-      <main className="rounded-lg p-4 shadow-sm border border-dashed overflow-y-hidden h-[calc(100%-75px)]">
+      <main className="h-[calc(100%-75px)] overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm">
         {children}
       </main>
     </div>
@@ -319,7 +325,9 @@ function ProductsTable({
                 src={product.imageUrl}
               />
             </TableCell>
-            <TableCell className="px-1 sm:px-4 font-medium">{product.name}</TableCell>
+            <TableCell className="px-1 font-medium sm:px-4">
+              {product.name}
+            </TableCell>
             <TableCell className="hidden sm:table-cell">
               <Badge variant="outline">
                 {
