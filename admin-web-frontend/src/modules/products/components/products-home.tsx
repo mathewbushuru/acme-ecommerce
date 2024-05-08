@@ -8,8 +8,6 @@ import {
 
 import { useGetAllProductsQuery } from "@/api";
 
-import ProductNavigation from "@/modules/products/components/product-navigation";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,7 +50,6 @@ export default function ProductsHome() {
     return (
       <ProductsHomeSubLayout>
         <div>
-          <ProductNavigation activeLink="products-home" />
           <p>Loading...</p>
         </div>
       </ProductsHomeSubLayout>
@@ -191,7 +188,7 @@ export default function ProductsHome() {
 
 function ProductsHomeSubLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-full gap-4 lg:gap-6">
+    <div className="h-full">
       <div className="h-[75px]">
         <h1 className="text-lg font-semibold md:text-xl">Products Home</h1>
         <p className="mt-2 text-sm text-muted-foreground">
