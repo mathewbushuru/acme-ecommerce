@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { Loader } from "lucide-react";
 
 import { useAdminLoginMutation } from "@/api";
 import { useAppDispatch } from "@/store/store";
-import { setCredentials } from "@/store/features/auth-slice";
+import { setCredentials, clearCredentials } from "@/store/features/auth-slice";
 
 import { type AdminLoginRequestType } from "@/types/auth";
 
@@ -31,6 +32,12 @@ export default function LoginForm() {
 
   const [hasLoginError, setHasLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
+
+  const handleLogout = () => {
+    toast.success("Logout successful.");
+    dispatch(clearCredentials());
+    navigate("/");
+  };
 
   const handleLogin = async (
     e:
@@ -69,6 +76,13 @@ export default function LoginForm() {
       console.log(message);
       console.log(user);
 
+      toast.success("Sign in successful.", {
+        description: "Welcome to the Admin Panel.",
+        action: {
+          label: "Log out",
+          onClick: handleLogout,
+        },
+      });
       navigate("/dashboard");
       dispatch(setCredentials({ user, token: jwtToken }));
     } catch (error: any) {
@@ -76,6 +90,7 @@ export default function LoginForm() {
       setLoginErrorMessage(
         error.data.errorMessage || "Wrong email or password",
       );
+      toast.error(error.data.errorMessage || "Wrong email or password");
       setPassword("");
       setHasLoginError(true);
     }
@@ -114,9 +129,6 @@ export default function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <p className="h-0.5 text-center text-xs text-destructive">
-            {hasLoginError ? loginErrorMessage : " "}
-          </p>
           <p className="text-center text-xs font-light text-muted-foreground">
             Use mattb@test.com and 781*admiN as demo credentials
           </p>
