@@ -9,6 +9,8 @@ import {
 
 import { useGetAllProductsQuery, useGetAllCategoriesQuery } from "@/api";
 
+import ProductLayout from "@/modules/products/layouts/product-layout";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,11 +52,14 @@ export default function ProductsHome() {
 
   if (!productsData) {
     return (
-      <ProductsHomeSubLayout>
+      <ProductLayout
+        title="Products Home"
+        description="Search and view all your listed products."
+      >
         <div>
           <p>Loading...</p>
         </div>
-      </ProductsHomeSubLayout>
+      </ProductLayout>
     );
   }
 
@@ -62,7 +67,10 @@ export default function ProductsHome() {
   // const allProductsArr: any[] = [];
 
   return (
-    <ProductsHomeSubLayout>
+    <ProductLayout
+      title="Products Home"
+      description="Search and view all your listed products."
+    >
       <Tabs defaultValue="active">
         <div className="flex items-center">
           {/* Left header - tabs selector  */}
@@ -188,24 +196,7 @@ export default function ProductsHome() {
           </TabsContent>
         </div>
       </Tabs>
-    </ProductsHomeSubLayout>
-  );
-}
-
-function ProductsHomeSubLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="h-full">
-      <div className="h-[75px]">
-        <h1 className="text-lg font-semibold md:text-xl">Products Home</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Search and view all your listed products.
-        </p>
-      </div>
-
-      <main className="h-[calc(100%-75px)] overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm">
-        {children}
-      </main>
-    </div>
+    </ProductLayout>
   );
 }
 
