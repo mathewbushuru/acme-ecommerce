@@ -7,6 +7,7 @@ import { useGetRootQuery } from "@/api";
 import { publicRouter, privateRouter } from "@/routes";
 
 import ThemeProvider from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 function AppRouter() {
   const { data } = useGetRootQuery();
@@ -24,6 +25,7 @@ function App() {
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="system" storageKey="acme-admin-ui-theme">
         <AppRouter />
+        <Toaster />
       </ThemeProvider>
     </ReduxProvider>
   );

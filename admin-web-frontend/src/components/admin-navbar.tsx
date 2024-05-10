@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import {
   Package2,
   Menu,
@@ -34,6 +35,7 @@ export default function AdminNavbar() {
   const handleLogout = () => {
     dispatch(clearCredentials());
     navigate("/");
+    toast.success("Logout successful.");
   };
 
   return (

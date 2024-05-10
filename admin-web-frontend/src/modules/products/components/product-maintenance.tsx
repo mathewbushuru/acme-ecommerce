@@ -1,7 +1,10 @@
+import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
 
 import { useGetAllCategoriesQuery } from "@/api";
+
+import ProductLayout from "@/modules/products/layouts/product-layout";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,13 +19,19 @@ import {
 } from "@/components/ui/select";
 
 export default function ProductMaintenance() {
+  const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
   const skuSearchParam = searchParams.get("sku");
+
+  const [skuNumber, setSkuNumber] = useState(skuSearchParam);
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
   return (
-    <ProductsSubLayout>
+    <ProductLayout
+      title="Product Maintenance"
+      description="Fine grained search for all products in your inventory."
+    >
       <form
         className="grid h-full grid-cols-1 grid-rows-[2] sm:grid-cols-2"
         onSubmit={(e) => e.preventDefault()}
@@ -36,7 +45,8 @@ export default function ProductMaintenance() {
               <Input
                 type="search"
                 id="sku"
-                defaultValue={skuSearchParam || ""}
+                value={skuNumber || ""}
+                onChange={(e) => setSkuNumber(e.target.value)}
                 placeholder="By Sku# or '%' + 'product_name'"
                 className="h-9 w-72 pl-8"
               />
@@ -169,7 +179,14 @@ export default function ProductMaintenance() {
         {/* Bottom */}
         <div className="flex  items-center gap-2 ">
           <div className="hidden w-40 sm:inline-block">{""}</div>
-          <Button className="max-w-xs" variant="secondary">
+          <Button
+            className="max-w-xs"
+            variant="secondary"
+            onClick={() => {
+              if (!skuNumber) return;
+              navigate(`/products/maintenance/${skuNumber}`);
+            }}
+          >
             Search
           </Button>
           <Button className="max-w-xs" variant="secondary">
@@ -180,26 +197,6 @@ export default function ProductMaintenance() {
           </Button>
         </div>
       </form>
-    </ProductsSubLayout>
-  );
-}
-
-function ProductsSubLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="h-full">
-      <div className="h-[75px]">
-        <h1 className="text-lg font-semibold md:text-xl">
-          {" "}
-          Product Maintenance
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Fine grained search for all products in your inventory.
-        </p>
-      </div>
-
-      <main className="h-[calc(100%-75px)] overflow-y-hidden rounded-lg border border-dashed p-4 shadow-sm">
-        {children}
-      </main>
-    </div>
+    </ProductLayout>
   );
 }
