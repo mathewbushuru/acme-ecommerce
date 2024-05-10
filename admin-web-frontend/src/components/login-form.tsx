@@ -30,9 +30,6 @@ export default function LoginForm() {
 
   const [loginTrigger, { isLoading }] = useAdminLoginMutation();
 
-  const [hasLoginError, setHasLoginError] = useState(false);
-  const [loginErrorMessage, setLoginErrorMessage] = useState("");
-
   const handleLogout = () => {
     toast.success("Logout successful.");
     dispatch(clearCredentials());
@@ -47,25 +44,20 @@ export default function LoginForm() {
     e.preventDefault();
 
     if (email.length === 0) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Email is required");
+      toast.error("Email is required");
       return;
     }
 
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailRegex.test(email)) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Use valid email address");
+      toast.error("Use valid email address");
       return;
     }
 
     if (password.length === 0) {
-      setHasLoginError(true);
-      setLoginErrorMessage("Password is required");
+      toast.error("Password is required");
       return;
     }
-
-    setHasLoginError(false);
 
     const loginData: AdminLoginRequestType = { email, password };
 
@@ -77,7 +69,7 @@ export default function LoginForm() {
       console.log(user);
 
       toast.success("Sign in successful.", {
-        description: "Welcome to the Admin Panel.",
+        description: "Welcome to the Acme Admin Panel.",
         action: {
           label: "Log out",
           onClick: handleLogout,
@@ -87,12 +79,8 @@ export default function LoginForm() {
       dispatch(setCredentials({ user, token: jwtToken }));
     } catch (error: any) {
       console.error(error);
-      setLoginErrorMessage(
-        error.data.errorMessage || "Wrong email or password",
-      );
       toast.error(error.data.errorMessage || "Wrong email or password");
       setPassword("");
-      setHasLoginError(true);
     }
   };
 
