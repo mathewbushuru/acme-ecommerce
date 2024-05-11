@@ -8,6 +8,16 @@ import ProductLayout from "@/modules/products/layouts/product-layout";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { isServerErrorResponse } from "@/lib/utils";
 import { type ServerErrorType } from "@/types/general";
@@ -55,8 +65,8 @@ export default function ProductMaintenanceEdit() {
       title="Product Maintenance Edit"
       description="Fine grained search for all products in your inventory."
     >
-      <main className="bg-red-501 grid h-full gap-4 md:gap-8">
-        <div className="bg-green-501 mx-auto grid max-w-[65rem] auto-rows-max gap-4">
+      <main className="grid h-full gap-4 md:gap-8">
+        <div className="mx-auto grid max-w-[59rem] auto-rows-max gap-4">
           {/* header  */}
           <div className="flex items-center gap-4">
             <Button
@@ -72,13 +82,53 @@ export default function ProductMaintenanceEdit() {
               {productData.name}
             </h1>
             <Badge variant="outline">In stock</Badge>
-            <div className="hidden md:flex gap-2 md:ml-auto">
+            <div className="hidden gap-2 md:ml-auto md:flex">
               <Button variant="outline" size="sm">
                 Discard Changes
               </Button>
-              <Button variant="secondary" size="sm">Save Product</Button>
+              <Button variant="secondary" size="sm">
+                Save Product
+              </Button>
             </div>
           </div>
+
+          {/* Main */}
+          <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+            <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+              {/* Product details card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Product Details.</CardTitle>
+                  <CardDescription>Name, Description</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        className="w-full bg-popover"
+                        defaultValue={productData.name}
+                      />
+                    </div>
+                    <div className="grid gap-3">
+                      <Label htmlFor="description">Description</Label>
+                      <Textarea
+                        id="description"
+                        className="w-full min-h-28 bg-popover"
+                        defaultValue={
+                          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores repellat cum corrupti doloremque facilis quae"
+                        }
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* json  */}
           <div className="max-w-xs overflow-hidden md:max-w-md">
             {JSON.stringify(productData)}
           </div>
