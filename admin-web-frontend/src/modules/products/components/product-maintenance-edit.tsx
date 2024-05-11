@@ -18,6 +18,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 import { isServerErrorResponse } from "@/lib/utils";
 import { type ServerErrorType } from "@/types/general";
@@ -65,8 +72,8 @@ export default function ProductMaintenanceEdit() {
       title="Product Maintenance Edit"
       description="Fine grained search for all products in your inventory."
     >
-      <main className="grid h-full gap-4 md:gap-8">
-        <div className="mx-auto grid max-w-[59rem] auto-rows-max gap-4">
+      <main className="grid gap-4 md:gap-8 ">
+        <div className="sm:mx-auto grid max-w-[59rem] auto-rows-max gap-4">
           {/* header  */}
           <div className="flex items-center gap-4">
             <Button
@@ -78,10 +85,10 @@ export default function ProductMaintenanceEdit() {
               <ChevronLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Button>
-            <h1 className="shrink-0 whitespace-nowrap text-xl font-semibold">
+            <h1 className="max-w-[10rem] sm:max-w-[20rem] lg:max-w-[30rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold">
               {productData.name}
             </h1>
-            <Badge variant="outline">In stock</Badge>
+            <Badge variant="outline" className="ml-auto">In stock</Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
               <Button variant="outline" size="sm">
                 Discard Changes
@@ -94,6 +101,7 @@ export default function ProductMaintenanceEdit() {
 
           {/* Main */}
           <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+            {/* Left cards  */}
             <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
               {/* Product details card */}
               <Card>
@@ -116,7 +124,7 @@ export default function ProductMaintenanceEdit() {
                       <Label htmlFor="description">Description</Label>
                       <Textarea
                         id="description"
-                        className="w-full min-h-28 bg-popover"
+                        className="min-h-28 w-full bg-popover"
                         defaultValue={
                           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores repellat cum corrupti doloremque facilis quae"
                         }
@@ -125,13 +133,50 @@ export default function ProductMaintenanceEdit() {
                   </div>
                 </CardContent>
               </Card>
+              {/* Prices Card  */}
+              {/* ProductCategoryCard  */}
+            </div>
+
+            {/* Right cards  */}
+            <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+              {/* Product status card  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Product Status</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="status">Status</Label>
+                      <Select>
+                        <SelectTrigger className="bg-popover">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="draft">Draft</SelectItem>
+                          <SelectItem value="active">Active</SelectItem>
+                          <SelectItem value="discontinued">
+                            Discontinued
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              {/* ProductImagesCard  */}
+              {/* DeleteProductCard  */}
             </div>
           </div>
 
           {/* json  */}
-          <div className="max-w-xs overflow-hidden md:max-w-md">
-            {JSON.stringify(productData)}
-          </div>
+          {/* <div className="max-w-xs overflow-hidden md:max-w-md">
+            {JSON.stringify(productData)
+              .split(",")
+              .map((item, index) => (
+                <p key={index}>{item}</p>
+              ))}
+          </div> */}
         </div>
       </main>
     </ProductLayout>
