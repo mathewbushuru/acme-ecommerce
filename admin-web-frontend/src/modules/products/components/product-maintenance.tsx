@@ -202,14 +202,14 @@ export default function ProductMaintenance() {
           </Button>
           <Button
             className="max-w-xs"
-            variant="secondary"
+            variant="outline"
             onClick={(e) => e.preventDefault()}
           >
             Clear
           </Button>
           <Button
             className="max-w-xs"
-            variant="secondary"
+            variant="outline"
             onClick={(e) => e.preventDefault()}
           >
             Pick Random
