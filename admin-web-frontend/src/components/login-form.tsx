@@ -79,7 +79,7 @@ export default function LoginForm() {
       dispatch(setCredentials({ user, token: jwtToken }));
     } catch (error: any) {
       console.error(error);
-      toast.error(error.data.errorMessage || "Wrong email or password");
+      toast.error(error.data.errorMessage || "Wrong email or password", );
       setPassword("");
     }
   };
