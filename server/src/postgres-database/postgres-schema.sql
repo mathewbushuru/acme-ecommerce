@@ -1,3 +1,6 @@
+-- show databases
+SELECT datname FROM pg_database;
+
 -- show tables
 -- @block;
 SELECT table_name FROM information_schema.tables
@@ -167,7 +170,20 @@ VALUES (
 );
 
 -- @block;
-SELECT * FROM acme_products;
+SELECT * FROM acme_products WHERE id = 1;
+
+-- @block;
+ SELECT
+        id, name, size, 
+        categoryid as "categoryId",
+        regularprice as "regularPrice",
+        specialprice as "specialPrice",
+        isonspecial as "isOnSpecial",
+        imageurl as "imageUrl",
+        createdat as "createdAt",
+        updatedat as "updatedAt"
+    FROM acme_products
+    WHERE id = 1;
 
 -- need to set manual trigger for updatedAt to match MySQL's ON UPDATE
 -- @block;

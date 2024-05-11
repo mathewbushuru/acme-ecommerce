@@ -11,8 +11,8 @@ import {
   type AdminLoginSuccessfulResponseType,
 } from "@/types/auth";
 
-const SERVER_URL = "https://acme-groceries-api.onrender.com";
-// const SERVER_URL = "http://localhost:5000";
+// const SERVER_URL = "https://acme-groceries-api.onrender.com";
+const SERVER_URL = "http://localhost:5000";
 
 console.log(`Connecting to server:  ${SERVER_URL}`);
 
@@ -34,6 +34,7 @@ const acmeAdminApi = createApi({
     getRoot: builder.query<string, void>({
       query: () => `/`,
     }),
+
     adminLogin: builder.mutation<
       AdminLoginSuccessfulResponseType,
       AdminLoginRequestType
@@ -45,12 +46,21 @@ const acmeAdminApi = createApi({
       }),
       invalidatesTags: [],
     }),
+
     getAllProducts: builder.query<
       { allProducts: ProductSuccessfulResponseType[] },
       void
     >({
       query: () => `/product/all`,
     }),
+
+    getProductById: builder.query<
+      { productData: ProductSuccessfulResponseType },
+      string
+    >({
+      query: (productId) => `/product/${productId}`,
+    }),
+
     getAllCategories: builder.query<
       { allCategories: ProductCategoryType[] },
       void
@@ -64,6 +74,7 @@ export const {
   useGetRootQuery,
   useAdminLoginMutation,
   useGetAllProductsQuery,
+  useGetProductByIdQuery,
   useGetAllCategoriesQuery,
 } = acmeAdminApi;
 

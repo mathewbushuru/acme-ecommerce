@@ -28,7 +28,9 @@ export default function ProductPageSidebar() {
             Products Home
           </Button>
           <Button
-            variant={pathname === "/products/maintenance" ? "default" : "ghost"}
+            variant={
+              pathname.startsWith("/products/maintenance") ? "default" : "ghost"
+            }
             size="sm"
             className="justify-start"
             onClick={() => navigate("/products/maintenance")}

@@ -114,7 +114,7 @@ export const postEmployeeLoginController = async (
   );
 
   if (!passwordMatches) {
-    const errorMessage = "Sign error, wrong password";
+    const errorMessage = "Sign in error, wrong password";
     console.error(errorMessage);
     return res.status(401).json({ errorMessage });
   }
