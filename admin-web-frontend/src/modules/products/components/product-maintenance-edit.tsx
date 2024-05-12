@@ -1,6 +1,6 @@
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Upload } from "lucide-react";
 
 import { useGetProductByIdQuery, useGetAllCategoriesQuery } from "@/api";
 
@@ -271,7 +271,9 @@ export default function ProductMaintenanceEdit() {
                     </div>
 
                     <div className="grid gap-3">
-                      <Label htmlFor="subcategory">Subcategory (Optional)</Label>
+                      <Label htmlFor="subcategory">
+                        Subcategory (Optional)
+                      </Label>
                       <Select>
                         <SelectTrigger id="subcategory" className="bg-popover">
                           <SelectValue placeholder="Select subcategory" />
@@ -327,6 +329,38 @@ export default function ProductMaintenanceEdit() {
               </Card>
 
               {/* ProductImagesCard  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Product Images</CardTitle>
+                  <CardDescription>Online website images</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-2">
+                    <img
+                      alt={productData.name}
+                      className="aspect-square rounded-md object-cover w-full"
+                      src={productData.imageUrl}
+                    />
+
+                    <div className="grid grid-cols-3 gap-2">
+                      <img
+                        alt={productData.name}
+                        className="aspect-square rounded-md  object-cover"
+                        src="/placeholder.svg"
+                      />
+                      <img
+                        alt={productData.name}
+                        className="aspect-square rounded-md  object-cover"
+                        src="/placeholder.svg"
+                      />
+                      <button className="flex items-center justify-center border border-dashed aspect-square rounded-md">
+                          <Upload className="h-5 w-5 text-muted-foreground" />
+                          <span className="sr-only">Upload</span>
+                      </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* DeleteProductCard  */}
             </div>
