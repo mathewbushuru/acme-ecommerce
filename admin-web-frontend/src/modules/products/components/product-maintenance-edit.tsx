@@ -338,7 +338,7 @@ export default function ProductMaintenanceEdit() {
                   <div className="grid gap-2">
                     <img
                       alt={productData.name}
-                      className="aspect-square rounded-md object-cover w-full"
+                      className="aspect-square w-full rounded-md object-cover"
                       src={productData.imageUrl}
                     />
 
@@ -353,9 +353,9 @@ export default function ProductMaintenanceEdit() {
                         className="aspect-square rounded-md  object-cover"
                         src="/placeholder.svg"
                       />
-                      <button className="flex items-center justify-center border border-dashed aspect-square rounded-md">
-                          <Upload className="h-5 w-5 text-muted-foreground" />
-                          <span className="sr-only">Upload</span>
+                      <button className="flex aspect-square items-center justify-center rounded-md border border-dashed">
+                        <Upload className="h-5 w-5 text-muted-foreground" />
+                        <span className="sr-only">Upload</span>
                       </button>
                     </div>
                   </div>
@@ -363,6 +363,17 @@ export default function ProductMaintenanceEdit() {
               </Card>
 
               {/* DeleteProductCard  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Delete Product</CardTitle>
+                  <CardDescription>You will lose all data about this product including analytics. Change it's status to 'Discontinued' to keep historical data.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button variant="destructive">
+                    Delete Product
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
