@@ -25,6 +25,15 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { isServerErrorResponse } from "@/lib/utils";
 import { type ServerErrorType } from "@/types/general";
@@ -44,7 +53,7 @@ export default function ProductMaintenanceEdit() {
     const errorData = (
       isServerErrorResponse(error)
         ? error.data
-        : { errorMessage: "Something went wrong" }
+        : { errorMessage: "Something went wrong." }
     ) as ServerErrorType;
     toast.error(
       errorData.errorMessage ||
@@ -72,7 +81,7 @@ export default function ProductMaintenanceEdit() {
       title="Product Maintenance Edit"
       description="Fine grained search for all products in your inventory."
     >
-      <main className="grid gap-4 md:gap-8 ">
+      <main className="grid gap-4 md:gap-8">
         <div className="grid auto-rows-max gap-4">
           {/* header  */}
           <div className="flex items-center gap-4">
@@ -103,14 +112,14 @@ export default function ProductMaintenanceEdit() {
           </div>
 
           {/* Main */}
-          <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+          <div className="scrollbar-hide grid h-[63vh] gap-4 overflow-y-auto md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8    2xl:h-[69vh]">
             {/* Left cards  */}
             <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
               {/* Product details card */}
               <Card>
                 <CardHeader>
                   <CardTitle>Product Details.</CardTitle>
-                  <CardDescription>Sku, Name, Description</CardDescription>
+                  <CardDescription>Sku, Name, Description.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-6">
@@ -145,8 +154,107 @@ export default function ProductMaintenanceEdit() {
                   </div>
                 </CardContent>
               </Card>
+
               {/* Prices Card  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Prices</CardTitle>
+                  <CardDescription>
+                    Case Cost and Case Quantity, Retail Price and Retail
+                    Quantity.
+                  </CardDescription>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead />
+                          <TableHead>Price (CAD)</TableHead>
+                          <TableHead>Quantity</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>Case Cost</TableCell>
+                          <TableCell>
+                            <Label htmlFor="case-cost" className="sr-only">
+                              Case Cost Price
+                            </Label>
+                            <Input
+                              id="case-cost"
+                              type="number"
+                              defaultValue={
+                                Math.round(productData.regularPrice * 0.75) /
+                                100
+                              }
+                              className="bg-popover"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="case-quantity" className="sr-only">
+                              Case Quantity
+                            </Label>
+                            <Input
+                              id="case-quantity"
+                              type="number"
+                              defaultValue={1}
+                              className="bg-popover"
+                            />
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Retail Price</TableCell>
+                          <TableCell>
+                            <Label htmlFor="retail-price" className="sr-only">
+                              Retail Price
+                            </Label>
+                            <Input
+                              id="retail-price"
+                              type="number"
+                              defaultValue={productData.regularPrice / 100}
+                              className="bg-popover"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Label
+                              htmlFor="retail-quantity"
+                              className="sr-only"
+                            >
+                              Retail Quantity
+                            </Label>
+                            <Input
+                              id="retail-quantity"
+                              type="number"
+                              defaultValue={1}
+                              className="bg-popover"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                      <TableFooter>
+                        <TableRow>
+                          <TableCell colSpan={2}>
+                            Gross Margin
+                          </TableCell>
+                          <TableCell>
+                            25%
+                          </TableCell>
+                        </TableRow>
+                      </TableFooter>
+                    </Table>
+                  </CardContent>
+                </CardHeader>
+              </Card>
+
               {/* ProductCategoryCard  */}
+
+              {/* json  */}
+              {/* <div className="max-w-xs overflow-hidden md:max-w-md">
+                {JSON.stringify(productData)
+                  .split(",")
+                  .map((item, index) => (
+                    <p key={index}>{item}</p>
+                  ))}
+              </div> */}
             </div>
 
             {/* Right cards  */}
@@ -180,15 +288,6 @@ export default function ProductMaintenanceEdit() {
               {/* DeleteProductCard  */}
             </div>
           </div>
-
-          {/* json  */}
-          {/* <div className="max-w-xs overflow-hidden md:max-w-md">
-            {JSON.stringify(productData)
-              .split(",")
-              .map((item, index) => (
-                <p key={index}>{item}</p>
-              ))}
-          </div> */}
         </div>
 
         {/* Mobile action buttons */}
