@@ -73,7 +73,7 @@ export default function ProductMaintenanceEdit() {
       description="Fine grained search for all products in your inventory."
     >
       <main className="grid gap-4 md:gap-8 ">
-        <div className="sm:mx-auto grid max-w-[59rem] auto-rows-max gap-4">
+        <div className="grid max-w-[59rem] auto-rows-max gap-4 sm:mx-auto">
           {/* header  */}
           <div className="flex items-center gap-4">
             <Button
@@ -85,16 +85,18 @@ export default function ProductMaintenanceEdit() {
               <ChevronLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Button>
-            <h1 className="max-w-[10rem] sm:max-w-[20rem] lg:max-w-[30rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold">
+            <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
               {productData.name}
             </h1>
-            <Badge variant="outline" className="ml-auto">In stock</Badge>
+            <Badge variant="outline" className="ml-auto">
+              In stock
+            </Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
               <Button variant="outline" size="sm">
                 Discard Changes
               </Button>
               <Button variant="secondary" size="sm">
-                Save Product
+                Save Changes
               </Button>
             </div>
           </div>
@@ -107,10 +109,19 @@ export default function ProductMaintenanceEdit() {
               <Card>
                 <CardHeader>
                   <CardTitle>Product Details.</CardTitle>
-                  <CardDescription>Name, Description</CardDescription>
+                  <CardDescription>Sku, Name, Description</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="sku">Sku number</Label>
+                      <Input
+                        id="sku"
+                        type="text"
+                        className="w-full bg-popover"
+                        defaultValue={productData.id}
+                      />
+                    </div>
                     <div className="grid gap-3">
                       <Label htmlFor="name">Name</Label>
                       <Input
@@ -177,6 +188,16 @@ export default function ProductMaintenanceEdit() {
                 <p key={index}>{item}</p>
               ))}
           </div> */}
+        </div>
+
+        {/* Mobile action buttons */}
+        <div className="flex items-center gap-2 md:hidden justify-center">
+          <Button variant="outline" size="sm">
+            Discard Changes
+          </Button>
+          <Button variant="secondary" size="sm">
+            Save Changes
+          </Button>
         </div>
       </main>
     </ProductLayout>
