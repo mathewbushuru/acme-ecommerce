@@ -25,7 +25,7 @@ function App() {
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="system" storageKey="acme-admin-ui-theme">
         <AppRouter />
-        <Toaster />
+        <Toaster position="bottom-right" />
       </ThemeProvider>
     </ReduxProvider>
   );

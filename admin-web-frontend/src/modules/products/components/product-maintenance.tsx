@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { Search } from "lucide-react";
 
 import { useGetAllCategoriesQuery } from "@/api";
@@ -20,12 +21,25 @@ import {
 
 export default function ProductMaintenance() {
   const navigate = useNavigate();
-  const [searchParams, _] = useSearchParams();
-  const skuSearchParam = searchParams.get("sku");
 
-  const [skuNumber, setSkuNumber] = useState(skuSearchParam);
+  const [skuNumber, setSkuNumber] = useState<string | null>(null);
 
   const { data: categoryData } = useGetAllCategoriesQuery();
+
+  const handleSubmit = (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+
+    if (!skuNumber) {
+      toast.error("Sku number is required.");
+      return;
+    }
+
+    navigate(`/products/maintenance/${skuNumber}`);
+  };
 
   return (
     <ProductLayout
@@ -34,7 +48,7 @@ export default function ProductMaintenance() {
     >
       <form
         className="grid h-full grid-cols-1 grid-rows-[2] sm:grid-cols-2"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         {/* Top left*/}
         <div className="flex flex-col gap-2 ">
@@ -182,17 +196,22 @@ export default function ProductMaintenance() {
           <Button
             className="max-w-xs"
             variant="secondary"
-            onClick={() => {
-              if (!skuNumber) return;
-              navigate(`/products/maintenance/${skuNumber}`);
-            }}
+            onClick={handleSubmit}
           >
             Search
           </Button>
-          <Button className="max-w-xs" variant="secondary">
+          <Button
+            className="max-w-xs"
+            variant="outline"
+            onClick={(e) => e.preventDefault()}
+          >
             Clear
           </Button>
-          <Button className="max-w-xs" variant="secondary">
+          <Button
+            className="max-w-xs"
+            variant="outline"
+            onClick={(e) => e.preventDefault()}
+          >
             Pick Random
           </Button>
         </div>

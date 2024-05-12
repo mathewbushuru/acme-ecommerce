@@ -1,5 +1,5 @@
 export interface ProductSuccessfulResponseType {
-  id: number;
+  id: string;
   name: string;
   categoryId: number;
   regularPrice: number;
@@ -12,7 +12,7 @@ export interface ProductSuccessfulResponseType {
 }
 
 export interface ProductCategoryType {
-  id: number;
+  id: string;
   name: string;
   imageUrl: string;
   createdAt: string;

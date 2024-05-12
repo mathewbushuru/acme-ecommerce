@@ -345,7 +345,7 @@ function ProductsTable({
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuItem
                     onClick={() =>
-                      navigate(`/products/maintenance?sku=${product.id}`)
+                      navigate(`/products/maintenance/${product.id}`)
                     }
                   >
                     View/Edit
