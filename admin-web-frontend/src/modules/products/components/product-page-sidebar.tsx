@@ -38,6 +38,14 @@ export default function ProductPageSidebar() {
             Product Maintenance
           </Button>
           <Button
+            variant={pathname === "/products/groups" ? "default" : "ghost"}
+            size="sm"
+            className="justify-start"
+            onClick={() => navigate("/products/groups")}
+          >
+            Product Groups Setup
+          </Button>
+          <Button
             variant={pathname === "/products/specials" ? "default" : "ghost"}
             size="sm"
             className="justify-start"
@@ -66,14 +74,6 @@ export default function ProductPageSidebar() {
             onClick={() => navigate("#")}
           >
             CSV Imports
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="justify-start"
-            onClick={() => navigate("#")}
-          >
-            Groups Setup
           </Button>
         </nav>
       </div>

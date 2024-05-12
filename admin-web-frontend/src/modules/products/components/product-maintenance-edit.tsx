@@ -243,6 +243,51 @@ export default function ProductMaintenanceEdit() {
                 </CardHeader>
               </Card>
 
+              {/* ProductCategoryCard  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Product Category</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 sm:grid-cols-3">
+                    <div className="grid gap-3">
+                      <Label htmlFor="category">Category</Label>
+                      <Select>
+                        <SelectTrigger id="category" className="bg-popover">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {!categoryData ? (
+                            <SelectItem value="Loading">Loading ...</SelectItem>
+                          ) : (
+                            categoryData.allCategories.map((category) => (
+                              <SelectItem value={category.id} key={category.id}>
+                                {category.name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="grid gap-3">
+                      <Label htmlFor="subcategory">Subcategory (Optional)</Label>
+                      <Select>
+                        <SelectTrigger id="subcategory" className="bg-popover">
+                          <SelectValue placeholder="Select subcategory" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="no-tax">No tax</SelectItem>
+                          <SelectItem value="gst">GST only</SelectItem>
+                          <SelectItem value="pst">PST only</SelectItem>
+                          <SelectItem value="gst+pst">GST + PST</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* json  */}
               {/* <div className="max-w-xs overflow-hidden md:max-w-md">
                 {JSON.stringify(productData)
@@ -265,7 +310,7 @@ export default function ProductMaintenanceEdit() {
                     <div className="grid gap-3">
                       <Label htmlFor="status">Status</Label>
                       <Select>
-                        <SelectTrigger className="bg-popover">
+                        <SelectTrigger id="status" className="bg-popover">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -282,36 +327,6 @@ export default function ProductMaintenanceEdit() {
               </Card>
 
               {/* ProductImagesCard  */}
-
-              {/* ProductCategoryCard  */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Product Category</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-6">
-                    <div className="grid gap-3">
-                      <Label htmlFor="status">Category</Label>
-                      <Select>
-                        <SelectTrigger className="bg-popover">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {!categoryData ? (
-                            <SelectItem value="Loading">Loading ...</SelectItem>
-                          ) : (
-                            categoryData.allCategories.map((category) => (
-                              <SelectItem value={category.id} key={category.id}>
-                                {category.name}
-                              </SelectItem>
-                            ))
-                          )}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* DeleteProductCard  */}
             </div>
