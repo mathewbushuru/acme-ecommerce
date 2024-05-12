@@ -2,7 +2,7 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { ChevronLeft } from "lucide-react";
 
-import { useGetProductByIdQuery } from "@/api";
+import { useGetProductByIdQuery, useGetAllCategoriesQuery } from "@/api";
 
 import ProductLayout from "@/modules/products/layouts/product-layout";
 
@@ -41,6 +41,8 @@ import { type ServerErrorType } from "@/types/general";
 export default function ProductMaintenanceEdit() {
   const navigate = useNavigate();
   const { skuNumber } = useParams();
+
+  const { data: categoryData } = useGetAllCategoriesQuery();
 
   if (!skuNumber) {
     toast.error("Sku number is required!");
@@ -232,20 +234,14 @@ export default function ProductMaintenanceEdit() {
                       </TableBody>
                       <TableFooter>
                         <TableRow>
-                          <TableCell colSpan={2}>
-                            Gross Margin
-                          </TableCell>
-                          <TableCell>
-                            25%
-                          </TableCell>
+                          <TableCell colSpan={2}>Gross Margin</TableCell>
+                          <TableCell>25%</TableCell>
                         </TableRow>
                       </TableFooter>
                     </Table>
                   </CardContent>
                 </CardHeader>
               </Card>
-
-              {/* ProductCategoryCard  */}
 
               {/* json  */}
               {/* <div className="max-w-xs overflow-hidden md:max-w-md">
@@ -284,7 +280,39 @@ export default function ProductMaintenanceEdit() {
                   </div>
                 </CardContent>
               </Card>
+
               {/* ProductImagesCard  */}
+
+              {/* ProductCategoryCard  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Product Category</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="status">Category</Label>
+                      <Select>
+                        <SelectTrigger className="bg-popover">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {!categoryData ? (
+                            <SelectItem value="Loading">Loading ...</SelectItem>
+                          ) : (
+                            categoryData.allCategories.map((category) => (
+                              <SelectItem value={category.id} key={category.id}>
+                                {category.name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* DeleteProductCard  */}
             </div>
           </div>
