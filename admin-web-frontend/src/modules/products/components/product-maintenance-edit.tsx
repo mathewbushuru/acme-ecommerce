@@ -73,7 +73,7 @@ export default function ProductMaintenanceEdit() {
       description="Fine grained search for all products in your inventory."
     >
       <main className="grid gap-4 md:gap-8 ">
-        <div className="grid max-w-[59rem] auto-rows-max gap-4 sm:mx-auto">
+        <div className="grid auto-rows-max gap-4">
           {/* header  */}
           <div className="flex items-center gap-4">
             <Button
@@ -86,9 +86,10 @@ export default function ProductMaintenanceEdit() {
               <span className="sr-only">Back</span>
             </Button>
             <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
-              {productData.name}
+              {productData.name}{" "}
+              <span className="text-base font-normal">{`[#${productData.id}]`}</span>
             </h1>
-            <Badge variant="outline" className="ml-auto">
+            <Badge variant="outline" className="ml-auto sm:ml-0">
               In stock
             </Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
@@ -191,7 +192,7 @@ export default function ProductMaintenanceEdit() {
         </div>
 
         {/* Mobile action buttons */}
-        <div className="flex items-center gap-2 md:hidden justify-center">
+        <div className="flex items-center justify-center gap-2 md:hidden">
           <Button variant="outline" size="sm">
             Discard Changes
           </Button>
