@@ -63,6 +63,7 @@ export default function ProductMaintenance() {
                 onChange={(e) => setSkuNumber(e.target.value)}
                 placeholder="By Sku# or '%' + 'product_name'"
                 className="h-9 w-72 pl-8"
+                autoFocus
               />
             </div>
           </div>

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import {
   ListFilter,
   File,
@@ -201,17 +203,33 @@ export default function ProductsHome() {
 }
 
 function SearchProductInput() {
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (searchValue.length === 0) return;
+
+    if (searchValue.startsWith("%")) {
+      toast.error("Product name search coming soon.");
+      setSearchValue("");
+      return;
+    }
+    navigate(`/products/maintenance/${searchValue}`);
+  };
+
   return (
-    <form
-      className="flex-1 sm:flex-initial"
-      onSubmit={(e) => e.preventDefault()}
-    >
+    <form className="flex-1 sm:flex-initial" onSubmit={handleSearchSubmit}>
       <div className="relative">
         <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="By Sku# or '%' + 'product_name'..."
+          placeholder="By Sku# or '%' + 'product name'"
           className="h-9 pl-8 sm:w-[300px] md:w-[240px] lg:w-[300px]"
+          autoFocus
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
     </form>
