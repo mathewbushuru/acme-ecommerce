@@ -46,7 +46,7 @@ export default function ProductMaintenanceEdit() {
 
   if (!skuNumber) {
     toast.error("Sku number is required!");
-    return <Navigate to="/products/maintenance" replace />;
+    return <Navigate to="-1" replace />;
   }
 
   const { data, isLoading, error } = useGetProductByIdQuery(skuNumber);
@@ -62,7 +62,7 @@ export default function ProductMaintenanceEdit() {
         `Sku number ${skuNumber ? skuNumber : ""} not in database.`,
     );
 
-    return <Navigate to="/products/maintenance" replace />;
+    return <Navigate to="-1" replace />;
   }
 
   if (isLoading || !data) {
@@ -366,12 +366,14 @@ export default function ProductMaintenanceEdit() {
               <Card>
                 <CardHeader>
                   <CardTitle>Delete Product</CardTitle>
-                  <CardDescription>You will lose all data about this product including analytics. Change it's status to 'Discontinued' to keep historical data.</CardDescription>
+                  <CardDescription>
+                    You will lose all data about this product including
+                    analytics. Change it's status to 'Discontinued' to keep
+                    historical data.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="destructive">
-                    Delete Product
-                  </Button>
+                  <Button variant="destructive">Delete Product</Button>
                 </CardContent>
               </Card>
             </div>
