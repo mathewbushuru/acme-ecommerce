@@ -13,7 +13,6 @@ import {
  */
 
 // table definition
-
 export const product = pgTable("acme_product", {
   id: serial("id").primaryKey(),
   skuNumber: integer("sku_number").notNull().unique(),
