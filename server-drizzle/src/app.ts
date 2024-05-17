@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 
+// Routes imports
+import testRoutes from "./routes/test";
+
 const app = express();
 
 // Middleware
@@ -16,9 +19,11 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   return res.json({ message: "Acme Ecommerce API" });
 });
 
+app.use("/test", testRoutes);
+
 // Error handler
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  console.error("[Global Error Handler:]", error);
+  console.error("[Global Error Handler]:", error);
 
   return res.status(500).json({
     errorMessage: error.message || "Something went wrong.",
