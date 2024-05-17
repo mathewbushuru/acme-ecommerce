@@ -1,0 +1,29 @@
+import {
+  pgTable,
+  serial,
+  varchar,
+  integer,
+  numeric,
+  boolean,
+} from "drizzle-orm/pg-core";
+
+/**
+ * Product table
+ */
+
+export const product = pgTable("acme_product", {
+  id: serial("id").primaryKey(),
+  skuNumber: integer("sku_number").notNull().unique(),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: varchar("description", { length: 256 }),
+  categoryId: integer("category_id").default(0),
+  regularPrice: numeric("regular_price").notNull(),
+  specialPrice: numeric("special_price"),
+  isOnSpecial: boolean("is_on_special").default(false),
+  vendorId: integer("vendor_id"),
+  vendorOrderingCode: varchar("vendor_ordering_code").notNull(),
+  status: varchar("status", { length: 50 }).$type<
+    "draft" | "active" | "discontinued"
+  >(),
+  imageUrl: varchar("image_url", { length: 256 }),
+});
