@@ -12,7 +12,7 @@ export const user = pgTable("acme_user", {
   firstName: varchar("first_name", { length: 256 }).notNull(),
   lastName: varchar("last_name", { length: 256 }).notNull(),
   role: varchar("role", { length: 50 })
-    .$type<"adminstrator" | "employee" | "customer">()
+    .$type<"administrator" | "employee" | "customer">()
     .default("customer"),
   createdAt: timestamp("created_at").defaultNow(),
 });

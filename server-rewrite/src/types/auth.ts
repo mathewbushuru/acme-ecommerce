@@ -3,7 +3,7 @@ import { type UserType, type NewUserType } from "../database/schemas/user";
 export type LoginRequestType = {
   email: string;
   password: string;
-  isAdminOrEmployee?: boolean;
+  role: UserType["role"];
 };
 
 export type LoginSuccessfulResponseType = Omit<UserType, "hashedPassword"> & {
