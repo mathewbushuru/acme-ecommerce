@@ -16,3 +16,7 @@ export const user = pgTable("acme_user", {
   >(),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// read and write types
+export type UserType = typeof user.$inferSelect;
+export type NewUserType = typeof user.$inferInsert;

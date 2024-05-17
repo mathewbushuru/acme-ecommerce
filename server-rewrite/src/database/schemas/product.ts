@@ -33,6 +33,10 @@ export const product = pgTable("acme_product", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// read and write types
+export type ProductType = typeof product.$inferSelect;
+export type NewProductType = typeof product.$inferInsert;
+
 /**
  * Category table
  */
@@ -44,3 +48,7 @@ export const category = pgTable("acme_category", {
   imageUrl: varchar("image_url", { length: 256 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// read and write types
+export type CategoryType = typeof category.$inferSelect;
+export type NewCategoryType = typeof category.$inferInsert;
