@@ -1,0 +1,1 @@
+ALTER TABLE "acme_user" ADD COLUMN "role" varchar(50);

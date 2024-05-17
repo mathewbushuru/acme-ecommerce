@@ -11,5 +11,8 @@ export const user = pgTable("acme_user", {
   hashedPassword: text("hashed_password").notNull(),
   firstName: varchar("first_name", { length: 256 }).notNull(),
   lastName: varchar("last_name", { length: 256 }).notNull(),
+  role: varchar("role", { length: 50 }).$type<
+    "adminstrator" | "employee" | "customer"
+  >(),
   createdAt: timestamp("created_at").defaultNow(),
 });
