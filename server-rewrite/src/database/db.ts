@@ -1,6 +1,9 @@
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
+import * as userSchema from "./schemas/user";
+import * as productSchema from "./schemas/product";
+
 export const sql = postgres({
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
@@ -22,5 +25,5 @@ export async function logPostgresVersion() {
   console.log(result);
 }
 
-const db = drizzle(sql);
+const db = drizzle(sql, { schema: { ...userSchema, ...productSchema } });
 export default db;
