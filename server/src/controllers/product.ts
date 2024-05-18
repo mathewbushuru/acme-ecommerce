@@ -5,8 +5,8 @@ import db from "../database/db";
 import {
   product,
   type ProductType,
-  category,
-  type CategoryType,
+  productCategory,
+  type ProductCategoryType,
 } from "../database/schemas/product";
 
 /**
@@ -110,17 +110,17 @@ export const getAllProductCategoriesController = async (
   next: NextFunction
 ) => {
   try {
-    const dbQueryResult = await db.select().from(category);
+    const dbQueryResult = await db.select().from(productCategory);
 
     if (dbQueryResult === undefined) {
-      const errorMessage = "There was an error fetching all categories.";
+      const errorMessage = "There was an error fetching all product categories.";
       console.error("[getAllProductCategoriesController]: ", errorMessage);
       return res.status(500).json({ errorMessage });
     }
 
-    const allCategoriesArr: CategoryType[] = dbQueryResult;
+    const allProductCategoriesArr: ProductCategoryType[] = dbQueryResult;
 
-    return res.json(allCategoriesArr);
+    return res.json(allProductCategoriesArr);
   } catch (error: any) {
     const errorMessage = "There was an error fetching all categories.";
     console.error("[getAllProductCategoriesController]: ", errorMessage);
@@ -130,7 +130,7 @@ export const getAllProductCategoriesController = async (
 };
 
 /**
- * @desc:       Get category by id
+ * @desc:       Get product category by id
  * @listens:    POST /products/categories/:categoryId
  * @access:     public
  * @param {Request} req;
@@ -138,7 +138,7 @@ export const getAllProductCategoriesController = async (
  * @param {NextFunction} next;
  * @return {void}
  */
-export const getCategoryByIdController = async (
+export const getProductCategoryByIdController = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -148,34 +148,34 @@ export const getCategoryByIdController = async (
     const categoryIdNumber = Number(categoryIdString);
     if (isNaN(categoryIdNumber)) {
       const errorMessage = "Category Id must be a valid number.";
-      console.error("[getCategoryByIdController]: ", errorMessage);
+      console.error("[getProductCategoryByIdController]: ", errorMessage);
       return res.status(400).json({ errorMessage });
     }
   
     try {
       const dbQueryResult = await db
         .select()
-        .from(category)
-        .where(eq(category.id, categoryIdNumber));
+        .from(productCategory)
+        .where(eq(productCategory.id, categoryIdNumber));
   
       if (dbQueryResult === undefined) {
-        const errorMessage = "There was an error fetching this category.";
-        console.error("[getCategoryByIdController]: ", errorMessage);
+        const errorMessage = "There was an error fetching this product category.";
+        console.error("[getProductCategoryByIdController]: ", errorMessage);
         return res.status(500).json({ errorMessage });
       }
   
       if (dbQueryResult.length === 0) {
-        const errorMessage = `Category with Id ${categoryIdNumber} was not found.`;
-        console.error("[getCategoryByIdController]: ", errorMessage);
+        const errorMessage = `Product category with Id ${categoryIdNumber} was not found.`;
+        console.error("[getProductCategoryByIdController]: ", errorMessage);
         return res.status(404).json({ errorMessage });
       }
   
-      const categoryData: CategoryType = dbQueryResult[0];
+      const categoryData: ProductCategoryType = dbQueryResult[0];
   
       return res.json(categoryData);
     } catch (error: any) {
       const errorMessage = "There was an error fetching this category.";
-      console.error("[getCategoryByIdController]: ", errorMessage);
+      console.error("[getProductCategoryByIdController]: ", errorMessage);
       console.error(error);
       return res.status(500).json({ errorMessage });
     }

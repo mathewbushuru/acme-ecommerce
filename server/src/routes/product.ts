@@ -4,7 +4,7 @@ import {
   getAllProductsController,
   getProductByIdController,
   getAllProductCategoriesController,
-  getCategoryByIdController,
+  getProductCategoryByIdController,
 } from "../controllers/product";
 
 const router = Router();
@@ -12,6 +12,6 @@ const router = Router();
 router.get("/all", getAllProductsController);
 router.get("/:productId", getProductByIdController);
 router.get("/categories/all", getAllProductCategoriesController);
-router.get("/categories/:categoryId", getCategoryByIdController);
+router.get("/categories/:categoryId", getProductCategoryByIdController);
 
 export default router;

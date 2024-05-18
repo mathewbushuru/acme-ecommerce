@@ -17,7 +17,7 @@ export const product = pgTable("acme_product", {
   skuNumber: integer("sku_number").notNull().unique(),
   name: varchar("name", { length: 256 }).notNull(),
   description: varchar("description", { length: 256 }),
-  categoryId: integer("category_id").references(() => category.id, {
+  categoryId: integer("category_id").references(() => productCategory.id, {
     onDelete: "set null",
   }),
   regularPrice: numeric("regular_price").notNull(),
@@ -40,7 +40,7 @@ export type NewProductType = typeof product.$inferInsert;
  * Category table
  */
 // table definition
-export const category = pgTable("acme_category", {
+export const productCategory = pgTable("acme_product_category", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull(),
   imageUrl: varchar("image_url", { length: 256 }),
@@ -48,5 +48,5 @@ export const category = pgTable("acme_category", {
 });
 
 // read and write types
-export type CategoryType = typeof category.$inferSelect;
-export type NewCategoryType = typeof category.$inferInsert;
+export type ProductCategoryType = typeof productCategory.$inferSelect;
+export type NewProductCategoryType = typeof productCategory.$inferInsert;
