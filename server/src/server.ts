@@ -1,9 +1,9 @@
 import app from "./app";
-import { logPostgresVersion } from "./postgres-database";
+import { logPostgresVersion } from "./database/db";
 
 const port = process.env.PORT || 3001;
 
 app.listen(port, async () => {
-  console.log(`Acme Groceries API running on port ${port}`);
-  await logPostgresVersion()
+  console.log(`Acme Ecommerce API running on port ${port}`);
+  await logPostgresVersion();
 });

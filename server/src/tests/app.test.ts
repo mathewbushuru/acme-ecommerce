@@ -7,13 +7,15 @@ describe("GET /", () => {
   it("responds with a welcome message", async () => {
     const response = await request(app).get("/");
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: "Acme Groceries API" });
+    expect(response.body).toEqual({
+      message: "Acme Ecommerce API",
+    });
   });
 });
 
 describe("Error handler", () => {
   it("responds with a 500 status code and error message", async () => {
-    const response = await request(app).get("/test/test-error");
+    const response = await request(app).get("/test/test-error-handler");
     expect(response.status).toBe(500);
     expect(response.body).toHaveProperty("errorMessage");
   });

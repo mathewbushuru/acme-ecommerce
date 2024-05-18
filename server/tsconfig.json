@@ -10,7 +10,7 @@
     "strict": true,
     "types": ["node"]
   },
-  "include": ["src/**/*"],
+  "include": ["./**/*"],
   "exclude": ["node_modules", "src/tests/**/*"],
   "ts-node": {
     "esm": true
