@@ -6,6 +6,7 @@ import {
   product,
   type NewProductType,
 } from "./schemas/product";
+import { hashPassword } from "../lib/auth";
 
 export async function seedDatabase() {
   await db.delete(user);
@@ -16,7 +17,7 @@ export async function seedDatabase() {
     firstName: "Matt",
     lastName: "B",
     email: "matt@test.com",
-    hashedPassword: "Tester123",
+    hashedPassword: await hashPassword("Tester123"),
   };
   const returnUserValue = await db.insert(user).values(newUser).returning();
   console.log(returnUserValue);
