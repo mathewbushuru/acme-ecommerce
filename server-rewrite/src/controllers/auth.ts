@@ -69,6 +69,7 @@ export const postSignupController = async (
     console.log(
       `[postSignupController]: Signup successful (${responseData.email})`
     );
+
     return res
       .status(201)
       .json({ message: "Signup successful.", ...responseData });

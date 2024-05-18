@@ -11,7 +11,6 @@ import {
 /**
  * Product table
  */
-
 // table definition
 export const product = pgTable("acme_product", {
   id: serial("id").primaryKey(),
@@ -40,7 +39,6 @@ export type NewProductType = typeof product.$inferInsert;
 /**
  * Category table
  */
-
 // table definition
 export const category = pgTable("acme_category", {
   id: serial("id").primaryKey(),

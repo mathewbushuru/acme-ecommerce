@@ -2,7 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { eq } from "drizzle-orm";
 
 import db from "../database/db";
-import { product, type ProductType } from "../database/schemas/product";
+import {
+  product,
+  type ProductType,
+  category,
+  type CategoryType,
+} from "../database/schemas/product";
 
 /**
  * @desc:       Get all products
@@ -85,6 +90,40 @@ export const getProductByIdController = async (
   } catch (error: any) {
     const errorMessage = "There was an error fetching this product.";
     console.error("[getProductByIdController]: ", errorMessage);
+    console.error(error);
+    return res.status(500).json({ errorMessage });
+  }
+};
+
+/**
+ * @desc:       Get all product categories
+ * @listens:    POST /products/categories/all
+ * @access:     public
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
+ */
+export const getAllProductCategoriesController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const dbQueryResult = await db.select().from(category);
+
+    if (dbQueryResult === undefined) {
+      const errorMessage = "There was an error fetching all categories.";
+      console.error("[getAllProductCategoriesController]: ", errorMessage);
+      return res.status(500).json({ errorMessage });
+    }
+
+    const allCategoriesArr: CategoryType[] = dbQueryResult;
+
+    return res.json(allCategoriesArr);
+  } catch (error: any) {
+    const errorMessage = "There was an error fetching all categories.";
+    console.error("[getAllProductCategoriesController]: ", errorMessage);
     console.error(error);
     return res.status(500).json({ errorMessage });
   }

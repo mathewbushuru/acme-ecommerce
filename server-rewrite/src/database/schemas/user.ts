@@ -3,7 +3,6 @@ import { pgTable, serial, varchar, text, timestamp } from "drizzle-orm/pg-core";
 /**
  * user table
  */
-
 // table definition
 export const user = pgTable("acme_user", {
   id: serial("id").primaryKey(),
