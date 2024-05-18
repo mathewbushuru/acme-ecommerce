@@ -8,6 +8,7 @@ import {
   type NewProductType,
   productCategory,
   type ProductCategoryType,
+  type NewProductCategoryType,
 } from "../database/schemas/product";
 
 /**
@@ -139,7 +140,8 @@ export const postCreateNewProductController = async (
   }
 
   if (!requestData.regularPrice) {
-    const errorMessage = "Product creation error, product regular price is missing.";
+    const errorMessage =
+      "Product creation error, product regular price is missing.";
     console.error("[postCreateNewProductController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
   }
@@ -149,6 +151,10 @@ export const postCreateNewProductController = async (
       "Product creation error, product vendor code is missing.";
     console.error("[postCreateNewProductController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
+  }
+
+  if (!requestData.status) {
+    requestData.status = "draft";
   }
 
   try {
@@ -275,6 +281,61 @@ export const getProductCategoryByIdController = async (
   } catch (error: any) {
     const errorMessage = "There was an error fetching this category.";
     console.error("[getProductCategoryByIdController]: ", errorMessage);
+    console.error(error);
+    return res.status(500).json({ errorMessage });
+  }
+};
+
+/**
+ * @desc:       Create new product category
+ * @listens:    POST /products/categories/new
+ * @access:     public
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
+ */
+export const postCreateNewProductCategoryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestData = req.body as NewProductCategoryType;
+
+  if (!requestData.name) {
+    const errorMessage = "Product creation error, product name is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  try {
+    const dbQueryResult = await db
+      .insert(productCategory)
+      .values(requestData)
+      .returning();
+
+    if (!dbQueryResult || dbQueryResult.length === 0) {
+      throw new Error("There was an error creating the category, try again.");
+    }
+
+    const createdCategoryData = dbQueryResult[0];
+
+    const responseData: ProductCategoryType & {
+      message: string;
+    } = {
+      message: `${createdCategoryData.name} category successfully created.`,
+      ...createdCategoryData,
+    };
+
+    console.log(
+      "[postCreateNewProductCategoryController]:",
+      responseData.message
+    );
+
+    return res.json(responseData);
+  } catch (error: any) {
+    const errorMessage = "There was an error creating the category, try again.";
+    console.error("[postCreateNewProductCategoryController]: ", errorMessage);
     console.error(error);
     return res.status(500).json({ errorMessage });
   }

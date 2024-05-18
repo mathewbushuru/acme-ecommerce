@@ -26,8 +26,7 @@ export const product = pgTable("acme_product", {
   vendorId: integer("vendor_id"),
   vendorOrderingCode: varchar("vendor_ordering_code").notNull(),
   status: varchar("status", { length: 50 })
-    .$type<"draft" | "active" | "discontinued">()
-    .default("draft"),
+    .$type<"draft" | "active" | "discontinued">(),
   imageUrl: varchar("image_url", { length: 256 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
