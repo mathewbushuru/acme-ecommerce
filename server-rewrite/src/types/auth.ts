@@ -10,5 +10,3 @@ export type LoginSuccessfulResponseType = Omit<UserType, "hashedPassword"> & {
   message: string;
   jwtToken: string;
 };
-
-export type SignupRequestType = Omit<NewUserType, "id" | "createdAt">;
