@@ -128,3 +128,55 @@ export const getAllProductCategoriesController = async (
     return res.status(500).json({ errorMessage });
   }
 };
+
+/**
+ * @desc:       Get category by id
+ * @listens:    POST /products/categories/:categoryId
+ * @access:     public
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
+ */
+export const getCategoryByIdController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { categoryId: categoryIdString } = req.params;
+  
+    const categoryIdNumber = Number(categoryIdString);
+    if (isNaN(categoryIdNumber)) {
+      const errorMessage = "Category Id must be a valid number.";
+      console.error("[getCategoryByIdController]: ", errorMessage);
+      return res.status(400).json({ errorMessage });
+    }
+  
+    try {
+      const dbQueryResult = await db
+        .select()
+        .from(category)
+        .where(eq(category.id, categoryIdNumber));
+  
+      if (dbQueryResult === undefined) {
+        const errorMessage = "There was an error fetching this category.";
+        console.error("[getCategoryByIdController]: ", errorMessage);
+        return res.status(500).json({ errorMessage });
+      }
+  
+      if (dbQueryResult.length === 0) {
+        const errorMessage = `Category with Id ${categoryIdNumber} was not found.`;
+        console.error("[getCategoryByIdController]: ", errorMessage);
+        return res.status(404).json({ errorMessage });
+      }
+  
+      const categoryData: CategoryType = dbQueryResult[0];
+  
+      return res.json(categoryData);
+    } catch (error: any) {
+      const errorMessage = "There was an error fetching this category.";
+      console.error("[getCategoryByIdController]: ", errorMessage);
+      console.error(error);
+      return res.status(500).json({ errorMessage });
+    }
+  };
