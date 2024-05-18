@@ -1,8 +1,8 @@
 import db from "./db";
 import { user, type NewUserType } from "./schemas/user";
 import {
-  category,
-  type NewCategoryType,
+  productCategory,
+  type NewProductCategoryType,
   product,
   type NewProductType,
 } from "./schemas/product";
@@ -11,7 +11,7 @@ import { hashPassword } from "../lib/auth";
 export async function seedDatabase() {
   await db.delete(user);
   await db.delete(product);
-  await db.delete(category);
+  await db.delete(productCategory);
 
   const newUser: NewUserType = {
     firstName: "Matt",
@@ -22,11 +22,11 @@ export async function seedDatabase() {
   const returnUserValue = await db.insert(user).values(newUser).returning();
   console.log(returnUserValue);
 
-  const newCategory: NewCategoryType = {
+  const newCategory: NewProductCategoryType = {
     name: "Test Category",
   };
   const returnCategoryValue = await db
-    .insert(category)
+    .insert(productCategory)
     .values(newCategory)
     .returning();
   console.log(returnCategoryValue);

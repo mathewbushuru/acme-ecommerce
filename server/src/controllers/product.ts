@@ -5,6 +5,7 @@ import db from "../database/db";
 import {
   product,
   type ProductType,
+  type NewProductType,
   productCategory,
   type ProductCategoryType,
 } from "../database/schemas/product";
@@ -96,6 +97,103 @@ export const getProductByIdController = async (
 };
 
 /**
+ * @desc:       Create new product
+ * @listens:    POST /products/new
+ * @access:     public
+ * @param {Request} req;
+ * @param {Response} res;
+ * @param {NextFunction} next;
+ * @return {void}
+ */
+export const postCreateNewProductController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestData = req.body as NewProductType;
+
+  if (!requestData.skuNumber) {
+    const errorMessage = "Product creation error, sku number is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  const skuNumberStringAsNumber = Number(requestData.skuNumber);
+  if (isNaN(skuNumberStringAsNumber)) {
+    const errorMessage = "Sku number must be a valid number.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+  requestData.skuNumber = skuNumberStringAsNumber;
+
+  if (!requestData.name) {
+    const errorMessage = "Product creation error, product name is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  if (!requestData.categoryId) {
+    const errorMessage = "Product creation error, product category is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  if (!requestData.regularPrice) {
+    const errorMessage = "Product creation error, product regular price is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  if (!requestData.vendorOrderingCode) {
+    const errorMessage =
+      "Product creation error, product vendor code is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  try {
+    const dbQueryResult = await db
+      .insert(product)
+      .values(requestData)
+      .returning();
+
+    if (!dbQueryResult || dbQueryResult.length === 0) {
+      throw new Error("There was an error creating the product, try again.");
+    }
+
+    const createdProductData = dbQueryResult[0];
+
+    const responseData: ProductType & {
+      message: string;
+    } = {
+      message: `${createdProductData.name} product successfully created.`,
+      ...createdProductData,
+    };
+
+    console.log("[postCreateNewProductController]:", responseData.message);
+
+    return res.json(responseData);
+  } catch (error: any) {
+    let customErrorMessage: string | undefined;
+
+    if (
+      error.message &&
+      error.message ===
+        'duplicate key value violates unique constraint "acme_product_sku_number_unique"'
+    ) {
+      customErrorMessage = `Product creation error, sku number ${requestData.skuNumber} already in system.`;
+    }
+
+    const errorMessage =
+      customErrorMessage ||
+      "There was an error creating the product, try again.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    console.error(error);
+    return res.status(500).json({ errorMessage });
+  }
+};
+
+/**
  * @desc:       Get all product categories
  * @listens:    POST /products/categories/all
  * @access:     public
@@ -113,7 +211,8 @@ export const getAllProductCategoriesController = async (
     const dbQueryResult = await db.select().from(productCategory);
 
     if (dbQueryResult === undefined) {
-      const errorMessage = "There was an error fetching all product categories.";
+      const errorMessage =
+        "There was an error fetching all product categories.";
       console.error("[getAllProductCategoriesController]: ", errorMessage);
       return res.status(500).json({ errorMessage });
     }
@@ -139,44 +238,44 @@ export const getAllProductCategoriesController = async (
  * @return {void}
  */
 export const getProductCategoryByIdController = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const { categoryId: categoryIdString } = req.params;
-  
-    const categoryIdNumber = Number(categoryIdString);
-    if (isNaN(categoryIdNumber)) {
-      const errorMessage = "Category Id must be a valid number.";
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { categoryId: categoryIdString } = req.params;
+
+  const categoryIdNumber = Number(categoryIdString);
+  if (isNaN(categoryIdNumber)) {
+    const errorMessage = "Category Id must be a valid number.";
+    console.error("[getProductCategoryByIdController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
+  try {
+    const dbQueryResult = await db
+      .select()
+      .from(productCategory)
+      .where(eq(productCategory.id, categoryIdNumber));
+
+    if (dbQueryResult === undefined) {
+      const errorMessage = "There was an error fetching this product category.";
       console.error("[getProductCategoryByIdController]: ", errorMessage);
-      return res.status(400).json({ errorMessage });
-    }
-  
-    try {
-      const dbQueryResult = await db
-        .select()
-        .from(productCategory)
-        .where(eq(productCategory.id, categoryIdNumber));
-  
-      if (dbQueryResult === undefined) {
-        const errorMessage = "There was an error fetching this product category.";
-        console.error("[getProductCategoryByIdController]: ", errorMessage);
-        return res.status(500).json({ errorMessage });
-      }
-  
-      if (dbQueryResult.length === 0) {
-        const errorMessage = `Product category with Id ${categoryIdNumber} was not found.`;
-        console.error("[getProductCategoryByIdController]: ", errorMessage);
-        return res.status(404).json({ errorMessage });
-      }
-  
-      const categoryData: ProductCategoryType = dbQueryResult[0];
-  
-      return res.json(categoryData);
-    } catch (error: any) {
-      const errorMessage = "There was an error fetching this category.";
-      console.error("[getProductCategoryByIdController]: ", errorMessage);
-      console.error(error);
       return res.status(500).json({ errorMessage });
     }
-  };
+
+    if (dbQueryResult.length === 0) {
+      const errorMessage = `Product category with Id ${categoryIdNumber} was not found.`;
+      console.error("[getProductCategoryByIdController]: ", errorMessage);
+      return res.status(404).json({ errorMessage });
+    }
+
+    const categoryData: ProductCategoryType = dbQueryResult[0];
+
+    return res.json(categoryData);
+  } catch (error: any) {
+    const errorMessage = "There was an error fetching this category.";
+    console.error("[getProductCategoryByIdController]: ", errorMessage);
+    console.error(error);
+    return res.status(500).json({ errorMessage });
+  }
+};

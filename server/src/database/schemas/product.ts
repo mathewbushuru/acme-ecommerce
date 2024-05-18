@@ -25,9 +25,9 @@ export const product = pgTable("acme_product", {
   isOnSpecial: boolean("is_on_special").default(false),
   vendorId: integer("vendor_id"),
   vendorOrderingCode: varchar("vendor_ordering_code").notNull(),
-  status: varchar("status", { length: 50 }).$type<
-    "draft" | "active" | "discontinued"
-  >(),
+  status: varchar("status", { length: 50 })
+    .$type<"draft" | "active" | "discontinued">()
+    .default("draft"),
   imageUrl: varchar("image_url", { length: 256 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
