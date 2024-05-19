@@ -185,7 +185,9 @@ export default function ProductMaintenanceEdit() {
                               id="case-cost"
                               type="number"
                               defaultValue={
-                                Math.round(productData.regularPrice * 0.75) - 0.01
+                                Math.round(
+                                  Number(productData.regularPrice) * 0.75,
+                                ) - 0.01
                               }
                               className="bg-popover"
                             />
@@ -211,7 +213,7 @@ export default function ProductMaintenanceEdit() {
                             <Input
                               id="retail-price"
                               type="number"
-                              defaultValue={productData.regularPrice }
+                              defaultValue={productData.regularPrice}
                               className="bg-popover"
                             />
                           </TableCell>
@@ -338,7 +340,7 @@ export default function ProductMaintenanceEdit() {
                     <img
                       alt={productData.name}
                       className="aspect-square w-full rounded-md object-cover"
-                      src={productData.imageUrl}
+                      src={productData.imageUrl ?? "/placeholder.svg"}
                     />
 
                     <div className="grid grid-cols-3 gap-2">

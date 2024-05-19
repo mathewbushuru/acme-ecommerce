@@ -46,7 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { type ProductSuccessfulResponseType } from "@/types/product";
+import { type ProductType } from "@/types/product";
 
 export default function ProductsHome() {
   const navigate = useNavigate();
@@ -298,7 +298,7 @@ function FilterDropdownMenu() {
 function ProductsTable({
   productsArr,
 }: {
-  productsArr: ProductSuccessfulResponseType[];
+  productsArr: ProductType[];
 }) {
   const navigate = useNavigate();
   return (
@@ -325,7 +325,7 @@ function ProductsTable({
             <TableCell className="hidden sm:table-cell">
               <img
                 className="aspect-square rounded-md object-cover"
-                src={product.imageUrl}
+                src={product.imageUrl ?? "/placeholder.svg"}
               />
             </TableCell>
             <TableCell className="px-1 font-medium sm:px-4">
@@ -343,12 +343,13 @@ function ProductsTable({
             <TableCell className="hidden font-medium md:table-cell">
               {product.id}
             </TableCell>
-            <TableCell>${product.regularPrice }</TableCell>
+            <TableCell>${product.regularPrice}</TableCell>
             <TableCell className="hidden lg:table-cell">
               {Math.floor(Math.random() * 5000).toLocaleString()}
             </TableCell>
             <TableCell className="hidden lg:table-cell">
-              {new Date(product.createdAt).toLocaleString()}
+              {product.createdAt &&
+                new Date(product.createdAt).toLocaleString()}
             </TableCell>
             <TableCell>
               <DropdownMenu>

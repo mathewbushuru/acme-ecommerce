@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { type RootState } from "@/store/store";
 
 import {
-  type ProductSuccessfulResponseType,
+  type ProductType,
   type ProductCategoryType,
 } from "@/types/product";
 import {
@@ -47,11 +47,11 @@ const acmeAdminApi = createApi({
       invalidatesTags: [],
     }),
 
-    getAllProducts: builder.query<ProductSuccessfulResponseType[], void>({
+    getAllProducts: builder.query<ProductType[], void>({
       query: () => `/products/all`,
     }),
 
-    getProductById: builder.query<ProductSuccessfulResponseType, string>({
+    getProductById: builder.query<ProductType, string>({
       query: (productId) => `/products/${productId}`,
     }),
 

@@ -1,26 +1,25 @@
-export interface AdminUser {
+export type AdminUser = {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
-  isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+  role: "administrator" | "employee" | "customer" | null;
+  createdAt: Date | null;
+};
 
-export interface AdminLoginRequestType {
+export type AdminLoginRequestType = {
   email: string;
   password: string;
-}
+  role?: AdminUser["role"];
+};
 
-export interface AdminLoginSuccessfulResponseType {
+export type AdminLoginSuccessfulResponseType = {
   message: string;
   jwtToken: string;
   id: number;
   email: string;
   firstName: string;
   lastName: string;
-  isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+  role: AdminUser["role"];
+  createdAt: Date | null;
+};
