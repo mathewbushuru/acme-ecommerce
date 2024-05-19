@@ -1,4 +1,4 @@
-export type ProductSuccessfulResponseType = {
+export type ProductType = {
   id: string; // to be converted to number in BE
   skuNumber: string; // to be converted to number in BE
   name: string;

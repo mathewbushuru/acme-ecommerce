@@ -46,7 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { type ProductSuccessfulResponseType } from "@/types/product";
+import { type ProductType } from "@/types/product";
 
 export default function ProductsHome() {
   const navigate = useNavigate();
@@ -298,7 +298,7 @@ function FilterDropdownMenu() {
 function ProductsTable({
   productsArr,
 }: {
-  productsArr: ProductSuccessfulResponseType[];
+  productsArr: ProductType[];
 }) {
   const navigate = useNavigate();
   return (
