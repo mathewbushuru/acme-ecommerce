@@ -17,6 +17,9 @@ export const product = pgTable("acme_product", {
   skuNumber: integer("sku_number").notNull().unique(),
   name: varchar("name", { length: 256 }).notNull(),
   description: varchar("description", { length: 256 }),
+  sizeAndMeasurement: varchar("size_and_measurement", { length: 30 }).default(
+    "1 each"
+  ),
   categoryId: integer("category_id").references(() => productCategory.id, {
     onDelete: "set null",
   }),
@@ -25,8 +28,9 @@ export const product = pgTable("acme_product", {
   isOnSpecial: boolean("is_on_special").default(false),
   vendorId: integer("vendor_id"),
   vendorOrderingCode: varchar("vendor_ordering_code").notNull(),
-  status: varchar("status", { length: 50 })
-    .$type<"draft" | "active" | "discontinued">(),
+  status: varchar("status", { length: 50 }).$type<
+    "draft" | "active" | "discontinued"
+  >(),
   imageUrl: varchar("image_url", { length: 256 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
