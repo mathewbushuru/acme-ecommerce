@@ -1,1 +1,0 @@
-ALTER TABLE "acme_product" ADD COLUMN "size_and_measurement" varchar(30) DEFAULT '1 each';
