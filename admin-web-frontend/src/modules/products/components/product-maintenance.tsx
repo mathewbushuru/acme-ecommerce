@@ -119,7 +119,7 @@ export default function ProductMaintenance() {
                 ) : (
                   <>
                     <SelectItem value="All"> All </SelectItem>
-                    {categoryData.allCategories.map((category) => (
+                    {categoryData.map((category) => (
                       <SelectItem value={category.name} key={category.id}>
                         {category.name}
                       </SelectItem>
