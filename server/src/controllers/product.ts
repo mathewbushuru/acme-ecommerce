@@ -190,6 +190,14 @@ export const postCreateNewProductController = async (
       customErrorMessage = `Product creation error, sku number ${requestData.skuNumber} already in system.`;
     }
 
+    if (
+      error.message &&
+      error.message ===
+        'insert or update on table "acme_product" violates foreign key constraint "acme_product_category_id_acme_product_category_id_fk"'
+    ) {
+      customErrorMessage = `Product creation error, category id ${requestData.categoryId} not in system.`;
+    }
+
     const errorMessage =
       customErrorMessage ||
       "There was an error creating the product, try again.";
