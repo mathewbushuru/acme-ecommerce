@@ -40,32 +40,23 @@ const acmeAdminApi = createApi({
       AdminLoginRequestType
     >({
       query: (credentials) => ({
-        url: "admin/auth/login",
+        url: "/auth/login",
         method: "POST",
         body: credentials,
       }),
       invalidatesTags: [],
     }),
 
-    getAllProducts: builder.query<
-      { allProducts: ProductSuccessfulResponseType[] },
-      void
-    >({
-      query: () => `/product/all`,
+    getAllProducts: builder.query<ProductSuccessfulResponseType[], void>({
+      query: () => `/products/all`,
     }),
 
-    getProductById: builder.query<
-      { productData: ProductSuccessfulResponseType },
-      string
-    >({
-      query: (productId) => `/product/${productId}`,
+    getProductById: builder.query<ProductSuccessfulResponseType, string>({
+      query: (productId) => `/products/${productId}`,
     }),
 
-    getAllCategories: builder.query<
-      { allCategories: ProductCategoryType[] },
-      void
-    >({
-      query: () => `/product/categories`,
+    getAllCategories: builder.query<ProductCategoryType[], void>({
+      query: () => `/products/categories/all`,
     }),
   }),
 });

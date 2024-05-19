@@ -76,7 +76,7 @@ export default function ProductMaintenanceEdit() {
     );
   }
 
-  const { productData } = data;
+  const productData = data;
 
   return (
     <ProductLayout
@@ -185,8 +185,7 @@ export default function ProductMaintenanceEdit() {
                               id="case-cost"
                               type="number"
                               defaultValue={
-                                Math.round(productData.regularPrice * 0.75) /
-                                100
+                                Math.round(productData.regularPrice * 0.75) - 0.01
                               }
                               className="bg-popover"
                             />
@@ -212,7 +211,7 @@ export default function ProductMaintenanceEdit() {
                             <Input
                               id="retail-price"
                               type="number"
-                              defaultValue={productData.regularPrice / 100}
+                              defaultValue={productData.regularPrice }
                               className="bg-popover"
                             />
                           </TableCell>
@@ -260,7 +259,7 @@ export default function ProductMaintenanceEdit() {
                           {!categoryData ? (
                             <SelectItem value="Loading">Loading ...</SelectItem>
                           ) : (
-                            categoryData.allCategories.map((category) => (
+                            categoryData.map((category) => (
                               <SelectItem value={category.id} key={category.id}>
                                 {category.name}
                               </SelectItem>

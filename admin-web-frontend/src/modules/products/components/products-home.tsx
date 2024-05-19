@@ -65,7 +65,7 @@ export default function ProductsHome() {
     );
   }
 
-  const allProductsArr = productsData.allProducts;
+  const allProductsArr = productsData;
   // const allProductsArr: any[] = [];
 
   return (
@@ -259,7 +259,7 @@ function FilterDropdownMenu() {
                 Loading ...
               </DropdownMenuCheckboxItem>
             ) : (
-              categoryData.allCategories.map((category) => (
+              categoryData.map((category) => (
                 <DropdownMenuCheckboxItem key={category.id}>
                   {category.name}
                 </DropdownMenuCheckboxItem>
@@ -343,7 +343,7 @@ function ProductsTable({
             <TableCell className="hidden font-medium md:table-cell">
               {product.id}
             </TableCell>
-            <TableCell>${product.regularPrice / 100}</TableCell>
+            <TableCell>${product.regularPrice }</TableCell>
             <TableCell className="hidden lg:table-cell">
               {Math.floor(Math.random() * 5000).toLocaleString()}
             </TableCell>

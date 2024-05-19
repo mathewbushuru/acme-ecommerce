@@ -1,7 +1,7 @@
 import Autoplay from "embla-carousel-autoplay";
 
 import { useGetAllProductsQuery } from "@/api";
-import { productType } from "@/types/product";
+import { ProductType } from "@/types/product";
 import { fallbackAllProducts } from "@/lib/constants";
 
 import AuthModal from "@/components/auth-modal";
@@ -19,12 +19,12 @@ export default function DealsCarousel() {
   const { data } = useGetAllProductsQuery();
 
   let allProducts: Omit<
-    productType,
+    ProductType,
     "id" | "categoryId" | "isOnSpecial" | "createdAt" | "updatedAt"
   >[];
 
   if (data) {
-    allProducts = data.allProducts;
+    allProducts = data;
   } else {
     allProducts = fallbackAllProducts;
   }
@@ -52,28 +52,39 @@ export default function DealsCarousel() {
       >
         <CarouselContent>
           {allProducts.map((item, index) => (
-            <CarouselItem className="md:basis-1/3 lg:basis-1/4" key={index}>
-              <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-square flex-col justify-center gap-3 p-4">
-                    <img
-                      src={item.imageUrl}
-                      className="mx-auto h-48 w-72 cursor-pointer rounded-md object-cover"
-                    />
-                    <p className="h-8 cursor-pointer text-sm">{`${item.name} - ${item.size}`}</p>
-                    <p className="mb-1 text-left">
-                      <span className="font-bold text-destructive">
-                        {`$${(item.specialPrice / 100).toFixed(2)}`}
-                      </span>{" "}
-                      was {`$${(item.regularPrice / 100).toFixed(2)}`}
-                    </p>
-                    <AuthModal>
-                      <Button size="sm">Add to Cart</Button>
-                    </AuthModal>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
+            <>
+              {item.specialPrice ? (
+                <>
+                  <CarouselItem
+                    className="md:basis-1/3 lg:basis-1/4"
+                    key={index}
+                  >
+                    <div className="p-1">
+                      <Card>
+                        <CardContent className="flex aspect-square flex-col justify-center gap-3 p-4">
+                          <img
+                            src={item.imageUrl}
+                            className="mx-auto h-48 w-72 cursor-pointer rounded-md object-cover"
+                          />
+                          <p className="h-8 cursor-pointer text-sm">{`${item.name} - ${item.sizeAndMeasurement}`}</p>
+                          <p className="mb-1 text-left">
+                            <span className="font-bold text-destructive">
+                              {`$${item.specialPrice}`}
+                            </span>{" "}
+                            was {`$${item.regularPrice}`}
+                          </p>
+                          <AuthModal>
+                            <Button size="sm">Add to Cart</Button>
+                          </AuthModal>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
           ))}
         </CarouselContent>
         <CarouselPrevious />

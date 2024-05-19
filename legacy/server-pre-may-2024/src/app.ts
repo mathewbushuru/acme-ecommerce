@@ -6,7 +6,7 @@ import "dotenv/config";
 
 // Routes imports
 import authRoutes from "./routes/auth";
-import productRoutes from "./routes/product";
+import productRoutes from "./routes/product"
 import adminRoutes from "./routes/admin";
 import testRoutes from "./routes/test";
 
@@ -19,20 +19,19 @@ app.use(bodyParser.json());
 
 // Routes
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  return res.json({ message: "Acme Ecommerce API" });
+  res.json({ message: "Acme Groceries API" });
 });
 
 app.use("/auth", authRoutes);
-app.use("/products", productRoutes);
+app.use("/product", productRoutes);
 app.use("/admin", adminRoutes);
 app.use("/test", testRoutes);
 
-// Error handler
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  console.error("[Global Error Handler]:", error);
+  console.error(error);
 
   return res.status(500).json({
-    errorMessage: error.message || "Something went wrong.",
+    errorMessage: error.message || "Something went wrong...",
     ...error,
   });
 });

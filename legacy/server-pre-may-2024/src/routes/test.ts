@@ -6,7 +6,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/test-error-handler", (req, res, next) => {
+router.get("/test-error", (req, res, next) => {
   const error = new Error("Test error");
   next(error);
 });

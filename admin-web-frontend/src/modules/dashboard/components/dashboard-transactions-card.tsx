@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/table";
 
 export default function DashboardTransactionsCard() {
+  const navigate = useNavigate();
   return (
     <Card className="xl:col-span-2">
       <CardHeader className="flex flex-row items-center gap-1">
@@ -28,7 +30,11 @@ export default function DashboardTransactionsCard() {
             Recent transactions from the stores
           </CardDescription>
         </div>
-        <Button size="sm" className="ml-auto gap-1">
+        <Button
+          size="sm"
+          className="ml-auto gap-1"
+          onClick={() => navigate("/analytics")}
+        >
           View all
           <ArrowUpRight className="h-4 w-4" />
         </Button>
@@ -50,7 +56,7 @@ export default function DashboardTransactionsCard() {
             <TableRow>
               <TableCell>
                 <div className="font-medium">Oliver Twist</div>
-                <div className="text-sm text-muted-foreground hidden sm:inline">
+                <div className="hidden text-sm text-muted-foreground sm:inline">
                   Granville Island Store
                 </div>
               </TableCell>
@@ -64,7 +70,7 @@ export default function DashboardTransactionsCard() {
             <TableRow>
               <TableCell>
                 <div className="font-medium">Rose Maylie</div>
-                <div className="text-sm text-muted-foreground hidden sm:inline">
+                <div className="hidden text-sm text-muted-foreground sm:inline">
                   Online Store
                 </div>
               </TableCell>
@@ -78,7 +84,7 @@ export default function DashboardTransactionsCard() {
             <TableRow>
               <TableCell>
                 <div className="font-medium">Bill Sikes</div>
-                <div className="text-sm text-muted-foreground hidden sm:inline">
+                <div className="hidden text-sm text-muted-foreground sm:inline">
                   Metrotown Store
                 </div>
               </TableCell>
@@ -94,7 +100,7 @@ export default function DashboardTransactionsCard() {
             <TableRow>
               <TableCell>
                 <div className="font-medium">Noah Claypole</div>
-                <div className="text-sm text-muted-foreground hidden sm:inline">
+                <div className="hidden text-sm text-muted-foreground sm:inline">
                   Downtown Store
                 </div>
               </TableCell>
@@ -103,7 +109,9 @@ export default function DashboardTransactionsCard() {
                 <Badge variant="destructive">Refund</Badge>
               </TableCell>
               <TableCell className="hidden sm:table-cell">2024-04-31</TableCell>
-              <TableCell className="text-right whitespace-nowrap">- $70.00</TableCell>
+              <TableCell className="whitespace-nowrap text-right">
+                - $70.00
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

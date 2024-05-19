@@ -8,8 +8,8 @@ import {
   type SignupResponseType,
 } from "@/types/auth";
 import {
-  GetAllCategoriesResponseType,
-  GetAllProductsResponseType,
+  type ProductType,
+  type CategoryType,
 } from "@/types/product";
 
 const SERVER_URL = "https://acme-groceries-api.onrender.com";
@@ -51,11 +51,11 @@ const acmeApi = createApi({
       }),
       invalidatesTags: [],
     }),
-    getAllProductCategories: builder.query<GetAllCategoriesResponseType, void>({
-      query: () => `/product/categories`,
+    getAllProductCategories: builder.query<CategoryType[], void>({
+      query: () => `/products/categories/all`,
     }),
-    getAllProducts: builder.query<GetAllProductsResponseType, void>({
-      query: () => `/product/all`,
+    getAllProducts: builder.query<ProductType[], void>({
+      query: () => `/products/all`,
     }),
   }),
 });

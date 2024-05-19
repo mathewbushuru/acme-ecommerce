@@ -1,33 +1,21 @@
 import { Router } from "express";
 
 import {
-  getAllProductCategories,
-  getAllProducts,
-  getProductById,
-} from "../postgres-database/product-utils";
+  getAllProductsController,
+  getProductByIdController,
+  postCreateNewProductController,
+  getAllProductCategoriesController,
+  getProductCategoryByIdController,
+  postCreateNewProductCategoryController,
+} from "../controllers/product";
 
 const router = Router();
 
-router.get("/categories", async (req, res, next) => {
-  const allCategories = await getAllProductCategories();
-  return res.json({ allCategories });
-});
-
-router.get("/all", async (req, res, next) => {
-  const allProducts = await getAllProducts();
-  return res.json({ allProducts });
-});
-
-router.get("/:productId", async (req, res, next) => {
-  const { productId } = req.params;
-  const productData = await getProductById(productId);
-
-  if(!productData){
-    const errorMessage = `Product with sku number ${productId} not in database.`;
-    return res.status(404).json({errorMessage});
-  }
-
-  return res.json({ productData });
-});
+router.get("/all", getAllProductsController);
+router.get("/:productId", getProductByIdController);
+router.post("/new", postCreateNewProductController);
+router.get("/categories/all", getAllProductCategoriesController);
+router.get("/categories/:categoryId", getProductCategoryByIdController);
+router.post("/categories/new", postCreateNewProductCategoryController);
 
 export default router;
