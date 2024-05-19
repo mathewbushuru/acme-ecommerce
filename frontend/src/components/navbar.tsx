@@ -159,7 +159,7 @@ function ShopAislesDropdownMenu() {
   if (!allBackendCategories) {
     allCategories = fallbackAisleCategories;
   } else {
-    allCategories = allBackendCategories.allCategories;
+    allCategories = allBackendCategories;
   }
 
   return (

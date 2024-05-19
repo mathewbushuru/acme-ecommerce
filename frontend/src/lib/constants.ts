@@ -68,7 +68,7 @@ export const fallbackAllProducts = [
     name: "Blueberries",
     specialPrice: 399,
     regularPrice: 799,
-    size: "1 pint, 1 each",
+    sizeAndMeasurement: "1 pint, 1 each",
   },
   {
     imageUrl:
@@ -76,7 +76,7 @@ export const fallbackAllProducts = [
     name: "Meat Lasagna",
     specialPrice: 749,
     regularPrice: 1169,
-    size: "907 Grams",
+    sizeAndMeasurement: "907 Grams",
   },
   {
     imageUrl:
@@ -84,7 +84,7 @@ export const fallbackAllProducts = [
     name: "Ancient Grains Bread",
     specialPrice: 399,
     regularPrice: 799,
-    size: "600 Grams",
+    sizeAndMeasurement: "600 Grams",
   },
   {
     imageUrl:
@@ -92,7 +92,7 @@ export const fallbackAllProducts = [
     name: "Maple & Brown Sugar Flavour Oat Meal",
     specialPrice: 300,
     regularPrice: 479,
-    size: "12 Pack",
+    sizeAndMeasurement: "12 Pack",
   },
   {
     imageUrl:
@@ -100,7 +100,7 @@ export const fallbackAllProducts = [
     name: "Breakfast Cereal",
     specialPrice: 899,
     regularPrice: 1249,
-    size: "850 Grams",
+    sizeAndMeasurement: "850 Grams",
   },
   {
     imageUrl:
@@ -108,7 +108,7 @@ export const fallbackAllProducts = [
     name: "Sea Salt &  Vinegar Potato Chips",
     specialPrice: 379,
     regularPrice: 549,
-    size: "200 Grams",
+    sizeAndMeasurement: "200 Grams",
   },
   {
     imageUrl:
@@ -116,7 +116,7 @@ export const fallbackAllProducts = [
     name: "Coca-Cola Soft Drinks",
     specialPrice: 869,
     regularPrice: 1249,
-    size: "12 Pack",
+    sizeAndMeasurement: "12 Pack",
   },
 ];
 
