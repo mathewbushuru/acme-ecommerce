@@ -324,7 +324,7 @@ export default function ProductMaintenanceEdit() {
                       <Label htmlFor="status">Status</Label>
                       <Select defaultValue={productData.status!}>
                         <SelectTrigger id="status" className="bg-popover">
-                          <SelectValue  placeholder="Select status"/>
+                          <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="draft">Draft</SelectItem>
@@ -368,6 +368,47 @@ export default function ProductMaintenanceEdit() {
                         <Upload className="h-5 w-5 text-muted-foreground" />
                         <span className="sr-only">Upload</span>
                       </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Size and Measurement card  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Size and Measurement</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {/* <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="size">Size and Measurement</Label>
+                      <Input
+                        id="size"
+                        type="text"
+                        className="w-full bg-popover"
+                        defaultValue={productData.sizeAndMeasurement!}
+                      />
+                    </div>
+                  </div> */}
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-3">
+                      <Label htmlFor="size">Size</Label>
+                      <Input
+                        id="size"
+                        type="number"
+                        className="w-full bg-popover"
+                        defaultValue={productData.sizeAndMeasurement!.split(" ")[0]}
+                      />
+                    </div>
+
+                    <div className="grid gap-3">
+                      <Label htmlFor="size">Measurement</Label>
+                      <Input
+                        id="size"
+                        type="text"
+                        className="w-full bg-popover"
+                        defaultValue={productData.sizeAndMeasurement!.split(" ").slice(1)}
+                      />
                     </div>
                   </div>
                 </CardContent>
