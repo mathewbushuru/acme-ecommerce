@@ -41,7 +41,7 @@ export type ProductCategoryType = {
 
 export type NewProductCategoryType = {
   name: string;
-  id?: string | undefined; // created by database on insert, and is number in BE
+  id: string ; // to be converted number in BE
   imageUrl?: string | null | undefined;
   createdAt?: Date | null | undefined;
 }

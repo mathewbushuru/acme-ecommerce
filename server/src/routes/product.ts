@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   getAllProductsController,
-  getProductByIdController,
+  getProductBySkuNumberController,
   postCreateNewProductController,
   getAllProductCategoriesController,
   getProductCategoryByIdController,
@@ -12,7 +12,7 @@ import {
 const router = Router();
 
 router.get("/all", getAllProductsController);
-router.get("/:productId", getProductByIdController);
+router.get("/:skuNumber", getProductBySkuNumberController);
 router.post("/new", postCreateNewProductController);
 router.get("/categories/all", getAllProductCategoriesController);
 router.get("/categories/:categoryId", getProductCategoryByIdController);

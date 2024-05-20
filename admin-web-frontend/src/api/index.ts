@@ -51,8 +51,8 @@ const acmeAdminApi = createApi({
       query: () => `/products/all`,
     }),
 
-    getProductById: builder.query<ProductType, string>({
-      query: (productId) => `/products/${productId}`,
+    getProductBySkuNumber: builder.query<ProductType, string>({
+      query: (skuNumber) => `/products/${skuNumber}`,
     }),
 
     getAllCategories: builder.query<ProductCategoryType[], void>({
@@ -65,7 +65,7 @@ export const {
   useGetRootQuery,
   useAdminLoginMutation,
   useGetAllProductsQuery,
-  useGetProductByIdQuery,
+  useGetProductBySkuNumberQuery,
   useGetAllCategoriesQuery,
 } = acmeAdminApi;
 

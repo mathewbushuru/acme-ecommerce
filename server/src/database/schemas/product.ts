@@ -44,7 +44,7 @@ export type NewProductType = typeof product.$inferInsert;
  */
 // table definition
 export const productCategory = pgTable("acme_product_category", {
-  id: serial("id").primaryKey(),
+  id: integer("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull(),
   imageUrl: varchar("image_url", { length: 256 }),
   createdAt: timestamp("created_at").defaultNow(),

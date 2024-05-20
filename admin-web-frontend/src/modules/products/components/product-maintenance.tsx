@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { Search } from "lucide-react";
 
@@ -21,7 +21,7 @@ import {
 
 export default function ProductMaintenance() {
   const navigate = useNavigate();
-
+  const { pathname } = useLocation();
   const [skuNumber, setSkuNumber] = useState<string | null>(null);
 
   const { data: categoryData } = useGetAllCategoriesQuery();
@@ -38,7 +38,9 @@ export default function ProductMaintenance() {
       return;
     }
 
-    navigate(`/products/maintenance/${skuNumber}`);
+    navigate(`/products/maintenance/${skuNumber}`, {
+      state: { fromPathname: pathname },
+    });
   };
 
   return (

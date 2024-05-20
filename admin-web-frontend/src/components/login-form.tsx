@@ -65,10 +65,8 @@ export default function LoginForm() {
       const loginResponse = await loginTrigger(loginData).unwrap();
 
       const { jwtToken, message, ...user } = loginResponse;
-      console.log(message);
-      console.log(user);
 
-      toast.success("Sign in successful.", {
+      toast.success(message, {
         description: "Welcome to the Acme Admin Panel.",
         action: {
           label: "Log out",
@@ -118,7 +116,7 @@ export default function LoginForm() {
             />
           </div>
           <p className="text-center text-xs font-light text-muted-foreground">
-            Use mattb@test.com and 781*admiN as demo credentials
+            Use mattbw@test.com and 781*admiN as demo credentials
           </p>
         </CardContent>
         <CardFooter>

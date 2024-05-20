@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import {
   ListFilter,
@@ -204,6 +204,7 @@ export default function ProductsHome() {
 
 function SearchProductInput() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -216,7 +217,9 @@ function SearchProductInput() {
       setSearchValue("");
       return;
     }
-    navigate(`/products/maintenance/${searchValue}`);
+    navigate(`/products/maintenance/${searchValue}`, {
+      state: { fromPathname: pathname },
+    });
   };
 
   return (
@@ -295,11 +298,7 @@ function FilterDropdownMenu() {
   );
 }
 
-function ProductsTable({
-  productsArr,
-}: {
-  productsArr: ProductType[];
-}) {
+function ProductsTable({ productsArr }: { productsArr: ProductType[] }) {
   const navigate = useNavigate();
   return (
     <Table>
@@ -310,8 +309,8 @@ function ProductsTable({
           </TableHead>
           <TableHead className="px-1 sm:px-4">Name</TableHead>
           <TableHead className="hidden sm:table-cell">Status</TableHead>
-          <TableHead className="hidden md:table-cell">Sku#</TableHead>
-          <TableHead>Price</TableHead>
+          <TableHead className="hidden md:table-cell">Sku Number</TableHead>
+          <TableHead>Retail Price</TableHead>
           <TableHead className="hidden lg:table-cell">Total Sales</TableHead>
           <TableHead className="hidden lg:table-cell">Created At</TableHead>
           <TableHead>
@@ -332,16 +331,10 @@ function ProductsTable({
               {product.name}
             </TableCell>
             <TableCell className="hidden sm:table-cell">
-              <Badge variant="outline">
-                {
-                  ["Active", "Draft", "Disc"].sort(
-                    () => Math.random() - Math.random(),
-                  )[0]
-                }
-              </Badge>
+              <Badge variant="outline">{product.status}</Badge>
             </TableCell>
             <TableCell className="hidden font-medium md:table-cell">
-              {product.id}
+              {product.skuNumber}
             </TableCell>
             <TableCell>${product.regularPrice}</TableCell>
             <TableCell className="hidden lg:table-cell">
@@ -364,7 +357,7 @@ function ProductsTable({
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuItem
                     onClick={() =>
-                      navigate(`/products/maintenance/${product.id}`)
+                      navigate(`/products/maintenance/${product.skuNumber}`)
                     }
                   >
                     View/Edit

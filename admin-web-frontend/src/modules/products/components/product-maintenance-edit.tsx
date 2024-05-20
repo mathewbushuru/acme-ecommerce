@@ -1,8 +1,13 @@
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { toast } from "sonner";
 import { ChevronLeft, Upload } from "lucide-react";
 
-import { useGetProductByIdQuery, useGetAllCategoriesQuery } from "@/api";
+import { useGetProductBySkuNumberQuery, useGetAllCategoriesQuery } from "@/api";
 
 import ProductLayout from "@/modules/products/layouts/product-layout";
 
@@ -40,16 +45,17 @@ import { type ServerErrorType } from "@/types/general";
 
 export default function ProductMaintenanceEdit() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { skuNumber } = useParams();
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
   if (!skuNumber) {
     toast.error("Sku number is required!");
-    return <Navigate to="-1" replace />;
+    return <Navigate to="/products/maintenance" replace />;
   }
 
-  const { data, isLoading, error } = useGetProductByIdQuery(skuNumber);
+  const { data, isLoading, error } = useGetProductBySkuNumberQuery(skuNumber);
 
   if (error) {
     const errorData = (
@@ -62,7 +68,11 @@ export default function ProductMaintenanceEdit() {
         `Sku number ${skuNumber ? skuNumber : ""} not in database.`,
     );
 
-    return <Navigate to="-1" replace />;
+    if (state && state.fromPathname) {
+      return <Navigate to={state.fromPathname} replace />;
+    }
+
+    return <Navigate to="/products/home" replace />;
   }
 
   if (isLoading || !data) {
@@ -98,16 +108,24 @@ export default function ProductMaintenanceEdit() {
             </Button>
             <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
               {productData.name}{" "}
-              <span className="text-base font-normal">{`[#${productData.id}]`}</span>
+              <span className="text-base font-normal">{`[#${productData.skuNumber}]`}</span>
             </h1>
             <Badge variant="outline" className="ml-auto sm:ml-0">
               In stock
             </Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/products/home")}
+              >
                 Discard Changes
               </Button>
-              <Button variant="secondary" size="sm">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => navigate("/products/home")}
+              >
                 Save Changes
               </Button>
             </div>
@@ -131,7 +149,7 @@ export default function ProductMaintenanceEdit() {
                         id="sku"
                         type="text"
                         className="w-full bg-popover"
-                        defaultValue={productData.id}
+                        defaultValue={productData.skuNumber}
                       />
                     </div>
                     <div className="grid gap-3">
@@ -186,7 +204,7 @@ export default function ProductMaintenanceEdit() {
                               type="number"
                               defaultValue={
                                 Math.round(
-                                  Number(productData.regularPrice) * 0.75,
+                                  Number(productData.regularPrice) * 0.75 * 6,
                                 ) - 0.01
                               }
                               className="bg-popover"
@@ -199,7 +217,7 @@ export default function ProductMaintenanceEdit() {
                             <Input
                               id="case-quantity"
                               type="number"
-                              defaultValue={1}
+                              defaultValue={6}
                               className="bg-popover"
                             />
                           </TableCell>
@@ -236,7 +254,7 @@ export default function ProductMaintenanceEdit() {
                       <TableFooter>
                         <TableRow>
                           <TableCell colSpan={2}>Gross Margin</TableCell>
-                          <TableCell>25%</TableCell>
+                          <TableCell>25.00%</TableCell>
                         </TableRow>
                       </TableFooter>
                     </Table>
@@ -263,7 +281,7 @@ export default function ProductMaintenanceEdit() {
                           ) : (
                             categoryData.map((category) => (
                               <SelectItem value={category.id} key={category.id}>
-                                {category.name}
+                                {category.id} - {category.name}
                               </SelectItem>
                             ))
                           )}
@@ -312,7 +330,7 @@ export default function ProductMaintenanceEdit() {
                   <div className="grid gap-6">
                     <div className="grid gap-3">
                       <Label htmlFor="status">Status</Label>
-                      <Select>
+                      <Select defaultValue={productData.status!}>
                         <SelectTrigger id="status" className="bg-popover">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
@@ -358,6 +376,40 @@ export default function ProductMaintenanceEdit() {
                         <Upload className="h-5 w-5 text-muted-foreground" />
                         <span className="sr-only">Upload</span>
                       </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Size and Measurement card  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Size and Measurement</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-3">
+                      <Label htmlFor="size">Size</Label>
+                      <Input
+                        id="size"
+                        type="number"
+                        className="w-full bg-popover"
+                        defaultValue={
+                          productData.sizeAndMeasurement!.split(" ")[0]
+                        }
+                      />
+                    </div>
+
+                    <div className="grid gap-3">
+                      <Label htmlFor="meaurement">Measurement</Label>
+                      <Input
+                        id="meaurement"
+                        type="text"
+                        className="w-full bg-popover"
+                        defaultValue={productData
+                          .sizeAndMeasurement!.split(" ")
+                          .slice(1)}
+                      />
                     </div>
                   </div>
                 </CardContent>
