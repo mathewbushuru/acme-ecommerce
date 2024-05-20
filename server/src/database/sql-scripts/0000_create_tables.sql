@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS "acme_product" (
 
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "acme_product_category" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" integer PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
 	"image_url" varchar(256),
 	"created_at" timestamp DEFAULT now()

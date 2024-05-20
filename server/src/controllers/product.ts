@@ -133,8 +133,9 @@ export const postCreateNewProductController = async (
     return res.status(400).json({ errorMessage });
   }
 
-  if (!requestData.categoryNumber) {
-    const errorMessage = "Product creation error, product category number is missing.";
+  if (!requestData.categoryId) {
+    const errorMessage =
+      "Product creation error, product category id is missing.";
     console.error("[postCreateNewProductController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
   }
@@ -190,6 +191,14 @@ export const postCreateNewProductController = async (
       customErrorMessage = `Product creation error, sku number ${requestData.skuNumber} already in system.`;
     }
 
+    if (
+      error.message &&
+      error.message ===
+        'insert or update on table "acme_product" violates foreign key constraint "acme_product_category_id_acme_product_category_id_fk"'
+    ) {
+      customErrorMessage = `Product creation error, Category id ${requestData.categoryId} not in system.`;
+    }
+
     const errorMessage =
       customErrorMessage ||
       "There was an error creating the product, try again.";
@@ -214,7 +223,10 @@ export const getAllProductCategoriesController = async (
   next: NextFunction
 ) => {
   try {
-    const dbQueryResult = await db.select().from(productCategory);
+    const dbQueryResult = await db
+      .select()
+      .from(productCategory)
+      .orderBy(productCategory.id);
 
     if (dbQueryResult === undefined) {
       const errorMessage =
@@ -302,8 +314,14 @@ export const postCreateNewProductCategoryController = async (
 ) => {
   const requestData = req.body as NewProductCategoryType;
 
+  if (!requestData.id) {
+    const errorMessage = "Product creation error, product category id is missing.";
+    console.error("[postCreateNewProductController]: ", errorMessage);
+    return res.status(400).json({ errorMessage });
+  }
+
   if (!requestData.name) {
-    const errorMessage = "Product creation error, product name is missing.";
+    const errorMessage = "Product creation error, product category name is missing.";
     console.error("[postCreateNewProductController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
   }
