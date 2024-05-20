@@ -309,8 +309,8 @@ function ProductsTable({ productsArr }: { productsArr: ProductType[] }) {
           </TableHead>
           <TableHead className="px-1 sm:px-4">Name</TableHead>
           <TableHead className="hidden sm:table-cell">Status</TableHead>
-          <TableHead className="hidden md:table-cell">Sku#</TableHead>
-          <TableHead>Price</TableHead>
+          <TableHead className="hidden md:table-cell">Sku Number</TableHead>
+          <TableHead>Retail Price</TableHead>
           <TableHead className="hidden lg:table-cell">Total Sales</TableHead>
           <TableHead className="hidden lg:table-cell">Created At</TableHead>
           <TableHead>
@@ -331,16 +331,10 @@ function ProductsTable({ productsArr }: { productsArr: ProductType[] }) {
               {product.name}
             </TableCell>
             <TableCell className="hidden sm:table-cell">
-              <Badge variant="outline">
-                {
-                  ["Active", "Draft", "Disc"].sort(
-                    () => Math.random() - Math.random(),
-                  )[0]
-                }
-              </Badge>
+              <Badge variant="outline">{product.status}</Badge>
             </TableCell>
             <TableCell className="hidden font-medium md:table-cell">
-              {product.id}
+              {product.skuNumber}
             </TableCell>
             <TableCell>${product.regularPrice}</TableCell>
             <TableCell className="hidden lg:table-cell">
@@ -363,7 +357,7 @@ function ProductsTable({ productsArr }: { productsArr: ProductType[] }) {
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuItem
                     onClick={() =>
-                      navigate(`/products/maintenance/${product.id}`)
+                      navigate(`/products/maintenance/${product.skuNumber}`)
                     }
                   >
                     View/Edit
