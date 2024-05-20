@@ -70,61 +70,73 @@ async function seedProductCategories() {
   const mockCategoriesData: NewProductCategoryType[] = [
     {
       name: "Meat & Seafood",
+      categoryNumber: 100,
       imageUrl:
         "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Fruits & Vegetables",
+      categoryNumber: 200,
       imageUrl:
         "https://images.unsplash.com/photo-1622921491193-345ffb510f6f?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      name: "Pantry",
+      categoryNumber: 300,
+      imageUrl:
+        "https://images.unsplash.com/photo-1626607007733-d09228471d9f?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
       name: "Dairy & Eggs",
+      categoryNumber: 400,
       imageUrl:
         "https://images.unsplash.com/photo-1568405284653-65eca506b080?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Frozen",
+      categoryNumber: 500,
       imageUrl:
         "https://images.unsplash.com/photo-1530027613618-a3b5391592ca?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Bakery",
+      categoryNumber: 600,
       imageUrl:
         "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Deli & Ready Made Meals",
+      categoryNumber: 700,
       imageUrl:
         "https://images.unsplash.com/photo-1518492104633-130d0cc84637?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Plant Based & Non Dairy",
+      categoryNumber: 800,
       imageUrl:
         "https://images.unsplash.com/photo-1585297099941-c912e47e20d2?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      name: "Pantry",
-      imageUrl:
-        "https://images.unsplash.com/photo-1626607007733-d09228471d9f?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
       name: "Health & Beauty",
+      categoryNumber: 900,
       imageUrl:
         "https://images.unsplash.com/photo-1595348020949-87cdfbb44174?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Baby Care",
+      categoryNumber: 1000,
       imageUrl:
         "https://images.unsplash.com/photo-1584839404042-8bc21d240e91?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Pet Care",
+      categoryNumber: 1100,
       imageUrl:
         "https://images.unsplash.com/photo-1608408891486-f5cade977d19?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Cleaning, Paper & Home",
+      categoryNumber: 1200,
       imageUrl:
         "https://images.unsplash.com/photo-1624372646014-205ddf15eb9f?q=80&w=200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -146,12 +158,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "BB100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Fruits & Vegetables"))
-      )[0].id,
+      categoryNumber: 200,
       imageUrl:
         "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -164,12 +171,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "LSGN56789",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Meat & Seafood"))
-      )[0].id,
+      categoryNumber: 100,
       imageUrl:
         "https://plus.unsplash.com/premium_photo-1664472658489-8bb2cf572db1?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -182,12 +184,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "AGR100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Bakery"))
-      )[0].id,
+      categoryNumber: 600,
       imageUrl:
         "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -200,12 +197,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "OAT100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Pantry"))
-      )[0].id,
+      categoryNumber: 300,
       imageUrl:
         "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -218,12 +210,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "CER100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Pantry"))
-      )[0].id,
+      categoryNumber: 300,
       imageUrl:
         "https://images.unsplash.com/photo-1517456944721-229d38679dfa?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -236,12 +223,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "CH100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Pantry"))
-      )[0].id,
+      categoryNumber: 300,
       imageUrl:
         "https://images.unsplash.com/photo-1621447504864-d8686e12698c?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -254,12 +236,7 @@ async function seedProducts() {
       isOnSpecial: true,
       status: "active",
       vendorOrderingCode: "COCA100",
-      categoryId: (
-        await db
-          .select({ id: productCategory.id })
-          .from(productCategory)
-          .where(eq(productCategory.name, "Pantry"))
-      )[0].id,
+      categoryNumber: 300,
       imageUrl:
         "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },

@@ -133,8 +133,8 @@ export const postCreateNewProductController = async (
     return res.status(400).json({ errorMessage });
   }
 
-  if (!requestData.categoryId) {
-    const errorMessage = "Product creation error, product category is missing.";
+  if (!requestData.categoryNumber) {
+    const errorMessage = "Product creation error, product category number is missing.";
     console.error("[postCreateNewProductController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
   }
@@ -188,14 +188,6 @@ export const postCreateNewProductController = async (
         'duplicate key value violates unique constraint "acme_product_sku_number_unique"'
     ) {
       customErrorMessage = `Product creation error, sku number ${requestData.skuNumber} already in system.`;
-    }
-
-    if (
-      error.message &&
-      error.message ===
-        'insert or update on table "acme_product" violates foreign key constraint "acme_product_category_id_acme_product_category_id_fk"'
-    ) {
-      customErrorMessage = `Product creation error, category id ${requestData.categoryId} not in system.`;
     }
 
     const errorMessage =
