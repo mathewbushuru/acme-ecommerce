@@ -144,6 +144,7 @@ async function seedProducts() {
       regularPrice: "7.99",
       specialPrice: "3.99",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "BB100",
       categoryId: (
         await db
@@ -161,6 +162,7 @@ async function seedProducts() {
       regularPrice: "11.69",
       specialPrice: "7.49",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "LSGN56789",
       categoryId: (
         await db
@@ -178,6 +180,7 @@ async function seedProducts() {
       regularPrice: "7.99",
       specialPrice: "3.99",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "AGR100",
       categoryId: (
         await db
@@ -195,6 +198,7 @@ async function seedProducts() {
       regularPrice: "4.79",
       specialPrice: "2.99",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "OAT100",
       categoryId: (
         await db
@@ -212,6 +216,7 @@ async function seedProducts() {
       regularPrice: "12.49",
       specialPrice: "8.99",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "CER100",
       categoryId: (
         await db
@@ -229,6 +234,7 @@ async function seedProducts() {
       regularPrice: "5.49",
       specialPrice: "3.79",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "CH100",
       categoryId: (
         await db
@@ -246,6 +252,7 @@ async function seedProducts() {
       regularPrice: "12.49",
       specialPrice: "8.69",
       isOnSpecial: true,
+      status: "active",
       vendorOrderingCode: "COCA100",
       categoryId: (
         await db

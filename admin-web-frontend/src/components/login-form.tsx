@@ -65,10 +65,8 @@ export default function LoginForm() {
       const loginResponse = await loginTrigger(loginData).unwrap();
 
       const { jwtToken, message, ...user } = loginResponse;
-      console.log(message);
-      console.log(user);
 
-      toast.success("Sign in successful.", {
+      toast.success(message, {
         description: "Welcome to the Acme Admin Panel.",
         action: {
           label: "Log out",
