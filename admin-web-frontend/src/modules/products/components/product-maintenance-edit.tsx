@@ -401,9 +401,9 @@ export default function ProductMaintenanceEdit() {
                     </div>
 
                     <div className="grid gap-3">
-                      <Label htmlFor="size">Measurement</Label>
+                      <Label htmlFor="meaurement">Measurement</Label>
                       <Input
-                        id="size"
+                        id="meaurement"
                         type="text"
                         className="w-full bg-popover"
                         defaultValue={productData
