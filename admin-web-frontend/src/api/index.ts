@@ -11,8 +11,8 @@ import {
   type AdminLoginSuccessfulResponseType,
 } from "@/types/auth";
 
-const SERVER_URL = "https://acme-groceries-api.onrender.com";
-// const SERVER_URL = "http://localhost:5000";
+// const SERVER_URL = "https://acme-groceries-api.onrender.com";
+const SERVER_URL = "http://localhost:5000";
 
 console.log(`Connecting to server:  ${SERVER_URL}`);
 
