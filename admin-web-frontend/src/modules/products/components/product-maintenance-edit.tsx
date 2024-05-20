@@ -114,10 +114,18 @@ export default function ProductMaintenanceEdit() {
               In stock
             </Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/products/home")}
+              >
                 Discard Changes
               </Button>
-              <Button variant="secondary" size="sm">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => navigate("/products/home")}
+              >
                 Save Changes
               </Button>
             </div>
@@ -273,7 +281,7 @@ export default function ProductMaintenanceEdit() {
                           ) : (
                             categoryData.map((category) => (
                               <SelectItem value={category.id} key={category.id}>
-                                {category.name}
+                                {category.id} - {category.name}
                               </SelectItem>
                             ))
                           )}
@@ -379,17 +387,6 @@ export default function ProductMaintenanceEdit() {
                   <CardTitle>Size and Measurement</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {/* <div className="grid gap-6">
-                    <div className="grid gap-3">
-                      <Label htmlFor="size">Size and Measurement</Label>
-                      <Input
-                        id="size"
-                        type="text"
-                        className="w-full bg-popover"
-                        defaultValue={productData.sizeAndMeasurement!}
-                      />
-                    </div>
-                  </div> */}
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="grid gap-3">
                       <Label htmlFor="size">Size</Label>
@@ -397,7 +394,9 @@ export default function ProductMaintenanceEdit() {
                         id="size"
                         type="number"
                         className="w-full bg-popover"
-                        defaultValue={productData.sizeAndMeasurement!.split(" ")[0]}
+                        defaultValue={
+                          productData.sizeAndMeasurement!.split(" ")[0]
+                        }
                       />
                     </div>
 
@@ -407,7 +406,9 @@ export default function ProductMaintenanceEdit() {
                         id="size"
                         type="text"
                         className="w-full bg-popover"
-                        defaultValue={productData.sizeAndMeasurement!.split(" ").slice(1)}
+                        defaultValue={productData
+                          .sizeAndMeasurement!.split(" ")
+                          .slice(1)}
                       />
                     </div>
                   </div>
