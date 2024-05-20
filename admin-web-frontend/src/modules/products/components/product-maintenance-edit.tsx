@@ -1,4 +1,9 @@
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { toast } from "sonner";
 import { ChevronLeft, Upload } from "lucide-react";
 
@@ -40,13 +45,14 @@ import { type ServerErrorType } from "@/types/general";
 
 export default function ProductMaintenanceEdit() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { skuNumber } = useParams();
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
   if (!skuNumber) {
     toast.error("Sku number is required!");
-    return <Navigate to="-1" replace />;
+    return <Navigate to="/products/maintenance" replace />;
   }
 
   const { data, isLoading, error } = useGetProductByIdQuery(skuNumber);
@@ -62,7 +68,11 @@ export default function ProductMaintenanceEdit() {
         `Sku number ${skuNumber ? skuNumber : ""} not in database.`,
     );
 
-    return <Navigate to="-1" replace />;
+    if (state && state.fromPathname){
+      return <Navigate to={state.fromPathname} replace />;
+    }
+
+    return <Navigate to="/products/home" replace />;
   }
 
   if (isLoading || !data) {

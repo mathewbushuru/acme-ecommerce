@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import {
   ListFilter,
@@ -204,6 +204,7 @@ export default function ProductsHome() {
 
 function SearchProductInput() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -216,7 +217,9 @@ function SearchProductInput() {
       setSearchValue("");
       return;
     }
-    navigate(`/products/maintenance/${searchValue}`);
+    navigate(`/products/maintenance/${searchValue}`, {
+      state: { fromPathname: pathname },
+    });
   };
 
   return (
@@ -295,11 +298,7 @@ function FilterDropdownMenu() {
   );
 }
 
-function ProductsTable({
-  productsArr,
-}: {
-  productsArr: ProductType[];
-}) {
+function ProductsTable({ productsArr }: { productsArr: ProductType[] }) {
   const navigate = useNavigate();
   return (
     <Table>

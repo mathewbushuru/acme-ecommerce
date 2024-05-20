@@ -63,7 +63,7 @@ export const getProductByIdController = async (
 
   const productIdNumber = Number(productIdString);
   if (isNaN(productIdNumber)) {
-    const errorMessage = "Product Id must be a valid number.";
+    const errorMessage = "Product id must be a valid number.";
     console.error("[getProductByIdController]: ", errorMessage);
     return res.status(400).json({ errorMessage });
   }
@@ -81,7 +81,7 @@ export const getProductByIdController = async (
     }
 
     if (dbQueryResult.length === 0) {
-      const errorMessage = `Product with Id ${productIdNumber} was not found.`;
+      const errorMessage = `Product with id ${productIdNumber} was not found.`;
       console.error("[getProductByIdController]: ", errorMessage);
       return res.status(404).json({ errorMessage });
     }

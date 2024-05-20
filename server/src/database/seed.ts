@@ -59,6 +59,20 @@ async function seedUsers() {
       hashedPassword: await hashPassword("Tester123"),
       role: "customer",
     },
+    {
+      firstName: "Matt",
+      lastName: "Admin",
+      email: "mattbw@test.com",
+      hashedPassword: await hashPassword("781*admiN"),
+      role: "administrator",
+    },
+    {
+      firstName: "Matt",
+      lastName: "Customer",
+      email: "mattb@test.com",
+      hashedPassword: await hashPassword("Tester123!"),
+      role: "administrator",
+    },
   ];
 
   mockUsersData.map(async (userData) => {
