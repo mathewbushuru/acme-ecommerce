@@ -164,7 +164,7 @@ async function seedProducts() {
     {
       name: "Fresh Blueberries",
       sizeAndMeasurement: "1 pint",
-      skuNumber: 1234,
+      skuNumber: 5342,
       regularPrice: "7.99",
       specialPrice: "3.99",
       isOnSpecial: true,
@@ -281,7 +281,7 @@ async function seedProducts() {
     {
       name: "Gala Apples",
       sizeAndMeasurement: "1 kg",
-      skuNumber: 34567,
+      skuNumber: 1234,
       regularPrice: "4.99",
       specialPrice: "3.49",
       isOnSpecial: true,
