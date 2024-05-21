@@ -66,7 +66,16 @@ export default function ProductsHome() {
   }
 
   const allProductsArr = productsData;
-  // const allProductsArr: any[] = [];
+
+  const activeProducts = allProductsArr.filter(
+    (product) => product.status === "active",
+  );
+  const draftProducts = allProductsArr.filter(
+    (product) => product.status === "draft",
+  );
+  const discontinuedProducts = allProductsArr.filter(
+    (product) => product.status === "discontinued",
+  );
 
   return (
     <ProductLayout
@@ -131,7 +140,7 @@ export default function ProductsHome() {
                     </CardContent>
                     <CardFooter className="pb-0">
                       <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-{allProductsArr.length}</strong> of{" "}
+                        Showing <strong>1 - {allProductsArr.length}</strong> of{" "}
                         <strong>{allProductsArr.length}</strong> products.
                       </div>
                     </CardFooter>
@@ -141,9 +150,11 @@ export default function ProductsHome() {
             )}
           </TabsContent>
           <TabsContent value="active">
-            {allProductsArr.length === 0 ? (
+            {activeProducts.length === 0 ? (
               <div className="mt-32 flex flex-col items-center gap-2 text-center">
-                <h3 className="text-xl font-bold">You have no products.</h3>
+                <h3 className="text-xl font-bold">
+                  You have no active products.
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   You can start selling as soon as you add a product.
                 </p>
@@ -159,12 +170,12 @@ export default function ProductsHome() {
                       their sales performance.
                     </CardDescription>
                     <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
-                      <ProductsTable productsArr={allProductsArr} />
+                      <ProductsTable productsArr={activeProducts} />
                     </CardContent>
                     <CardFooter className="pb-0">
                       <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-{allProductsArr.length}</strong> of{" "}
-                        <strong>{allProductsArr.length}</strong> products.
+                        Showing <strong>1 - {activeProducts.length}</strong> of{" "}
+                        <strong>{activeProducts.length}</strong> products.
                       </div>
                     </CardFooter>
                   </CardHeader>
@@ -173,28 +184,75 @@ export default function ProductsHome() {
             )}
           </TabsContent>
           <TabsContent value="draft">
-            <div className="mt-32 flex flex-col items-center gap-2 text-center">
-              <h3 className="text-xl font-bold">
-                You have no products in the creation phase.
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Use this section for products you are creating but have don't
-                have all the details yet.
-              </p>
-              <Button className="mt-4">Add Product</Button>
-            </div>
+            {draftProducts.length === 0 ? (
+              <div className="mt-32 flex flex-col items-center gap-2 text-center">
+                <h3 className="text-xl font-bold">
+                  You have no products in the creation phase.
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Use this section for products you are creating but have don't
+                  have all the details yet.
+                </p>
+                <Button className="mt-4">Add Product</Button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-5 sm:gap-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Draft Products</CardTitle>
+                    <CardDescription className="hidden sm:inline-block">
+                      Edit products that you haven't activated to be live in
+                      your shop yet.
+                    </CardDescription>
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
+                      <ProductsTable productsArr={draftProducts} />
+                    </CardContent>
+                    <CardFooter className="pb-0">
+                      <div className="text-xs text-muted-foreground">
+                        Showing <strong>1 - {draftProducts.length}</strong> of{" "}
+                        <strong>{draftProducts.length}</strong> products.
+                      </div>
+                    </CardFooter>
+                  </CardHeader>
+                </Card>
+              </div>
+            )}
           </TabsContent>
           <TabsContent value="discontinued">
-            <div className="mt-32 flex flex-col items-center gap-3 text-center">
-              <h3 className="text-xl font-bold">
-                You have no archived / discontinued products.
-              </h3>
-              <p className="max-w-screen-sm text-sm text-muted-foreground">
-                Products marked as discontinued show up here. Use this for
-                products you no longer wish to sell, but still need for
-                historical reporting purposes.
-              </p>
-            </div>
+            {discontinuedProducts.length === 0 ? (
+              <div className="mt-32 flex flex-col items-center gap-2 text-center">
+                <h3 className="text-xl font-bold">
+                  You have no archived / discontinued products.
+                </h3>
+                <p className="max-w-screen-sm text-sm text-muted-foreground">
+                  Products marked as discontinued show up here. Use this for
+                  products you no longer wish to sell, but still need for
+                  historical reporting purposes.
+                </p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-5 sm:gap-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Draft Products</CardTitle>
+                    <CardDescription className="hidden sm:inline-block">
+                      Edit products that you haven't activated to be live in
+                      your shop yet.
+                    </CardDescription>
+                    <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
+                      <ProductsTable productsArr={discontinuedProducts} />
+                    </CardContent>
+                    <CardFooter className="pb-0">
+                      <div className="text-xs text-muted-foreground">
+                        Showing{" "}
+                        <strong>1 - {discontinuedProducts.length}</strong> of{" "}
+                        <strong>{discontinuedProducts.length}</strong> products.
+                      </div>
+                    </CardFooter>
+                  </CardHeader>
+                </Card>
+              </div>
+            )}
           </TabsContent>
         </div>
       </Tabs>

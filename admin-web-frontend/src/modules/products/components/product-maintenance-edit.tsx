@@ -117,7 +117,7 @@ export default function ProductMaintenanceEdit() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/products/home")}
+                onClick={() => navigate(-1)}
               >
                 Discard Changes
               </Button>

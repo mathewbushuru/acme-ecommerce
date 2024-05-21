@@ -38,12 +38,12 @@ export default function ProductPageSidebar() {
             Product Maintenance
           </Button>
           <Button
-            variant={pathname === "/products/groups" ? "default" : "ghost"}
+            variant={pathname === "/products/categories" ? "default" : "ghost"}
             size="sm"
             className="justify-start"
-            onClick={() => navigate("/products/groups")}
+            onClick={() => navigate("/products/categories")}
           >
-            Product Groups Setup
+            Product Categories
           </Button>
           <Button
             variant={pathname === "/products/specials" ? "default" : "ghost"}
