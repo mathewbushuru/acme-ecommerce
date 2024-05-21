@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { Upload } from "lucide-react";
@@ -38,7 +38,11 @@ import {
 export default function ProductMaintenance() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
   const [skuNumber, setSkuNumber] = useState<string>("");
+  const [inSearchSkuPhase, _setInSearchSkuPhase] = useState(true);
+
+  const skuInputRef = useRef<HTMLInputElement | null>(null);
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
@@ -51,8 +55,11 @@ export default function ProductMaintenance() {
 
     if (!skuNumber) {
       toast.error("Sku number is required.");
+      skuInputRef.current?.focus();
       return;
     }
+
+    // TODO: search for sku in db before going  to edit page
 
     navigate(`/products/maintenance/${skuNumber}`, {
       state: { fromPathname: pathname },
@@ -68,6 +75,8 @@ export default function ProductMaintenance() {
       toast.error("Sku number is required.");
       return;
     }
+
+    // TODO: Add product to db logic
 
     navigate("/products/home");
   };
@@ -129,6 +138,8 @@ export default function ProductMaintenance() {
                           value={skuNumber}
                           onChange={(e) => setSkuNumber(e.target.value)}
                           autoFocus
+                          placeholder="Search by Sku number"
+                          ref={skuInputRef}
                         />
                       </div>
                       <div className="grid gap-3">
@@ -137,17 +148,84 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
+                          placeholder="Search by product name"
                         />
                       </div>
                       <div className="grid gap-3">
-                        <Label htmlFor="description">Description</Label>
+                        <Label
+                          htmlFor="description"
+                          className={
+                            inSearchSkuPhase ? "text-muted-foreground" : ""
+                          }
+                        >
+                          Description
+                        </Label>
                         <Textarea
                           id="description"
                           className="min-h-28 w-full bg-popover"
-                          defaultValue={
-                            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores repellat cum corrupti doloremque facilis quae"
-                          }
+                          disabled={inSearchSkuPhase}
                         />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* ProductCategoryCard  */}
+                {/* TODO: search category value not being selected  */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Product Category</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-3">
+                      <div className="grid gap-3">
+                        <Label htmlFor="category">Category</Label>
+                        <Select>
+                          <SelectTrigger id="category" className="bg-popover">
+                            <SelectValue placeholder="Select category to search" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {!categoryData ? (
+                              <SelectItem value="Loading">
+                                Loading ...
+                              </SelectItem>
+                            ) : (
+                              categoryData.map((category) => (
+                                <SelectItem
+                                  value={category.id}
+                                  key={category.id}
+                                >
+                                  {category.id} - {category.name}
+                                </SelectItem>
+                              ))
+                            )}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="grid gap-3">
+                        <Label
+                          htmlFor="subcategory"
+                          className={
+                            inSearchSkuPhase ? "text-muted-foreground" : ""
+                          }
+                        >
+                          Subcategory
+                        </Label>
+                        <Select disabled={inSearchSkuPhase}>
+                          <SelectTrigger
+                            id="subcategory"
+                            className="bg-popover"
+                          >
+                            <SelectValue placeholder="Select subcategory" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="no-tax">No tax</SelectItem>
+                            <SelectItem value="gst">GST only</SelectItem>
+                            <SelectItem value="pst">PST only</SelectItem>
+                            <SelectItem value="gst+pst">GST + PST</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                   </CardContent>
@@ -172,7 +250,13 @@ export default function ProductMaintenance() {
                         </TableHeader>
                         <TableBody>
                           <TableRow>
-                            <TableCell>Case Cost</TableCell>
+                            <TableCell
+                              className={
+                                inSearchSkuPhase ? "text-muted-foreground" : ""
+                              }
+                            >
+                              Case Cost
+                            </TableCell>
                             <TableCell>
                               <Label htmlFor="case-cost" className="sr-only">
                                 Case Cost Price
@@ -181,6 +265,7 @@ export default function ProductMaintenance() {
                                 id="case-cost"
                                 type="number"
                                 className="bg-popover"
+                                disabled={inSearchSkuPhase}
                               />
                             </TableCell>
                             <TableCell>
@@ -193,13 +278,19 @@ export default function ProductMaintenance() {
                               <Input
                                 id="case-quantity"
                                 type="number"
-                                defaultValue={6}
                                 className="bg-popover"
+                                disabled={inSearchSkuPhase}
                               />
                             </TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell>Retail Price</TableCell>
+                            <TableCell
+                              className={
+                                inSearchSkuPhase ? "text-muted-foreground" : ""
+                              }
+                            >
+                              Retail Price
+                            </TableCell>
                             <TableCell>
                               <Label htmlFor="retail-price" className="sr-only">
                                 Retail Price
@@ -208,6 +299,7 @@ export default function ProductMaintenance() {
                                 id="retail-price"
                                 type="number"
                                 className="bg-popover"
+                                disabled={inSearchSkuPhase}
                               />
                             </TableCell>
                             <TableCell>
@@ -220,7 +312,7 @@ export default function ProductMaintenance() {
                               <Input
                                 id="retail-quantity"
                                 type="number"
-                                defaultValue={1}
+                                disabled={inSearchSkuPhase}
                                 className="bg-popover"
                               />
                             </TableCell>
@@ -228,68 +320,26 @@ export default function ProductMaintenance() {
                         </TableBody>
                         <TableFooter>
                           <TableRow>
-                            <TableCell colSpan={2}>Gross Margin</TableCell>
-                            <TableCell> %</TableCell>
+                            <TableCell
+                              className={
+                                inSearchSkuPhase ? "text-muted-foreground" : ""
+                              }
+                              colSpan={2}
+                            >
+                              Gross Margin
+                            </TableCell>
+                            <TableCell
+                              className={
+                                inSearchSkuPhase ? "text-muted-foreground" : ""
+                              }
+                            >
+                              0.00%
+                            </TableCell>
                           </TableRow>
                         </TableFooter>
                       </Table>
                     </CardContent>
                   </CardHeader>
-                </Card>
-
-                {/* ProductCategoryCard  */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Product Category</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid gap-6 sm:grid-cols-3">
-                      <div className="grid gap-3">
-                        <Label htmlFor="category">Category</Label>
-                        <Select>
-                          <SelectTrigger id="category" className="bg-popover">
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {!categoryData ? (
-                              <SelectItem value="Loading">
-                                Loading ...
-                              </SelectItem>
-                            ) : (
-                              categoryData.map((category) => (
-                                <SelectItem
-                                  value={category.id}
-                                  key={category.id}
-                                >
-                                  {category.id} - {category.name}
-                                </SelectItem>
-                              ))
-                            )}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="grid gap-3">
-                        <Label htmlFor="subcategory">
-                          Subcategory (Optional)
-                        </Label>
-                        <Select>
-                          <SelectTrigger
-                            id="subcategory"
-                            className="bg-popover"
-                          >
-                            <SelectValue placeholder="Select subcategory" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="no-tax">No tax</SelectItem>
-                            <SelectItem value="gst">GST only</SelectItem>
-                            <SelectItem value="pst">PST only</SelectItem>
-                            <SelectItem value="gst+pst">GST + PST</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </CardContent>
                 </Card>
               </div>
 
@@ -306,7 +356,7 @@ export default function ProductMaintenance() {
                         <Label htmlFor="status">Status</Label>
                         <Select>
                           <SelectTrigger id="status" className="bg-popover">
-                            <SelectValue placeholder="Select status" />
+                            <SelectValue placeholder="Search by product status" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
@@ -363,20 +413,36 @@ export default function ProductMaintenance() {
                   <CardContent>
                     <div className="grid gap-6 sm:grid-cols-2">
                       <div className="grid gap-3">
-                        <Label htmlFor="size">Size</Label>
+                        <Label
+                          htmlFor="size"
+                          className={
+                            inSearchSkuPhase ? "text-muted-foreground" : ""
+                          }
+                        >
+                          Size
+                        </Label>
                         <Input
                           id="size"
                           type="number"
                           className="w-full bg-popover"
+                          disabled={inSearchSkuPhase}
                         />
                       </div>
 
                       <div className="grid gap-3">
-                        <Label htmlFor="meaurement">Measurement</Label>
+                        <Label
+                          htmlFor="meaurement"
+                          className={
+                            inSearchSkuPhase ? "text-muted-foreground" : ""
+                          }
+                        >
+                          Measurement
+                        </Label>
                         <Input
                           id="meaurement"
                           type="text"
                           className="w-full bg-popover"
+                          disabled={inSearchSkuPhase}
                         />
                       </div>
                     </div>

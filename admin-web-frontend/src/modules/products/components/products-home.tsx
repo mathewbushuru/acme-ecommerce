@@ -140,8 +140,8 @@ export default function ProductsHome() {
                     </CardContent>
                     <CardFooter className="pb-0">
                       <div className="text-xs text-muted-foreground">
-                        Showing <strong>1 - {allProductsArr.length}</strong> of{" "}
-                        <strong>{allProductsArr.length}</strong> products.
+                        Showing <strong>1 - {allProductsArr.length}</strong> of
+                        all <strong>{allProductsArr.length}</strong> products.
                       </div>
                     </CardFooter>
                   </CardHeader>
@@ -175,7 +175,8 @@ export default function ProductsHome() {
                     <CardFooter className="pb-0">
                       <div className="text-xs text-muted-foreground">
                         Showing <strong>1 - {activeProducts.length}</strong> of{" "}
-                        <strong>{activeProducts.length}</strong> products.
+                        <strong>{activeProducts.length}</strong> active
+                        products.
                       </div>
                     </CardFooter>
                   </CardHeader>
@@ -210,7 +211,7 @@ export default function ProductsHome() {
                     <CardFooter className="pb-0">
                       <div className="text-xs text-muted-foreground">
                         Showing <strong>1 - {draftProducts.length}</strong> of{" "}
-                        <strong>{draftProducts.length}</strong> products.
+                        <strong>{draftProducts.length}</strong> draft products.
                       </div>
                     </CardFooter>
                   </CardHeader>
@@ -234,10 +235,9 @@ export default function ProductsHome() {
               <div className="flex flex-col gap-5 sm:gap-2">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Draft Products</CardTitle>
+                    <CardTitle>Discontinued Products</CardTitle>
                     <CardDescription className="hidden sm:inline-block">
-                      Edit products that you haven't activated to be live in
-                      your shop yet.
+                    Products marked as discontinued show up here.
                     </CardDescription>
                     <CardContent className="scrollbar-hide h-[46vh] max-w-[70vw] overflow-y-auto pt-1 2xl:h-[55vh]">
                       <ProductsTable productsArr={discontinuedProducts} />
@@ -246,7 +246,7 @@ export default function ProductsHome() {
                       <div className="text-xs text-muted-foreground">
                         Showing{" "}
                         <strong>1 - {discontinuedProducts.length}</strong> of{" "}
-                        <strong>{discontinuedProducts.length}</strong> products.
+                        <strong>{discontinuedProducts.length}</strong> discontinued products.
                       </div>
                     </CardFooter>
                   </CardHeader>

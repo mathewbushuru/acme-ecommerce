@@ -66,56 +66,56 @@ export const fallbackAllProducts = [
     imageUrl:
       "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Blueberries",
-    specialPrice: 399,
-    regularPrice: 799,
+    specialPrice: 3.99,
+    regularPrice: 7.99,
     sizeAndMeasurement: "1 pint, 1 each",
   },
   {
     imageUrl:
       "https://plus.unsplash.com/premium_photo-1664472658489-8bb2cf572db1?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Meat Lasagna",
-    specialPrice: 749,
-    regularPrice: 1169,
+    specialPrice: 7.49,
+    regularPrice: 11.69,
     sizeAndMeasurement: "907 Grams",
   },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Ancient Grains Bread",
-    specialPrice: 399,
-    regularPrice: 799,
+    specialPrice: 3.99,
+    regularPrice: 7.99,
     sizeAndMeasurement: "600 Grams",
   },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Maple & Brown Sugar Flavour Oat Meal",
-    specialPrice: 300,
-    regularPrice: 479,
+    specialPrice: 3.00,
+    regularPrice: 4.79,
     sizeAndMeasurement: "12 Pack",
   },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1517456944721-229d38679dfa?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Breakfast Cereal",
-    specialPrice: 899,
-    regularPrice: 1249,
+    specialPrice: 8.99,
+    regularPrice: 12.49,
     sizeAndMeasurement: "850 Grams",
   },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1621447504864-d8686e12698c?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Sea Salt &  Vinegar Potato Chips",
-    specialPrice: 379,
-    regularPrice: 549,
+    specialPrice: 3.79,
+    regularPrice: 5.49,
     sizeAndMeasurement: "200 Grams",
   },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Coca-Cola Soft Drinks",
-    specialPrice: 869,
-    regularPrice: 1249,
+    specialPrice: 8.69,
+    regularPrice: 12.49,
     sizeAndMeasurement: "12 Pack",
   },
 ];
