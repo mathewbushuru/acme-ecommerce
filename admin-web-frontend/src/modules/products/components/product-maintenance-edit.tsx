@@ -90,7 +90,7 @@ export default function ProductMaintenanceEdit() {
 
   return (
     <ProductLayout
-      title="Product Maintenance Edit"
+      title="Product Maintenance"
       description="Fine grained search for all products in your inventory."
     >
       <main className="grid gap-4 md:gap-8">

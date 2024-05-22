@@ -48,6 +48,8 @@ export default function ProductMaintenance() {
   const [skuNumber, setSkuNumber] = useState<string>("");
   const skuInputRef = useRef<HTMLInputElement | null>(null);
 
+  const dispatch = useAppDispatch();
+
   const [
     searchSkuTrigger,
     { error, isLoading, isSuccess: skuQueryIsSuccessful },
@@ -59,10 +61,9 @@ export default function ProductMaintenance() {
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (skuQueryIsSuccessful) {
+      toast.success(`Sku # ${skuNumber} is in system. Edit Product Mode...`);
       navigate(`/products/maintenance/${skuNumber}`, {
         state: { fromPathname: pathname },
       });
@@ -78,6 +79,13 @@ export default function ProductMaintenance() {
 
     if (!skuNumber) {
       toast.error("Sku number is required.");
+      skuInputRef.current?.focus();
+      return;
+    }
+
+    if (isNaN(Number(skuNumber))) {
+      toast.error(`Sku number '${skuNumber}' must be a valid number.`);
+      setSkuNumber("");
       skuInputRef.current?.focus();
       return;
     }
