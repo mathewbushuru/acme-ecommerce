@@ -72,7 +72,7 @@ export default function ProductMaintenanceEdit() {
       return <Navigate to={state.fromPathname} replace />;
     }
 
-    return <Navigate to="/products/home" replace />;
+    return <Navigate to="/products/maintenance" replace />;
   }
 
   if (isLoading || !data) {
@@ -124,7 +124,7 @@ export default function ProductMaintenanceEdit() {
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => navigate("/products/home")}
+                onClick={() => navigate("/products/list")}
               >
                 Save Changes
               </Button>

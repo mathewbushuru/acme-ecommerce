@@ -20,14 +20,6 @@ export default function ProductPageSidebar() {
       <div className="flex-1">
         <nav className="flex flex-col gap-2 px-2 lg:px-4">
           <Button
-            variant={pathname === "/products/home" ? "default" : "ghost"}
-            size="sm"
-            className="justify-start"
-            onClick={() => navigate("/products/home")}
-          >
-            Products Home
-          </Button>
-          <Button
             variant={
               pathname.startsWith("/products/maintenance") ? "default" : "ghost"
             }
@@ -36,6 +28,14 @@ export default function ProductPageSidebar() {
             onClick={() => navigate("/products/maintenance")}
           >
             Product Maintenance
+          </Button>
+          <Button
+            variant={pathname === "/products/list" ? "default" : "ghost"}
+            size="sm"
+            className="justify-start"
+            onClick={() => navigate("/products/list")}
+          >
+            Products List
           </Button>
           <Button
             variant={pathname === "/products/categories" ? "default" : "ghost"}

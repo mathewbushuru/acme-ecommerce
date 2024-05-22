@@ -95,7 +95,7 @@ export default function ProductMaintenance() {
       return;
     }
 
-    navigate("/products/home");
+    navigate("/products/list");
   };
 
   const handleDiscardChanges = (

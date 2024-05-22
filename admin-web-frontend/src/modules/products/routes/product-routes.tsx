@@ -3,23 +3,11 @@ import { Navigate } from "react-router-dom";
 import SidebarLayout from "@/layouts/sidebar-layout";
 
 import ProductPageSidebar from "@/modules/products/components/product-page-sidebar";
-import ProductsHome from "@/modules/products/components/products-home";
+import ProductsList from "@/modules/products/components/products-list";
 import ProductMaintenance from "@/modules/products/components/product-maintenance";
 import ProductMaintenanceEdit from "@/modules/products/components/product-maintenance-edit";
 
 export const productRoutes = [
-  {
-    path: "/products/home",
-    element: (
-      <SidebarLayout
-        sidebarComponent={<ProductPageSidebar />}
-        mainComponent={<ProductsHome />}
-      />
-    ),
-    isOnNavbar: false,
-    name: "Products home",
-    icon: null,
-  },
   {
     path: "/products/maintenance",
     element: (
@@ -30,6 +18,18 @@ export const productRoutes = [
     ),
     isOnNavbar: false,
     name: "Product maintenance",
+    icon: null,
+  },
+  {
+    path: "/products/list",
+    element: (
+      <SidebarLayout
+        sidebarComponent={<ProductPageSidebar />}
+        mainComponent={<ProductsList />}
+      />
+    ),
+    isOnNavbar: false,
+    name: "Products List",
     icon: null,
   },
   {
@@ -46,7 +46,7 @@ export const productRoutes = [
   },
   {
     path: "/products/*",
-    element: <Navigate to="/products/home" replace={true} />,
+    element: <Navigate to="/products/maintenance" replace={true} />,
     isOnNavbar: false,
     name: "Products Catchall",
     icon: null,
