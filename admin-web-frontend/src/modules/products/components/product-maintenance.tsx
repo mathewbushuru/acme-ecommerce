@@ -113,7 +113,9 @@ export default function ProductMaintenance() {
   ) => {
     e.preventDefault();
     dispatch(api.util.resetApiState());
+
     setSkuNumber("");
+    setProductName("");
   };
 
   return (
@@ -226,6 +228,44 @@ export default function ProductMaintenance() {
                           disabled={inSearchSkuPhase}
                           placeholder={
                             inSearchSkuPhase ? "" : "Add product description"
+                          }
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Vendor card  */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Vendor</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="grid gap-3">
+                        <Label htmlFor="name">Vendor name</Label>
+                        <Input
+                          id="name"
+                          type="text"
+                          className="w-full bg-popover"
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by vendor name`
+                              : `Vendor name`
+                          }
+                        />
+                      </div>
+
+                      <div className="grid gap-3">
+                        <Label htmlFor="ordering-code">Ordering code</Label>
+                        <Input
+                          id="ordering-code"
+                          type="text"
+                          className="w-full bg-popover"
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by ordering code`
+                              : `Ordering code`
                           }
                         />
                       </div>
