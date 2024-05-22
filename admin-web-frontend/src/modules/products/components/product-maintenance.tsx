@@ -1,9 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { Upload } from "lucide-react";
 
-import { useGetAllCategoriesQuery } from "@/api";
+import api, {
+  useGetAllCategoriesQuery,
+  useLazyGetProductBySkuNumberQuery,
+} from "@/api";
+import { useAppDispatch } from "@/store/store";
+
+import { cn, isServerErrorResponse } from "@/lib/utils";
 
 import ProductLayout from "@/modules/products/layouts/product-layout";
 
@@ -40,13 +46,30 @@ export default function ProductMaintenance() {
   const { pathname } = useLocation();
 
   const [skuNumber, setSkuNumber] = useState<string>("");
-  const [inSearchSkuPhase, _setInSearchSkuPhase] = useState(true);
-
   const skuInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [
+    searchSkuTrigger,
+    { error, isLoading, isSuccess: skuQueryIsSuccessful },
+  ] = useLazyGetProductBySkuNumberQuery();
+
+  const skuIsNotInDatabase =
+    isServerErrorResponse(error) && error.status === 404;
+  const inSearchSkuPhase = !skuIsNotInDatabase;
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
-  const handleSearchProductSubmit = (
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (skuQueryIsSuccessful) {
+      navigate(`/products/maintenance/${skuNumber}`, {
+        state: { fromPathname: pathname },
+      });
+    }
+  }, [skuQueryIsSuccessful, navigate, pathname]);
+
+  const handleSearchProductSubmit = async (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -59,11 +82,7 @@ export default function ProductMaintenance() {
       return;
     }
 
-    // TODO: search for sku in db before going  to edit page
-
-    navigate(`/products/maintenance/${skuNumber}`, {
-      state: { fromPathname: pathname },
-    });
+    await searchSkuTrigger(skuNumber);
   };
 
   const handleAddProductSubmit = (
@@ -76,9 +95,15 @@ export default function ProductMaintenance() {
       return;
     }
 
-    // TODO: Add product to db logic
-
     navigate("/products/home");
+  };
+
+  const handleDiscardChanges = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    dispatch(api.util.resetApiState());
+    setSkuNumber("");
   };
 
   return (
@@ -88,29 +113,39 @@ export default function ProductMaintenance() {
     >
       <main>
         <form
-          className="grid gap-4 md:gap-8"
+          className={cn("grid gap-4 md:gap-8", isLoading && "opacity-50")}
           onSubmit={handleSearchProductSubmit}
         >
           <div className="grid auto-rows-max gap-4">
             {/* header  */}
             <div className="flex items-center gap-4">
               <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
-                {"New Product Name"}{" "}
+                {isLoading ? "Loading..." : "New Product Name"}
                 <span className="text-base font-normal">{`[#${"Sku Number"}]`}</span>
               </h1>
               <div className="hidden gap-2 md:ml-auto md:flex">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={handleSearchProductSubmit}
-                >
-                  Search Sku
-                </Button>
+                {inSearchSkuPhase ? (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleSearchProductSubmit}
+                  >
+                    Search Sku
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleDiscardChanges}
+                  >
+                    Discard Changes
+                  </Button>
+                )}
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={handleAddProductSubmit}
-                  disabled
+                  disabled={inSearchSkuPhase}
                 >
                   Add Product
                 </Button>
@@ -137,9 +172,14 @@ export default function ProductMaintenance() {
                           className="w-full bg-popover"
                           value={skuNumber}
                           onChange={(e) => setSkuNumber(e.target.value)}
-                          autoFocus
-                          placeholder="Search by Sku number"
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by Sku number`
+                              : `Sku number`
+                          }
                           ref={skuInputRef}
+                          autoFocus={inSearchSkuPhase}
+                          disabled={!inSearchSkuPhase}
                         />
                       </div>
                       <div className="grid gap-3">
@@ -148,7 +188,11 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
-                          placeholder="Search by product name"
+                          placeholder={
+                            inSearchSkuPhase
+                              ? "Search by product name"
+                              : "Product name"
+                          }
                         />
                       </div>
                       <div className="grid gap-3">
@@ -164,6 +208,9 @@ export default function ProductMaintenance() {
                           id="description"
                           className="min-h-28 w-full bg-popover"
                           disabled={inSearchSkuPhase}
+                          placeholder={
+                            inSearchSkuPhase ? "" : "Add product description"
+                          }
                         />
                       </div>
                     </div>
@@ -171,7 +218,6 @@ export default function ProductMaintenance() {
                 </Card>
 
                 {/* ProductCategoryCard  */}
-                {/* TODO: search category value not being selected  */}
                 <Card>
                   <CardHeader>
                     <CardTitle>Product Category</CardTitle>
@@ -182,7 +228,13 @@ export default function ProductMaintenance() {
                         <Label htmlFor="category">Category</Label>
                         <Select>
                           <SelectTrigger id="category" className="bg-popover">
-                            <SelectValue placeholder="Select category to search" />
+                            <SelectValue
+                              placeholder={
+                                inSearchSkuPhase
+                                  ? "Select category to search"
+                                  : "Select category"
+                              }
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             {!categoryData ? (
@@ -356,12 +408,26 @@ export default function ProductMaintenance() {
                         <Label htmlFor="status">Status</Label>
                         <Select>
                           <SelectTrigger id="status" className="bg-popover">
-                            <SelectValue placeholder="Search by product status" />
+                            <SelectValue
+                              placeholder={
+                                inSearchSkuPhase
+                                  ? "Search by product status"
+                                  : "Select status"
+                              }
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="discontinued">
+                            <SelectItem
+                              value="active"
+                              disabled={!inSearchSkuPhase}
+                            >
+                              Active
+                            </SelectItem>
+                            <SelectItem
+                              value="discontinued"
+                              disabled={!inSearchSkuPhase}
+                            >
                               Discontinued
                             </SelectItem>
                           </SelectContent>

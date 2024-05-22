@@ -65,6 +65,7 @@ export const {
   useAdminLoginMutation,
   useGetAllProductsQuery,
   useGetProductBySkuNumberQuery,
+  useLazyGetProductBySkuNumberQuery,
   useGetAllCategoriesQuery,
 } = acmeAdminApi;
 
