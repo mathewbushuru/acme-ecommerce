@@ -70,6 +70,8 @@ export default function ProductMaintenance() {
     }
   }, [skuQueryIsSuccessful, navigate, pathname]);
 
+  const [productName, setProductName] = useState("");
+
   const handleSearchProductSubmit = async (
     e:
       | React.FormEvent<HTMLFormElement>
@@ -128,14 +130,12 @@ export default function ProductMaintenance() {
             {/* header  */}
             <div className="flex items-center gap-4">
               <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
-                {isLoading ? (
-                  <>Loading...</>
-                ) : (
-                  <>
-                    New Product Name
-                    <span className="text-base font-normal">{`[#${skuNumber}]`}</span>
-                  </>
-                )}
+                <>
+                  {productName ? productName : "Edit or Add New Product"}{" "}
+                  <span className="text-base font-normal">
+                    {skuNumber && `[#${skuNumber}]`}
+                  </span>
+                </>
               </h1>
               <div className="hidden gap-2 md:ml-auto md:flex">
                 {inSearchSkuPhase ? (
@@ -202,6 +202,8 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
+                          value={productName}
+                          onChange={(e) => setProductName(e.target.value)}
                           placeholder={
                             inSearchSkuPhase
                               ? "Search by product name"
