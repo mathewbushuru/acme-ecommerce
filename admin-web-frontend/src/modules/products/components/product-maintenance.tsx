@@ -71,6 +71,9 @@ export default function ProductMaintenance() {
   }, [skuQueryIsSuccessful, navigate, pathname]);
 
   const [name, setName] = useState("");
+  const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
+
+  console.log({ skuNumber, name, categoryId });
 
   const handleSearchProductSubmit = async (
     e:
@@ -116,6 +119,7 @@ export default function ProductMaintenance() {
 
     setSkuNumber("");
     setName("");
+    setCategoryId(undefined);
   };
 
   return (
@@ -282,7 +286,12 @@ export default function ProductMaintenance() {
                     <div className="grid gap-6 sm:grid-cols-3">
                       <div className="grid gap-3">
                         <Label htmlFor="category">Category</Label>
-                        <Select>
+                        <Select
+                          value={categoryId}
+                          onValueChange={(selectedCategoryId) =>
+                            setCategoryId(selectedCategoryId)
+                          }
+                        >
                           <SelectTrigger id="category" className="bg-popover">
                             <SelectValue
                               placeholder={
@@ -290,7 +299,16 @@ export default function ProductMaintenance() {
                                   ? "Select category to search"
                                   : "Select category"
                               }
-                            />
+                            >
+                              {categoryId}
+                              {categoryId
+                                ? categoryData &&
+                                  `- ${
+                                    categoryData.find((c) => c.id == categoryId)
+                                      ?.name
+                                  }`
+                                : "Select category"}
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {!categoryData ? (
