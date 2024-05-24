@@ -63,14 +63,14 @@ export default function ProductMaintenance() {
 
   useEffect(() => {
     if (skuQueryIsSuccessful) {
-      toast.success(`Sku # ${skuNumber} is in system. Edit Product Mode...`);
+      toast.success(`Sku # ${skuNumber} is in system. Edit Product Mode.`);
       navigate(`/products/maintenance/${skuNumber}`, {
         state: { fromPathname: pathname },
       });
     }
   }, [skuQueryIsSuccessful, navigate, pathname]);
 
-  const [productName, setProductName] = useState("");
+  const [name, setName] = useState("");
 
   const handleSearchProductSubmit = async (
     e:
@@ -115,7 +115,7 @@ export default function ProductMaintenance() {
     dispatch(api.util.resetApiState());
 
     setSkuNumber("");
-    setProductName("");
+    setName("");
   };
 
   return (
@@ -133,7 +133,7 @@ export default function ProductMaintenance() {
             <div className="flex items-center gap-4">
               <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
                 <>
-                  {productName ? productName : "Edit or Add New Product"}{" "}
+                  {name ? name : "Edit or Add New Product"}{" "}
                   <span className="text-base font-normal">
                     {skuNumber && `[#${skuNumber}]`}
                   </span>
@@ -204,8 +204,8 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
-                          value={productName}
-                          onChange={(e) => setProductName(e.target.value)}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                           placeholder={
                             inSearchSkuPhase
                               ? "Search by product name"
