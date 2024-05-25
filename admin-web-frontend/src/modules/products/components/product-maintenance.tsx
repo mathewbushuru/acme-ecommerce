@@ -77,8 +77,12 @@ export default function ProductMaintenance() {
 
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
+  const [regularPrice, setRegularPrice] = useState<string>("");
+  const [regularPriceQuantity, setRegularPriceQuantity] = useState<string>("1");
+  const [regularCost, setRegularCost] = useState<string>("");
+  const [regularCostQuantity, setRegularCostQuantity] = useState<string>("1");
 
-  console.log({ skuNumber, name, categoryId });
+  console.log({ skuNumber, name, categoryId, regularPrice });
 
   const handleSearchProductSubmit = async (
     e:
@@ -131,6 +135,10 @@ export default function ProductMaintenance() {
     setSkuNumber("");
     setName("");
     setCategoryId(undefined);
+    setRegularPrice("");
+    setRegularPriceQuantity("1");
+    setRegularCost("");
+    setRegularCostQuantity("1");
   };
 
   return (
@@ -408,6 +416,8 @@ export default function ProductMaintenance() {
                                 id="case-cost"
                                 type="number"
                                 className="bg-popover"
+                                value={regularCost}
+                                onChange={(e) => setRegularCost(e.target.value)}
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -422,6 +432,10 @@ export default function ProductMaintenance() {
                                 id="case-quantity"
                                 type="number"
                                 className="bg-popover"
+                                value={regularCostQuantity}
+                                onChange={(e) =>
+                                  setRegularCostQuantity(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -442,6 +456,10 @@ export default function ProductMaintenance() {
                                 id="retail-price"
                                 type="number"
                                 className="bg-popover"
+                                value={regularPrice}
+                                onChange={(e) =>
+                                  setRegularPrice(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -455,6 +473,10 @@ export default function ProductMaintenance() {
                               <Input
                                 id="retail-quantity"
                                 type="number"
+                                value={regularPriceQuantity}
+                                onChange={(e) =>
+                                  setRegularPriceQuantity(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                                 className="bg-popover"
                               />
@@ -476,7 +498,19 @@ export default function ProductMaintenance() {
                                 inSearchSkuPhase ? "text-muted-foreground" : ""
                               }
                             >
-                              0.00%
+                              {regularPrice &&
+                                regularPriceQuantity &&
+                                regularCostQuantity &&
+                                (
+                                  ((Number(regularPrice) /
+                                    Number(regularPriceQuantity) -
+                                    Number(regularCost) /
+                                      Number(regularCostQuantity)) /
+                                    (Number(regularPrice) /
+                                      Number(regularPriceQuantity))) *
+                                  100
+                                ).toFixed(2)}
+                              %
                             </TableCell>
                           </TableRow>
                         </TableFooter>
