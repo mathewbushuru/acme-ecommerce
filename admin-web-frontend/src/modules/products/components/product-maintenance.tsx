@@ -48,18 +48,16 @@ export default function ProductMaintenance() {
   const [skuNumber, setSkuNumber] = useState<string>("");
   const skuInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [inSearchSkuPhase, setInSearchSkuPhase] = useState(true);
+
   const dispatch = useAppDispatch();
+
+  const { data: categoryData } = useGetAllCategoriesQuery();
 
   const [
     searchSkuTrigger,
     { error, isLoading, isSuccess: skuQueryIsSuccessful },
   ] = useLazyGetProductBySkuNumberQuery();
-
-  const skuIsNotInDatabase =
-    isServerErrorResponse(error) && error.status === 404;
-  const inSearchSkuPhase = !skuIsNotInDatabase;
-
-  const { data: categoryData } = useGetAllCategoriesQuery();
 
   useEffect(() => {
     if (skuQueryIsSuccessful) {
@@ -69,6 +67,13 @@ export default function ProductMaintenance() {
       });
     }
   }, [skuQueryIsSuccessful, navigate, pathname]);
+
+  useEffect(() => {
+    if (isServerErrorResponse(error) && error.status === 404) {
+      // Enter Add New Product phase
+      setInSearchSkuPhase(false);
+    }
+  }, [error]);
 
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
@@ -99,7 +104,9 @@ export default function ProductMaintenance() {
   };
 
   const handleAddProductSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
 
@@ -108,6 +115,8 @@ export default function ProductMaintenance() {
       return;
     }
 
+    toast.success("New product added.");
+
     navigate("/products/list");
   };
 
@@ -115,7 +124,9 @@ export default function ProductMaintenance() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
+
     dispatch(api.util.resetApiState());
+    setInSearchSkuPhase(true);
 
     setSkuNumber("");
     setName("");
@@ -130,7 +141,11 @@ export default function ProductMaintenance() {
       <main>
         <form
           className={cn("grid gap-4 md:gap-8", isLoading && "opacity-50")}
-          onSubmit={handleSearchProductSubmit}
+          onSubmit={
+            inSearchSkuPhase
+              ? handleSearchProductSubmit
+              : handleAddProductSubmit
+          }
         >
           <div className="grid auto-rows-max gap-4">
             {/* header  */}
@@ -157,6 +172,7 @@ export default function ProductMaintenance() {
                     variant="outline"
                     size="sm"
                     onClick={handleDiscardChanges}
+                    type="button"
                   >
                     Discard Changes
                   </Button>
@@ -210,6 +226,7 @@ export default function ProductMaintenance() {
                           className="w-full bg-popover"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
+                          autoFocus={!inSearchSkuPhase}
                           placeholder={
                             inSearchSkuPhase
                               ? "Search by product name"

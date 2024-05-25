@@ -102,6 +102,7 @@ export default function LoginForm() {
               className="bg-popover"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoFocus
             />
           </div>
           <div className="grid gap-2">
