@@ -1,9 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { Upload } from "lucide-react";
 
-import { useGetAllCategoriesQuery } from "@/api";
+import api, {
+  useGetAllCategoriesQuery,
+  useLazyGetProductBySkuNumberQuery,
+  useCreateProductMutation,
+} from "@/api";
+import { useAppDispatch } from "@/store/store";
+
+import { cn, isServerErrorResponse } from "@/lib/utils";
+
+import { type NewProductType } from "@/types/product";
 
 import ProductLayout from "@/modules/products/layouts/product-layout";
 
@@ -40,13 +49,50 @@ export default function ProductMaintenance() {
   const { pathname } = useLocation();
 
   const [skuNumber, setSkuNumber] = useState<string>("");
-  const [inSearchSkuPhase, _setInSearchSkuPhase] = useState(true);
-
   const skuInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [inSearchSkuPhase, setInSearchSkuPhase] = useState(true);
+
+  const dispatch = useAppDispatch();
 
   const { data: categoryData } = useGetAllCategoriesQuery();
 
-  const handleSearchProductSubmit = (
+  const [
+    searchSkuTrigger,
+    { error, isLoading: isSkuQueryLoading, isSuccess: skuQueryIsSuccessful },
+  ] = useLazyGetProductBySkuNumberQuery();
+
+  useEffect(() => {
+    if (skuQueryIsSuccessful) {
+      toast.success(`Sku # ${skuNumber} is in system. Edit Product Mode.`);
+      navigate(`/products/maintenance/${skuNumber}`, {
+        state: { fromPathname: pathname },
+      });
+    }
+  }, [skuQueryIsSuccessful, navigate, pathname]);
+
+  useEffect(() => {
+    if (isServerErrorResponse(error) && error.status === 404) {
+      // Enter Add New Product phase
+      setInSearchSkuPhase(false);
+    }
+  }, [error]);
+
+  const [
+    createProductTrigger,
+    { isLoading: isCreateProductLoading},
+  ] = useCreateProductMutation();
+
+  const [name, setName] = useState("");
+  const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
+  const [regularPrice, setRegularPrice] = useState<string>("");
+  const [regularPriceQuantity, setRegularPriceQuantity] = useState<string>("1");
+  const [regularCost, setRegularCost] = useState<string>("");
+  const [regularCostQuantity, setRegularCostQuantity] = useState<string>("1");
+  const [vendorName, setVendorName] = useState("");
+  const [vendorOrderingCode, setVendorOrderingCode] = useState("");
+
+  const handleSearchProductSubmit = async (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -59,15 +105,20 @@ export default function ProductMaintenance() {
       return;
     }
 
-    // TODO: search for sku in db before going  to edit page
+    if (isNaN(Number(skuNumber))) {
+      toast.error(`Sku number '${skuNumber}' must be a valid number.`);
+      setSkuNumber("");
+      skuInputRef.current?.focus();
+      return;
+    }
 
-    navigate(`/products/maintenance/${skuNumber}`, {
-      state: { fromPathname: pathname },
-    });
+    await searchSkuTrigger(skuNumber);
   };
 
-  const handleAddProductSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  const handleAddProductSubmit = async (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
 
@@ -76,9 +127,66 @@ export default function ProductMaintenance() {
       return;
     }
 
-    // TODO: Add product to db logic
+    if (!name) {
+      toast.error("Product name is required.");
+      return;
+    }
 
-    navigate("/products/home");
+    if (!categoryId) {
+      toast.error("Product category is required.");
+      return;
+    }
+
+    if (!regularPrice) {
+      toast.error("Product regular retail price is required.");
+      return;
+    }
+
+    if (!vendorOrderingCode) {
+      toast.error("Product ordering code is required.");
+      return;
+    }
+
+    const newProductData: NewProductType = {
+      skuNumber,
+      name,
+      categoryId,
+      regularPrice,
+      vendorOrderingCode,
+    };
+
+    try {
+      const newProductCreationResponse =
+        await createProductTrigger(newProductData).unwrap();
+
+      toast.success(newProductCreationResponse.message);
+
+      navigate("/products/list");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(
+        error.data.errorMessage || "Something went wrong, product not created.",
+      );
+    }
+  };
+
+  const handleDiscardChanges = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+
+    dispatch(api.util.resetApiState());
+    setInSearchSkuPhase(true);
+
+    setSkuNumber("");
+    setName("");
+    setCategoryId(undefined);
+    setRegularPrice("");
+    setRegularPriceQuantity("1");
+    setRegularCost("");
+    setRegularCostQuantity("1");
+    setVendorName("");
+    setVendorOrderingCode("");
   };
 
   return (
@@ -88,31 +196,53 @@ export default function ProductMaintenance() {
     >
       <main>
         <form
-          className="grid gap-4 md:gap-8"
-          onSubmit={handleSearchProductSubmit}
+          className={cn(
+            "grid gap-4 md:gap-8",
+            isSkuQueryLoading && "opacity-50",
+          )}
+          onSubmit={
+            inSearchSkuPhase
+              ? handleSearchProductSubmit
+              : handleAddProductSubmit
+          }
         >
           <div className="grid auto-rows-max gap-4">
             {/* header  */}
             <div className="flex items-center gap-4">
               <h1 className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold sm:max-w-[20rem] lg:max-w-[30rem]">
-                {"New Product Name"}{" "}
-                <span className="text-base font-normal">{`[#${"Sku Number"}]`}</span>
+                <>
+                  {name ? name : "Edit or Add New Product"}{" "}
+                  <span className="text-base font-normal">
+                    {skuNumber && `[#${skuNumber}]`}
+                  </span>
+                </>
               </h1>
               <div className="hidden gap-2 md:ml-auto md:flex">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={handleSearchProductSubmit}
-                >
-                  Search Sku
-                </Button>
+                {inSearchSkuPhase ? (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleSearchProductSubmit}
+                  >
+                    Search Sku
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleDiscardChanges}
+                    type="button"
+                  >
+                    Discard Changes
+                  </Button>
+                )}
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={handleAddProductSubmit}
-                  disabled
+                  disabled={inSearchSkuPhase}
                 >
-                  Add Product
+                 {isCreateProductLoading ? "Loading ..." : "Add Product"}
                 </Button>
               </div>
             </div>
@@ -137,9 +267,14 @@ export default function ProductMaintenance() {
                           className="w-full bg-popover"
                           value={skuNumber}
                           onChange={(e) => setSkuNumber(e.target.value)}
-                          autoFocus
-                          placeholder="Search by Sku number"
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by Sku number`
+                              : `Sku number`
+                          }
                           ref={skuInputRef}
+                          autoFocus={inSearchSkuPhase}
+                          disabled={!inSearchSkuPhase}
                         />
                       </div>
                       <div className="grid gap-3">
@@ -148,7 +283,13 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
-                          placeholder="Search by product name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder={
+                            inSearchSkuPhase
+                              ? "Search by product name"
+                              : "Product name"
+                          }
                         />
                       </div>
                       <div className="grid gap-3">
@@ -164,6 +305,53 @@ export default function ProductMaintenance() {
                           id="description"
                           className="min-h-28 w-full bg-popover"
                           disabled={inSearchSkuPhase}
+                          placeholder={
+                            inSearchSkuPhase ? "" : "Add product description"
+                          }
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Vendor card  */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Vendor</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="grid gap-3">
+                        <Label htmlFor="name">Vendor name</Label>
+                        <Input
+                          id="name"
+                          type="text"
+                          className="w-full bg-popover"
+                          value={vendorName}
+                          onChange={(e) => setVendorName(e.target.value)}
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by vendor name`
+                              : `Vendor name`
+                          }
+                        />
+                      </div>
+
+                      <div className="grid gap-3">
+                        <Label htmlFor="ordering-code">Ordering code</Label>
+                        <Input
+                          id="ordering-code"
+                          type="text"
+                          className="w-full bg-popover"
+                          value={vendorOrderingCode}
+                          onChange={(e) =>
+                            setVendorOrderingCode(e.target.value)
+                          }
+                          placeholder={
+                            inSearchSkuPhase
+                              ? `Search by ordering code`
+                              : `Ordering code`
+                          }
                         />
                       </div>
                     </div>
@@ -171,7 +359,6 @@ export default function ProductMaintenance() {
                 </Card>
 
                 {/* ProductCategoryCard  */}
-                {/* TODO: search category value not being selected  */}
                 <Card>
                   <CardHeader>
                     <CardTitle>Product Category</CardTitle>
@@ -180,9 +367,29 @@ export default function ProductMaintenance() {
                     <div className="grid gap-6 sm:grid-cols-3">
                       <div className="grid gap-3">
                         <Label htmlFor="category">Category</Label>
-                        <Select>
+                        <Select
+                          value={categoryId}
+                          onValueChange={(selectedCategoryId) =>
+                            setCategoryId(selectedCategoryId)
+                          }
+                        >
                           <SelectTrigger id="category" className="bg-popover">
-                            <SelectValue placeholder="Select category to search" />
+                            <SelectValue
+                              placeholder={
+                                inSearchSkuPhase
+                                  ? "Select category to search"
+                                  : "Select category"
+                              }
+                            >
+                              {categoryId}
+                              {categoryId
+                                ? categoryData &&
+                                  `- ${
+                                    categoryData.find((c) => c.id == categoryId)
+                                      ?.name
+                                  }`
+                                : "Select category"}
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {!categoryData ? (
@@ -265,6 +472,8 @@ export default function ProductMaintenance() {
                                 id="case-cost"
                                 type="number"
                                 className="bg-popover"
+                                value={regularCost}
+                                onChange={(e) => setRegularCost(e.target.value)}
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -279,6 +488,10 @@ export default function ProductMaintenance() {
                                 id="case-quantity"
                                 type="number"
                                 className="bg-popover"
+                                value={regularCostQuantity}
+                                onChange={(e) =>
+                                  setRegularCostQuantity(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -299,6 +512,10 @@ export default function ProductMaintenance() {
                                 id="retail-price"
                                 type="number"
                                 className="bg-popover"
+                                value={regularPrice}
+                                onChange={(e) =>
+                                  setRegularPrice(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                               />
                             </TableCell>
@@ -312,6 +529,10 @@ export default function ProductMaintenance() {
                               <Input
                                 id="retail-quantity"
                                 type="number"
+                                value={regularPriceQuantity}
+                                onChange={(e) =>
+                                  setRegularPriceQuantity(e.target.value)
+                                }
                                 disabled={inSearchSkuPhase}
                                 className="bg-popover"
                               />
@@ -333,7 +554,19 @@ export default function ProductMaintenance() {
                                 inSearchSkuPhase ? "text-muted-foreground" : ""
                               }
                             >
-                              0.00%
+                              {regularPrice &&
+                                regularPriceQuantity &&
+                                regularCostQuantity &&
+                                (
+                                  ((Number(regularPrice) /
+                                    Number(regularPriceQuantity) -
+                                    Number(regularCost) /
+                                      Number(regularCostQuantity)) /
+                                    (Number(regularPrice) /
+                                      Number(regularPriceQuantity))) *
+                                  100
+                                ).toFixed(2)}
+                              %
                             </TableCell>
                           </TableRow>
                         </TableFooter>
@@ -356,12 +589,26 @@ export default function ProductMaintenance() {
                         <Label htmlFor="status">Status</Label>
                         <Select>
                           <SelectTrigger id="status" className="bg-popover">
-                            <SelectValue placeholder="Search by product status" />
+                            <SelectValue
+                              placeholder={
+                                inSearchSkuPhase
+                                  ? "Search by product status"
+                                  : "Select status"
+                              }
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="discontinued">
+                            <SelectItem
+                              value="active"
+                              disabled={!inSearchSkuPhase}
+                            >
+                              Active
+                            </SelectItem>
+                            <SelectItem
+                              value="discontinued"
+                              disabled={!inSearchSkuPhase}
+                            >
                               Discontinued
                             </SelectItem>
                           </SelectContent>

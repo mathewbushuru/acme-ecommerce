@@ -48,14 +48,14 @@ import {
 
 import { type ProductType } from "@/types/product";
 
-export default function ProductsHome() {
+export default function ProductsList() {
   const navigate = useNavigate();
   const { data: productsData } = useGetAllProductsQuery();
 
   if (!productsData) {
     return (
       <ProductLayout
-        title="Products Home"
+        title="Products List"
         description="Search and view all your listed products."
       >
         <div>
@@ -79,7 +79,7 @@ export default function ProductsHome() {
 
   return (
     <ProductLayout
-      title="Products Home"
+      title="Products List"
       description="Search and view all your listed products."
     >
       <Tabs defaultValue="active">

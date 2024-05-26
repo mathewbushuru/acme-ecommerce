@@ -72,7 +72,7 @@ export default function ProductMaintenanceEdit() {
       return <Navigate to={state.fromPathname} replace />;
     }
 
-    return <Navigate to="/products/home" replace />;
+    return <Navigate to="/products/maintenance" replace />;
   }
 
   if (isLoading || !data) {
@@ -90,7 +90,7 @@ export default function ProductMaintenanceEdit() {
 
   return (
     <ProductLayout
-      title="Product Maintenance Edit"
+      title="Product Maintenance"
       description="Fine grained search for all products in your inventory."
     >
       <main className="grid gap-4 md:gap-8">
@@ -114,17 +114,13 @@ export default function ProductMaintenanceEdit() {
               In stock
             </Badge>
             <div className="hidden gap-2 md:ml-auto md:flex">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate(-1)}
-              >
+              <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
                 Discard Changes
               </Button>
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => navigate("/products/home")}
+                onClick={() => navigate("/products/list")}
               >
                 Save Changes
               </Button>
@@ -150,6 +146,7 @@ export default function ProductMaintenanceEdit() {
                         type="text"
                         className="w-full bg-popover"
                         defaultValue={productData.skuNumber}
+                        disabled
                       />
                     </div>
                     <div className="grid gap-3">
@@ -169,6 +166,38 @@ export default function ProductMaintenanceEdit() {
                         defaultValue={
                           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores repellat cum corrupti doloremque facilis quae"
                         }
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Vendor card  */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Vendor</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-3">
+                      <Label htmlFor="name">Vendor name</Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        className="w-full bg-popover"
+                        placeholder={"Vendor name"}
+                        defaultValue={productData.vendorId ?? undefined}
+                      />
+                    </div>
+
+                    <div className="grid gap-3">
+                      <Label htmlFor="ordering-code">Ordering code</Label>
+                      <Input
+                        id="ordering-code"
+                        type="text"
+                        className="w-full bg-popover"
+                        placeholder={"Ordering code"}
+                        defaultValue={productData.vendorOrderingCode}
                       />
                     </div>
                   </div>
