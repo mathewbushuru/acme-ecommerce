@@ -81,8 +81,16 @@ export default function ProductMaintenance() {
   const [regularPriceQuantity, setRegularPriceQuantity] = useState<string>("1");
   const [regularCost, setRegularCost] = useState<string>("");
   const [regularCostQuantity, setRegularCostQuantity] = useState<string>("1");
+  const [vendorName, setVendorName] = useState("");
+  const [vendorOrderingCode, setVendorOrderingCode] = useState("");
 
-  console.log({ skuNumber, name, categoryId, regularPrice });
+  console.log({
+    skuNumber,
+    name,
+    categoryId,
+    regularPrice,
+    vendorOrderingCode,
+  });
 
   const handleSearchProductSubmit = async (
     e:
@@ -234,7 +242,6 @@ export default function ProductMaintenance() {
                           className="w-full bg-popover"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          autoFocus={!inSearchSkuPhase}
                           placeholder={
                             inSearchSkuPhase
                               ? "Search by product name"
@@ -277,6 +284,8 @@ export default function ProductMaintenance() {
                           id="name"
                           type="text"
                           className="w-full bg-popover"
+                          value={vendorName}
+                          onChange={(e) => setVendorName(e.target.value)}
                           placeholder={
                             inSearchSkuPhase
                               ? `Search by vendor name`
@@ -291,6 +300,10 @@ export default function ProductMaintenance() {
                           id="ordering-code"
                           type="text"
                           className="w-full bg-popover"
+                          value={vendorOrderingCode}
+                          onChange={(e) =>
+                            setVendorOrderingCode(e.target.value)
+                          }
                           placeholder={
                             inSearchSkuPhase
                               ? `Search by ordering code`
