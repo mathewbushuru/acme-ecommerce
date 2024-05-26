@@ -6,10 +6,13 @@ import { Upload } from "lucide-react";
 import api, {
   useGetAllCategoriesQuery,
   useLazyGetProductBySkuNumberQuery,
+  useCreateProductMutation,
 } from "@/api";
 import { useAppDispatch } from "@/store/store";
 
 import { cn, isServerErrorResponse } from "@/lib/utils";
+
+import { type NewProductType } from "@/types/product";
 
 import ProductLayout from "@/modules/products/layouts/product-layout";
 
@@ -56,7 +59,7 @@ export default function ProductMaintenance() {
 
   const [
     searchSkuTrigger,
-    { error, isLoading, isSuccess: skuQueryIsSuccessful },
+    { error, isLoading: isSkuQueryLoading, isSuccess: skuQueryIsSuccessful },
   ] = useLazyGetProductBySkuNumberQuery();
 
   useEffect(() => {
@@ -75,6 +78,11 @@ export default function ProductMaintenance() {
     }
   }, [error]);
 
+  const [
+    createProductTrigger,
+    { isLoading: isCreateProductLoading},
+  ] = useCreateProductMutation();
+
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
   const [regularPrice, setRegularPrice] = useState<string>("");
@@ -83,14 +91,6 @@ export default function ProductMaintenance() {
   const [regularCostQuantity, setRegularCostQuantity] = useState<string>("1");
   const [vendorName, setVendorName] = useState("");
   const [vendorOrderingCode, setVendorOrderingCode] = useState("");
-
-  console.log({
-    skuNumber,
-    name,
-    categoryId,
-    regularPrice,
-    vendorOrderingCode,
-  });
 
   const handleSearchProductSubmit = async (
     e:
@@ -115,7 +115,7 @@ export default function ProductMaintenance() {
     await searchSkuTrigger(skuNumber);
   };
 
-  const handleAddProductSubmit = (
+  const handleAddProductSubmit = async (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -127,9 +127,47 @@ export default function ProductMaintenance() {
       return;
     }
 
-    toast.success("New product added.");
+    if (!name) {
+      toast.error("Product name is required.");
+      return;
+    }
 
-    navigate("/products/list");
+    if (!categoryId) {
+      toast.error("Product category is required.");
+      return;
+    }
+
+    if (!regularPrice) {
+      toast.error("Product regular retail price is required.");
+      return;
+    }
+
+    if (!vendorOrderingCode) {
+      toast.error("Product ordering code is required.");
+      return;
+    }
+
+    const newProductData: NewProductType = {
+      skuNumber,
+      name,
+      categoryId,
+      regularPrice,
+      vendorOrderingCode,
+    };
+
+    try {
+      const newProductCreationResponse =
+        await createProductTrigger(newProductData).unwrap();
+
+      toast.success(newProductCreationResponse.message);
+
+      navigate("/products/list");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(
+        error.data.errorMessage || "Something went wrong, product not created.",
+      );
+    }
   };
 
   const handleDiscardChanges = (
@@ -147,6 +185,8 @@ export default function ProductMaintenance() {
     setRegularPriceQuantity("1");
     setRegularCost("");
     setRegularCostQuantity("1");
+    setVendorName("");
+    setVendorOrderingCode("");
   };
 
   return (
@@ -156,7 +196,10 @@ export default function ProductMaintenance() {
     >
       <main>
         <form
-          className={cn("grid gap-4 md:gap-8", isLoading && "opacity-50")}
+          className={cn(
+            "grid gap-4 md:gap-8",
+            isSkuQueryLoading && "opacity-50",
+          )}
           onSubmit={
             inSearchSkuPhase
               ? handleSearchProductSubmit
@@ -199,7 +242,7 @@ export default function ProductMaintenance() {
                   onClick={handleAddProductSubmit}
                   disabled={inSearchSkuPhase}
                 >
-                  Add Product
+                 {isCreateProductLoading ? "Loading ..." : "Add Product"}
                 </Button>
               </div>
             </div>

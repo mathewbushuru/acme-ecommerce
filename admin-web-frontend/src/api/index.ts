@@ -4,6 +4,7 @@ import { type RootState } from "@/store/store";
 
 import {
   type ProductType,
+  type NewProductType,
   type ProductCategoryType,
 } from "@/types/product";
 import {
@@ -28,7 +29,7 @@ const acmeAdminApi = createApi({
       return headers;
     },
   }),
-  tagTypes: [],
+  tagTypes: ["product"],
   endpoints: (builder) => ({
     getRoot: builder.query<string, void>({
       query: () => `/`,
@@ -48,10 +49,24 @@ const acmeAdminApi = createApi({
 
     getAllProducts: builder.query<ProductType[], void>({
       query: () => `/products/all`,
+      providesTags: ["product"]
     }),
 
     getProductBySkuNumber: builder.query<ProductType, string>({
       query: (skuNumber) => `/products/${skuNumber}`,
+      providesTags: ["product"]
+    }),
+
+    createProduct: builder.mutation<
+      ProductType & { message: string },
+      NewProductType
+    >({
+      query: (newProductData) => ({
+        url: "/products/new",
+        method: "POST",
+        body: newProductData,
+      }),
+      invalidatesTags: ["product"],
     }),
 
     getAllCategories: builder.query<ProductCategoryType[], void>({
@@ -66,6 +81,7 @@ export const {
   useGetAllProductsQuery,
   useGetProductBySkuNumberQuery,
   useLazyGetProductBySkuNumberQuery,
+  useCreateProductMutation,
   useGetAllCategoriesQuery,
 } = acmeAdminApi;
 
