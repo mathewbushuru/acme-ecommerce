@@ -78,10 +78,8 @@ export default function ProductMaintenance() {
     }
   }, [error]);
 
-  const [
-    createProductTrigger,
-    { isLoading: isCreateProductLoading},
-  ] = useCreateProductMutation();
+  const [createProductTrigger, { isLoading: isCreateProductLoading }] =
+    useCreateProductMutation();
 
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
@@ -198,7 +196,7 @@ export default function ProductMaintenance() {
         <form
           className={cn(
             "grid gap-4 md:gap-8",
-            isSkuQueryLoading && "opacity-50",
+            (isSkuQueryLoading || isCreateProductLoading) && "opacity-50",
           )}
           onSubmit={
             inSearchSkuPhase
@@ -242,13 +240,13 @@ export default function ProductMaintenance() {
                   onClick={handleAddProductSubmit}
                   disabled={inSearchSkuPhase}
                 >
-                 {isCreateProductLoading ? "Loading ..." : "Add Product"}
+                  {isCreateProductLoading ? "Loading ..." : "Add Product"}
                 </Button>
               </div>
             </div>
 
             {/* Main */}
-            <div className="scrollbar-hide grid h-[63vh] gap-4 overflow-y-auto md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8    2xl:h-[69vh]">
+            <div className="scrollbar-hide grid h-[63vh] gap-4 overflow-y-auto md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8 2xl:h-[69vh]">
               {/* Left cards  */}
               <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                 {/* Product details card */}
